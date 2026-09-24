@@ -42,7 +42,7 @@ const standaard = plannen.find((p) => p.uitgelicht) ?? plannen[0];
                 <input type="radio" name="plan" value={p.id} class="sr-only" checked={p.id === standaard.id} />
                 <span class="text-sm text-muted">{p.label === p.looptijd ? 'Looptijd' : p.label}</span>
                 <span class="text-lg font-medium text-ink">{p.looptijd}</span>
-                <span class="text-sm text-ink-soft">vanaf € {p.jaar} p/m excl. btw</span>
+                <span class="text-sm text-ink-soft">€ <span data-plan-prijs data-maand={p.maand} data-jaar={p.jaar}>{p.maand}</span> p/m excl. btw</span>
               </label>
             ))}
           </div>
@@ -262,6 +262,10 @@ const standaard = plannen.find((p) => p.uitgelicht) ?? plannen[0];
       sam('btw', euro(btw));
       sam('totaal', euro(totaal));
       sam('pakket', `${plan.pakket} (gratis)`);
+      // Prijs op de drie plankeuzes volgt de gekozen facturering
+      form.querySelectorAll<HTMLElement>('[data-plan-prijs]').forEach((el) => {
+        el.textContent = (facturering === 'jaar' ? el.dataset.jaar : el.dataset.maand) ?? '';
+      });
       const tekst = form.querySelector<HTMLElement>('[data-akkoord-tekst]');
       if (tekst) {
         tekst.textContent = `Je sluit ${plan.naam} af voor een vaste looptijd van ${plan.looptijd}, voor ${euro(perMaand)} per maand exclusief btw (${facturering === 'jaar' ? `jaarlijks vooraf gefactureerd: ${euro(perFactuur)} per jaar excl. btw, ${euro(totaal)} incl. btw` : `maandelijks gefactureerd: ${euro(totaal)} per maand incl. btw`}${verlegd() ? ', btw verlegd' : ''}). De overeenkomst wordt daarna automatisch verlengd voor dezelfde periode, tenzij je uiterlijk 30 dagen voor het einde opzegt. Tussentijds opzeggen is niet mogelijk.`;
