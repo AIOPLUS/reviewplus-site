@@ -1,0 +1,65 @@
+---
+import { Image } from 'astro:assets';
+import { extraFuncties } from '@/config/content';
+import appBronnen from '@/assets/img/app-bronnen.jpeg';
+import iphone from '@/assets/img/iphone-frame.png';
+
+interface Props {
+  /** "kort": 3 kaarten + telefoon (home). "alles": 6 gekleurde kaarten (functiepagina). */
+  variant?: 'kort' | 'alles';
+}
+const { variant = 'kort' } = Astro.props;
+const items = variant === 'kort' ? extraFuncties.slice(0, 3) : extraFuncties;
+
+const kleuren: Record<string, string> = {
+  blauw: 'bg-brand-100 text-brand-600',
+  lichtblauw: 'bg-sky-100 text-sky-600',
+  roze: 'bg-pink-100 text-pink-600',
+  groen: 'bg-emerald-100 text-emerald-600',
+  geel: 'bg-amber-100 text-amber-600',
+};
+const iconen: Record<string, string> = {
+  widget: 'M3 3h7v7H3zM14 3h7v7h-7zM14 14h7v7h-7zM3 14h7v7H3z',
+  rapport: 'M3 3v18h18M7 16v-5M12 16V8M17 16v-8',
+  qr: 'M3 3h7v7H3zM14 3h7v7h-7zM3 14h7v7H3zM14 14h3v3h-3zM18 18h3v3h-3zM14 20h2M20 14v2',
+  social: 'M18 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6ZM6 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6ZM18 22a3 3 0 1 0 0-6 3 3 0 0 0 0 6ZM8.6 13.5l6.8 4M15.4 6.5l-6.8 4',
+  beloning: 'M20 12v10H4V12M2 7h20v5H2zM12 22V7M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7ZM12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7Z',
+  filter: 'M22 3H2l8 9.5V19l4 2v-8.5z',
+};
+---
+<section class="py-20 lg:py-28" aria-labelledby="meer-title">
+  <div class="container-rp">
+    {variant === 'kort' ? (
+      <h2 id="meer-title" class="heading-lg reveal mx-auto max-w-[700px] text-center">…en nog veel meer handige functies</h2>
+    ) : (
+      <div class="reveal grid justify-items-center gap-5 text-center">
+        <p class="eyebrow">Functies</p>
+        <h2 id="meer-title" class="display"><span class="block">Ontdek onze</span><span class="block text-brand-600">handige functies</span></h2>
+      </div>
+    )}
+
+    <ul class:list={['mt-12 grid gap-4 lg:mt-16', variant === 'kort' ? 'md:grid-cols-3' : 'sm:grid-cols-2 lg:grid-cols-3']}>
+      {items.map((f) => (
+        <li class="soft-card reveal flex items-start gap-4 p-5 lg:p-6">
+          <span class={`grid size-12 shrink-0 place-items-center rounded-xl ${kleuren[f.kleur]}`} aria-hidden="true">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d={iconen[f.icoon]} /></svg>
+          </span>
+          <div>
+            <h3 class="text-lg font-medium text-ink">{f.titel}</h3>
+            <p class="body-muted mt-1">{f.tekst}</p>
+          </div>
+        </li>
+      ))}
+    </ul>
+
+    {variant === 'kort' && (
+      <div class="relative mt-16 grid place-items-center overflow-hidden lg:mt-20">
+        <p class="pointer-events-none absolute top-1/3 select-none text-center text-[56px] font-semibold uppercase leading-none tracking-[-0.02em] text-brand-100 lg:text-[140px]" aria-hidden="true">Verschillende<br />functies</p>
+        <div class="reveal relative w-[260px] lg:w-[300px]">
+          <Image src={appBronnen} alt="Review Plus-app: reviewbronnen koppelen, zoals Google" widths={[280, 560]} sizes="280px" class="absolute left-[5%] top-[2.5%] w-[90%] rounded-[34px]" />
+          <Image src={iphone} alt="" widths={[300, 600]} sizes="300px" class="relative w-full" />
+        </div>
+      </div>
+    )}
+  </div>
+</section>

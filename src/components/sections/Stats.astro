@@ -1,0 +1,69 @@
+---
+import SectionHeader from '@/components/ui/SectionHeader.astro';
+import { stats } from '@/config/content';
+
+const [tijd, omzet, clicks] = stats.items;
+const klok = 'M12 22a10 10 0 1 0 0-20 10 10 0 0 0 0 20ZM12 6v6l4 2';
+const pijl = 'M12 19V5M5 12l7-7 7 7';
+---
+<section class="py-20 lg:py-28" aria-labelledby="stats-title">
+  <div class="container-rp">
+    <SectionHeader id="stats-title" eyebrow="Statistieken op jaarbasis" line1="Meer reviews" class="reveal" />
+
+    <div class="reveal mt-14 grid gap-4 lg:mt-20">
+      <div class="grid gap-4 md:grid-cols-[1fr_2fr_1fr]">
+        <div class="hidden items-center justify-center gap-6 rounded-full border border-line md:flex" aria-hidden="true">
+          {[0, 1, 2].map(() => <svg width="40" height="40" viewBox="0 0 40 40" stroke="var(--color-line-strong)" stroke-width="1"><path d="m4 4 32 32M36 4 4 36" /></svg>)}
+        </div>
+        <div class="flex items-center gap-5 rounded-full bg-brand-100 px-8 py-8 lg:px-12">
+          <svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="var(--color-brand-600)" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d={klok} /></svg>
+          <p class="text-[48px] font-light leading-none tracking-[-0.03em] text-brand-600 lg:text-[64px]"><span data-count={tijd.waarde}>{tijd.waarde}</span>{tijd.suffix}</p>
+          <p class="max-w-[190px] text-sm text-ink-soft">{tijd.label}<span class="sr-only"> ({tijd.waarde} uur per jaar)</span></p>
+        </div>
+        <div class="hidden items-center justify-center gap-6 rounded-full border border-line md:flex" aria-hidden="true">
+          {[0, 1, 2].map(() => <svg width="40" height="40" viewBox="0 0 40 40" stroke="var(--color-line-strong)" stroke-width="1"><path d="m4 4 32 32M36 4 4 36" /></svg>)}
+        </div>
+      </div>
+      <div class="grid gap-4 md:grid-cols-[2fr_.5fr_2fr]">
+        <div class="flex items-center gap-5 rounded-full bg-brand-100 px-8 py-8 lg:px-12">
+          <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="var(--color-brand-600)" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d={pijl} /></svg>
+          <p class="text-[48px] font-light leading-none tracking-[-0.03em] text-brand-600 lg:text-[64px]"><span data-count={omzet.waarde}>{omzet.waarde}</span>{omzet.suffix}</p>
+          <p class="max-w-[160px] text-sm text-ink-soft">{omzet.label}</p>
+        </div>
+        <div class="hidden place-items-center rounded-full border border-line md:grid" aria-hidden="true">
+          <svg width="40" height="40" viewBox="0 0 40 40" stroke="var(--color-line-strong)" stroke-width="1"><path d="M20 2v36M2 20h36" /></svg>
+        </div>
+        <div class="flex items-center gap-5 rounded-full bg-gradient-to-r from-brand-600 to-brand-400 px-8 py-8 text-white lg:px-12">
+          <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d={pijl} /></svg>
+          <p class="text-[48px] font-light leading-none tracking-[-0.03em] lg:text-[64px]"><span data-count={clicks.waarde}>{clicks.waarde}</span>{clicks.suffix}</p>
+          <p class="max-w-[170px] text-sm text-white/90">{clicks.label}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  // Tellers lopen op zodra ze in beeld komen (de waarde staat al in de HTML, dus zonder JS klopt alles).
+  const counters = document.querySelectorAll<HTMLElement>('[data-count]');
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (!reduce && 'IntersectionObserver' in window) {
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((e) => {
+        if (!e.isIntersecting) return;
+        io.unobserve(e.target);
+        const el = e.target as HTMLElement;
+        const target = Number(el.dataset.count);
+        const start = performance.now();
+        const step = (now: number) => {
+          const t = Math.min(1, (now - start) / 1400);
+          el.textContent = String(Math.round(target * (1 - Math.pow(1 - t, 3))));
+          if (t < 1) requestAnimationFrame(step);
+        };
+        el.textContent = '0';
+        requestAnimationFrame(step);
+      });
+    }, { threshold: 0.6 });
+    counters.forEach((c) => io.observe(c));
+  }
+</script>

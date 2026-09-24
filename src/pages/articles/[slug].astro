@@ -1,0 +1,55 @@
+---
+import { getCollection, render, type CollectionEntry } from 'astro:content';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import CtaFinal from '@/components/sections/CtaFinal.astro';
+import { brand } from '@/config/brand';
+import { absoluteUrl, url } from '@/lib/url';
+import { breadcrumbSchema } from '@/lib/schema';
+
+export async function getStaticPaths() {
+  const artikelen = await getCollection('articles', (a) => !a.data.concept);
+  return artikelen.map((a) => ({ params: { slug: a.id }, props: { artikel: a } }));
+}
+
+interface Props {
+  artikel: CollectionEntry<'articles'>;
+}
+const { artikel } = Astro.props;
+const { Content } = await render(artikel);
+const path = `/articles/${artikel.id}`;
+const d = artikel.data;
+const datum = (x: Date) => x.toLocaleDateString('nl-NL', { day: 'numeric', month: 'long', year: 'numeric' });
+const articleSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: d.titel,
+  description: d.beschrijving,
+  datePublished: d.datum.toISOString(),
+  dateModified: (d.bijgewerkt ?? d.datum).toISOString(),
+  author: { '@type': 'Organization', name: d.auteur },
+  publisher: { '@id': `${brand.siteUrl}/#organization` },
+  mainEntityOfPage: absoluteUrl(path),
+  inLanguage: 'nl-NL',
+};
+---
+<BaseLayout
+  title={`${d.titel} | Kennisbank Review Plus`}
+  description={d.beschrijving}
+  path={path}
+  page="artikel"
+  schemas={[articleSchema, breadcrumbSchema([{ name: 'Home', path: '/' }, { name: 'Kennisbank', path: '/articles' }, { name: d.titel, path }])]}
+>
+  <article class="container-rp pt-[140px] lg:pt-[200px]">
+    <header class="mx-auto grid max-w-[760px] gap-5">
+      <a href={url('/articles')} class="w-fit text-sm text-brand-600 hover:underline">← Kennisbank</a>
+      <p class="eyebrow w-fit">{d.categorie}</p>
+      <h1 class="display">{d.titel}</h1>
+      <p class="lead text-ink-soft">{d.beschrijving}</p>
+      <p class="text-sm text-muted">{d.auteur} · <time datetime={d.datum.toISOString()}>{datum(d.datum)}</time>{d.bijgewerkt && <> · bijgewerkt <time datetime={d.bijgewerkt.toISOString()}>{datum(d.bijgewerkt)}</time></>}</p>
+    </header>
+    <div class="prose-rp mx-auto mt-12 max-w-[760px]">
+      <Content />
+    </div>
+  </article>
+  <CtaFinal />
+</BaseLayout>

@@ -1,0 +1,43 @@
+---
+import { Image } from 'astro:assets';
+import bg from '@/assets/img/hero-kaart-bg.png';
+import google from '@/assets/img/logo-google.png';
+import chatgpt from '@/assets/img/logo-chatgpt.png';
+import tripadvisor from '@/assets/img/logo-tripadvisor.png';
+import trustpilot from '@/assets/img/logo-trustpilot.png';
+
+const woorden = Array.from({ length: 4 }, () => 'REPUTATIE MANAGEMENT');
+---
+<div class="relative isolate overflow-hidden rounded-[24px] bg-brand-600 text-white">
+  <Image src={bg} alt="" class="absolute inset-0 -z-10 size-full object-cover" widths={[800, 1400, 2000]} sizes="(min-width: 1360px) 1296px, 100vw" loading="eager" />
+
+  <!-- Lopende tekst -->
+  <div class="overflow-hidden pt-8 lg:pt-10" aria-hidden="true">
+    <div class="marquee">
+      {[...woorden, ...woorden].map((w) => (
+        <span class="flex items-center gap-8 pr-8 text-[64px] font-semibold leading-none tracking-[-0.02em] lg:text-[128px]">
+          <span class="bg-gradient-to-b from-white to-white/55 bg-clip-text text-transparent">{w}</span>
+          <span class="size-3 rounded-full bg-white/80 lg:size-4"></span>
+        </span>
+      ))}
+    </div>
+  </div>
+  <p class="sr-only">Reputatiemanagement</p>
+
+  <div class="mx-8 mt-8 h-px bg-white/20 lg:mx-16 lg:mt-12" aria-hidden="true"></div>
+
+  <div class="grid justify-items-center gap-10 px-6 pb-12 pt-12 text-center lg:pb-16">
+    <h2 class="max-w-[560px] text-2xl font-normal leading-snug lg:text-[28px]">Gekoppeld met systemen die jouw bedrijf elke dag sterker maken.</h2>
+    <ul class="flex flex-wrap items-center justify-center gap-x-12 gap-y-6 lg:gap-x-16" aria-label="Platformen">
+      <li><Image src={google} alt="Google" class="h-8 w-auto lg:h-9" /></li>
+      <li><Image src={chatgpt} alt="ChatGPT" class="h-7 w-auto lg:h-8" /></li>
+      <li><Image src={tripadvisor} alt="Tripadvisor" class="h-9 w-auto lg:h-11" /></li>
+      <li aria-label="Anthropic"><span class="text-[30px] font-semibold leading-none tracking-tight" aria-hidden="true">A\</span></li>
+      <li class="flex items-center gap-2 text-2xl font-medium">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.9 1.15h3.68l-8.04 9.19L24 22.85h-7.41l-5.8-7.58-6.64 7.58H.47l8.6-9.83L0 1.15h7.6l5.24 6.93 6.06-6.93Zm-1.29 19.5h2.04L6.48 3.24H4.3l13.31 17.41Z"/></svg>
+        Grok
+      </li>
+      <li><Image src={trustpilot} alt="Trustpilot" class="h-8 w-auto lg:h-9" /></li>
+    </ul>
+  </div>
+</div>

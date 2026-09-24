@@ -1,0 +1,94 @@
+---
+import { Image } from 'astro:assets';
+import { getCollection } from 'astro:content';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import PageHero from '@/components/sections/PageHero.astro';
+import SectionHeader from '@/components/ui/SectionHeader.astro';
+import Stats from '@/components/sections/Stats.astro';
+import CtaFinal from '@/components/sections/CtaFinal.astro';
+import { brand } from '@/config/brand';
+import { breadcrumbSchema } from '@/lib/schema';
+import { url } from '@/lib/url';
+import { img } from '@/lib/images';
+import restaurant from '@/assets/img/foto-restaurant.jpg';
+import salon from '@/assets/img/foto-salon.jpg';
+import zonnepanelen from '@/assets/img/foto-zonnepanelen.jpg';
+
+const sectors = (await getCollection('sectors')).sort((a, b) => a.data.volgorde - b.data.volgorde);
+
+/*
+ * TODO Jordan: vul dit aan met jullie eigen verhaal (waarom Review Plus is begonnen, wie erachter zit, waar jullie gevestigd zijn).
+ * De teksten hieronder beschrijven alleen wat Review Plus doet; er staan bewust geen verzonnen feiten in.
+ */
+const pijlers = [
+  { titel: 'Verzamelen', tekst: 'Reviews vragen op het juiste moment: met NFC-kaarten en totems, QR-codes, slimme links en automatische berichten per e-mail, sms of WhatsApp.' },
+  { titel: 'Reageren', tekst: 'Onze AI stelt op elke review een persoonlijk antwoord op in jouw stijl, zodat geen enkele klant onbeantwoord blijft.' },
+  { titel: 'Inzicht', tekst: 'Alle reviews, scores en platformen in één dashboard, per locatie en per medewerker, met maandelijkse rapporten.' },
+];
+---
+<BaseLayout
+  title="Over Review Plus: reputatiemanagement voor ondernemers"
+  description="Review Plus helpt ondernemers in Nederland en België aan meer en betere online reviews, met slimme software én fysieke reviewproducten zoals NFC-kaarten en totems."
+  path="/about"
+  page="over-ons"
+  schemas={[breadcrumbSchema([{ name: 'Home', path: '/' }, { name: 'Over ons', path: '/about' }])]}
+>
+  <PageHero line1="Over" line2="Review Plus" text="We maken het ondernemers makkelijk om een sterke online reputatie op te bouwen, zodat zij zich kunnen richten op hun bedrijf." />
+
+  <section class="py-16 lg:py-24" aria-labelledby="missie-title">
+    <div class="container-rp grid items-center gap-12 lg:grid-cols-2 lg:gap-20">
+      <div class="reveal grid grid-cols-2 gap-4">
+        <Image src={restaurant} alt="Restauranthouder met gasten" widths={[300, 600]} sizes="300px" class="aspect-[4/5] w-full rounded-[var(--radius-panel)] object-cover" />
+        <div class="grid gap-4 pt-10">
+          <Image src={salon} alt="Beautysalon" widths={[300, 600]} sizes="300px" class="aspect-square w-full rounded-[var(--radius-panel)] object-cover" />
+          <Image src={zonnepanelen} alt="Installateur bij zonnepanelen" widths={[300, 600]} sizes="300px" class="aspect-square w-full rounded-[var(--radius-panel)] object-cover" />
+        </div>
+      </div>
+      <div class="reveal grid gap-6">
+        <p class="eyebrow w-fit">Onze missie</p>
+        <h2 id="missie-title" class="heading-lg">Elke tevreden klant verdient een plek online</h2>
+        <p class="lead text-ink-soft">De meeste klanten zijn tevreden, maar laten dat zelden weten. Ontevreden klanten doen dat wel. Daardoor geeft je online score vaak geen eerlijk beeld van je bedrijf.</p>
+        <p class="lead text-ink-soft">Review Plus verandert dat. We combineren slimme software met fysieke reviewproducten, zodat het voor je klanten net zo makkelijk wordt om een review achter te laten als om af te rekenen.</p>
+        <p class="lead text-ink-soft">{brand.name} wordt gebruikt door ondernemers in allerlei branches: van restaurants en salons tot autobedrijven en installateurs.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="py-16 lg:py-24" aria-labelledby="pijlers-title">
+    <div class="container-rp">
+      <SectionHeader id="pijlers-title" eyebrow="Wat we doen" line1="Alles rond reviews," line2="op één plek" class="reveal" />
+      <ol class="mt-14 grid gap-4 md:grid-cols-3 lg:mt-20">
+        {pijlers.map((p, i) => (
+          <li class="soft-card reveal grid content-start gap-4 p-8">
+            <span class="text-[48px] font-light leading-none tracking-[-0.03em] text-brand-600" aria-hidden="true">0{i + 1}</span>
+            <h3 class="title">{p.titel}</h3>
+            <p class="body-muted">{p.tekst}</p>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </section>
+
+  <section class="py-16 lg:py-24" aria-labelledby="branches-title">
+    <div class="container-rp">
+      <SectionHeader id="branches-title" eyebrow="Voor wie" line1="Gemaakt voor" line2="lokale ondernemers" class="reveal" />
+      <ul class="mt-14 grid gap-4 sm:grid-cols-2 lg:mt-20 lg:grid-cols-3">
+        {sectors.map((s) => (
+          <li class="reveal">
+            <a href={url(`/voor/${s.data.slug}`)} class="group relative isolate flex h-[220px] items-end overflow-hidden rounded-[var(--radius-panel)] p-6 text-white">
+              <Image src={img(s.data.foto)} alt="" widths={[420, 840]} sizes="(min-width: 1200px) 420px, 50vw" class="absolute inset-0 -z-10 size-full object-cover transition-transform duration-500 group-hover:scale-105" />
+              <span class="absolute inset-0 -z-10 bg-gradient-to-t from-brand-900/80 via-brand-900/20 to-transparent" aria-hidden="true"></span>
+              <span class="grid gap-1">
+                <span class="text-xl font-medium">{s.data.naam}</span>
+                <span class="text-sm text-white/85">{s.data.doelgroep}</span>
+              </span>
+            </a>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <Stats />
+  <CtaFinal />
+</BaseLayout>

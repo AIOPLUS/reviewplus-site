@@ -1,0 +1,136 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import PageHero from '@/components/sections/PageHero.astro';
+import Faq from '@/components/sections/Faq.astro';
+import CtaFinal from '@/components/sections/CtaFinal.astro';
+import { planKenmerken, plannen, vergelijking } from '@/config/content';
+import { breadcrumbSchema, faqSchema, softwareSchema } from '@/lib/schema';
+import { url } from '@/lib/url';
+
+const prijsFaq = [
+  { vraag: 'Zijn de prijzen inclusief btw?', antwoord: 'Nee, alle prijzen zijn per maand en exclusief btw.' },
+  { vraag: 'Wat is het verschil tussen maandelijks en jaarlijks betalen?', antwoord: 'Bij maandelijkse facturering betaal je elke maand. Betaal je per jaar vooruit, dan is de prijs per maand lager. De looptijd (1, 2 of 3 jaar) kies je zelf.' },
+  { vraag: 'Wat zit er in het welkomstpakket?', antwoord: 'Bij elk abonnement krijg je gratis NFC-reviewkaarten en NFC-totems, zodat je direct reviews kunt verzamelen: 5 kaarten en 3 totems bij 1 jaar, 10 kaarten en 5 totems bij 2 jaar, 15 kaarten en 7 totems bij 3 jaar.' },
+  { vraag: 'Kan ik Review Plus eerst zien?', antwoord: 'Ja. Boek een vrijblijvende demo, dan laten we zien hoe Review Plus werkt voor jouw bedrijf.' },
+];
+---
+<BaseLayout
+  title="Prijzen: Review Plus Online vanaf € 59,95 per maand | Review Plus"
+  description="Kies 1, 2 of 3 jaar Review Plus Online, inclusief een gratis welkomstpakket met NFC-kaarten en totems. Per jaar betalen is voordeliger. Alle prijzen excl. btw."
+  path="/plans"
+  page="prijzen"
+  schemas={[softwareSchema(), faqSchema(prijsFaq), breadcrumbSchema([{ name: 'Home', path: '/' }, { name: 'Prijzen', path: '/plans' }])]}
+>
+  <PageHero line1="Onze" line2="plannen" text="Kies de looptijd die bij je past. Betaal je per jaar, dan betaal je minder per maand — inclusief een gratis welkomstpakket met NFC-kaarten en totems." compact />
+
+  <section class="pb-20 lg:pb-28" aria-label="Abonnementen">
+    <div class="container-rp">
+      <div class="mx-auto flex w-fit items-center gap-1 rounded-full bg-brand-100 p-1" role="radiogroup" aria-label="Facturering" data-billing>
+        <button type="button" role="radio" aria-checked="true" data-billing-option="maand" class="rounded-full px-5 py-2.5 text-[15px] transition-colors aria-checked:bg-white aria-checked:text-brand-600 aria-checked:shadow-sm">Maandelijks</button>
+        <button type="button" role="radio" aria-checked="false" data-billing-option="jaar" class="flex items-center gap-2 rounded-full px-5 py-2.5 text-[15px] transition-colors aria-checked:bg-white aria-checked:text-brand-600 aria-checked:shadow-sm">
+          Jaarlijks <span class="rounded-full bg-pink-100 px-2 py-0.5 text-xs text-pink-600">Voordeliger</span>
+        </button>
+      </div>
+
+      <ul class="mt-12 grid gap-6 lg:grid-cols-3">
+        {plannen.map((p) => (
+          <li class:list={['reveal flex flex-col overflow-hidden rounded-[var(--radius-panel)] border', p.uitgelicht ? 'border-brand-600 shadow-[var(--shadow-glow)]' : 'border-brand-200']}>
+            <div class:list={['grid gap-4 px-8 pb-12 pt-8 text-white', p.uitgelicht ? 'bg-gradient-to-br from-brand-600 to-brand-500' : 'bg-gradient-to-br from-brand-400 to-brand-300']}>
+              <p class="flex items-center gap-2 text-sm"><span class="size-1.5 rounded-full bg-white" aria-hidden="true"></span>{p.label}</p>
+              <p class="flex items-end gap-1">
+                <span class="text-[52px] font-medium leading-none tracking-[-0.03em]">€<span data-prijs-maand={p.maand} data-prijs-jaar={p.jaar}>{p.maand}</span></span>
+                <span class="pb-1 text-sm text-white/85">/mnd</span>
+              </p>
+            </div>
+            <div class="-mt-6 flex flex-1 flex-col gap-6 rounded-t-[var(--radius-panel)] bg-white px-8 pb-8 pt-8">
+              <div>
+                <h2 class="title">{p.naam}</h2>
+                <p class="mt-1 text-sm text-muted">Excl. btw · <span data-facturering>maandelijkse</span> facturering</p>
+              </div>
+              <ul class="grid gap-3 border-t border-line pt-6 text-[15px]">
+                <li class="flex gap-3 font-medium text-brand-600">
+                  <svg class="mt-0.5 shrink-0" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M20 12v10H4V12M2 7h20v5H2zM12 22V7" /></svg>
+                  Gratis welkomstpakket: {p.pakket}
+                </li>
+                {planKenmerken.map((k) => (
+                  <li class="flex gap-3 text-ink-soft">
+                    <svg class="mt-0.5 shrink-0 text-brand-600" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5" /></svg>
+                    {k}
+                  </li>
+                ))}
+              </ul>
+              <a href={url(`/contact?plan=${encodeURIComponent(p.looptijd)}`)} class:list={['btn mt-auto w-full', p.uitgelicht ? 'btn-primary' : 'btn-soft']} data-track="plan_klik" data-track-plek={p.looptijd}>Kies {p.looptijd}</a>
+            </div>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <section class="py-20 lg:py-28" aria-labelledby="vergelijk-title">
+    <div class="container-rp">
+      <h2 id="vergelijk-title" class="display reveal text-center"><span class="text-ink">Plannen</span> <span class="text-brand-600">vergelijken</span></h2>
+      <div class="reveal mt-12 overflow-x-auto rounded-[var(--radius-panel)] border border-brand-200">
+        <table class="w-full min-w-[640px] border-collapse text-left text-[15px]">
+          <thead>
+            <tr class="bg-brand-50">
+              <th scope="col" class="px-6 py-5 font-medium text-muted">Functie</th>
+              {plannen.map((p) => <th scope="col" class="px-6 py-5 text-center font-medium text-ink">{p.looptijd}</th>)}
+            </tr>
+          </thead>
+          <tbody>
+            {vergelijking.map((g) => (
+              <>
+                <tr><th colspan={4} scope="colgroup" class="bg-white px-6 pb-2 pt-6 text-sm font-medium text-brand-600">{g.groep}</th></tr>
+                {g.rijen.map((r) => (
+                  <tr class="border-t border-line">
+                    <th scope="row" class="px-6 py-4 font-normal text-ink">{r}</th>
+                    {plannen.map(() => (
+                      <td class="px-6 py-4 text-center">
+                        <svg class="mx-auto text-brand-600" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" role="img" aria-label="Inbegrepen"><path d="M20 6 9 17l-5-5" /></svg>
+                      </td>
+                    ))}
+                  </tr>
+                ))}
+              </>
+            ))}
+            <tr class="border-t border-line">
+              <th scope="row" class="px-6 py-4 font-normal text-ink">Gratis welkomstpakket</th>
+              {plannen.map((p) => <td class="px-6 py-4 text-center text-ink-soft">{p.pakketKort}</td>)}
+            </tr>
+            <tr class="border-t border-line">
+              <th scope="row" class="px-6 py-4 font-normal text-ink">Support</th>
+              {plannen.map((p) => <td class="px-6 py-4 text-center text-ink-soft">{p.support}</td>)}
+            </tr>
+            <tr class="border-t border-line bg-brand-50">
+              <th scope="row" class="px-6 py-4 font-medium text-ink">Per maand, maandelijkse facturering</th>
+              {plannen.map((p) => <td class="px-6 py-4 text-center font-medium text-ink">€ {p.maand}</td>)}
+            </tr>
+            <tr class="border-t border-line bg-brand-50">
+              <th scope="row" class="px-6 py-4 font-medium text-ink">Per maand, jaarlijkse facturering</th>
+              {plannen.map((p) => <td class="px-6 py-4 text-center font-medium text-brand-600">€ {p.jaar}</td>)}
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="mt-4 text-center text-sm text-muted">Alle prijzen per maand, exclusief btw.</p>
+    </div>
+  </section>
+
+  <Faq items={prijsFaq} line1="Vragen over" line2="de prijzen" />
+  <CtaFinal />
+</BaseLayout>
+
+<script>
+  const options = document.querySelectorAll<HTMLButtonElement>('[data-billing-option]');
+  const setBilling = (mode: 'maand' | 'jaar') => {
+    options.forEach((o) => o.setAttribute('aria-checked', String(o.dataset.billingOption === mode)));
+    document.querySelectorAll<HTMLElement>('[data-prijs-maand]').forEach((el) => {
+      el.textContent = (mode === 'maand' ? el.dataset.prijsMaand : el.dataset.prijsJaar) ?? '';
+    });
+    document.querySelectorAll<HTMLElement>('[data-facturering]').forEach((el) => {
+      el.textContent = mode === 'maand' ? 'maandelijkse' : 'jaarlijkse';
+    });
+  };
+  options.forEach((o) => o.addEventListener('click', () => setBilling(o.dataset.billingOption as 'maand' | 'jaar')));
+</script>

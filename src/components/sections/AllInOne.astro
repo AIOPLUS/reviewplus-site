@@ -1,0 +1,45 @@
+---
+import { Image } from 'astro:assets';
+import ArrowButton from '@/components/ui/ArrowButton.astro';
+import { DEMO_BOOKING_URL } from '@/config/site';
+import restaurant from '@/assets/img/foto-restaurant.jpg';
+import zonnepanelen from '@/assets/img/foto-zonnepanelen.jpg';
+import salon from '@/assets/img/foto-salon.jpg';
+import autobedrijf from '@/assets/img/foto-autobedrijf.jpg';
+
+// Zwevende sfeerfoto's rond de tekst (verschillende branches), zoals op de Framer-site.
+const fotos = [
+  { src: restaurant, alt: 'Restauranthouder in gesprek met gasten', pos: 'left-0 top-4', delay: '0s' },
+  { src: zonnepanelen, alt: 'Installateur bij zonnepanelen', pos: 'right-0 top-24', delay: '1.2s' },
+  { src: salon, alt: 'Interieur van een beautysalon', pos: 'left-[6%] bottom-0', delay: '.6s' },
+  { src: autobedrijf, alt: 'Showroom van een autobedrijf', pos: 'right-[4%] -bottom-10', delay: '1.8s' },
+];
+---
+<section class="relative py-24 lg:py-40" aria-labelledby="allinone-title">
+  <div class="container-rp relative grid-bg">
+    {fotos.map((f) => (
+      <div class={`float-photo absolute hidden h-[112px] w-[216px] overflow-hidden rounded-full shadow-[var(--shadow-card)] lg:block ${f.pos}`} style={`animation-delay:${f.delay}`}>
+        <Image src={f.src} alt={f.alt} widths={[216, 432]} sizes="216px" class="size-full object-cover" />
+      </div>
+    ))}
+
+    <div class="reveal relative mx-auto grid max-w-[760px] justify-items-center gap-8 text-center">
+      <h2 id="allinone-title" class="display text-brand-600">Jouw all&#8209;in&#8209;one AI&#8209;oplossing voor reviews en online vindbaarheid</h2>
+      <span class="size-2 rounded-full bg-brand-600" aria-hidden="true"></span>
+      <div class="flex items-center gap-4">
+        <span class="hidden h-px w-12 bg-brand-600 sm:block" aria-hidden="true"></span>
+        <p class="lead max-w-[460px] text-ink">Krijg de controle terug met een reputatiesysteem dat 24/7 voor je klaarstaat. Voor elke branche.</p>
+        <span class="hidden h-px w-12 bg-brand-600 sm:block" aria-hidden="true"></span>
+      </div>
+      <ArrowButton href={DEMO_BOOKING_URL} label="Boek een demo" track="demo_klik" />
+    </div>
+  </div>
+</section>
+
+<style>
+  .float-photo { animation: zweef 7s ease-in-out infinite; }
+  @keyframes zweef {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-14px); }
+  }
+</style>

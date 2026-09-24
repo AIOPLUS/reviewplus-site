@@ -1,0 +1,53 @@
+---
+import { Image } from 'astro:assets';
+import ArrowButton from '@/components/ui/ArrowButton.astro';
+import PlatformBand from './PlatformBand.astro';
+import { DEMO_BOOKING_URL } from '@/config/site';
+import { stats } from '@/config/content';
+import kfc from '@/assets/img/klant-kfc.png';
+import dominos from '@/assets/img/klant-dominos.png';
+import subway from '@/assets/img/klant-subway.jpg';
+import patroon1 from '@/assets/img/patroon-1.svg';
+import patroon2 from '@/assets/img/patroon-2.svg';
+
+const klanten = [subway, dominos, kfc];
+---
+<section class="relative pt-[120px] lg:pt-[184px]" aria-labelledby="hero-title">
+  <Image src={patroon1} alt="" class="pointer-events-none absolute left-[26%] top-[110px] hidden w-[240px] opacity-80 lg:block" loading="eager" />
+  <Image src={patroon2} alt="" class="pointer-events-none absolute right-[22%] top-[300px] hidden w-[240px] opacity-80 lg:block" loading="eager" />
+
+  <div class="container-rp relative">
+    <div class="grid gap-10 lg:grid-cols-[1fr_300px] lg:items-start">
+      <div class="grid gap-10">
+        <h1 id="hero-title" class="display text-ink">
+          <span class="block">Begin je reviews</span>
+          <span class="block">slim te</span>
+          <span class="flex items-center gap-4 text-ink-soft">
+            <span class="hidden h-px w-[72px] bg-line-strong sm:block lg:w-[120px]" aria-hidden="true"></span>managen
+          </span>
+        </h1>
+        <ArrowButton href={DEMO_BOOKING_URL} label="Boek een demo" track="demo_klik" class="w-fit" />
+      </div>
+
+      <div class="grid gap-8 lg:pt-4">
+        <svg width="34" height="34" viewBox="0 0 34 34" fill="none" stroke="var(--color-brand-400)" stroke-width="1.5" aria-hidden="true" class="hidden lg:block"><path d="M17 0v34M0 17h34" /></svg>
+        <p class="lead text-ink">Maak het jezelf makkelijker. Onze tool regelt jouw online reviews, zodat jij je kunt focussen op je bedrijf.</p>
+        <div class="grid gap-2">
+          <div class="flex items-center gap-4">
+            <div class="flex -space-x-2.5">
+              {klanten.map((img) => (
+                <Image src={img} alt="" width={40} height={40} class="size-10 rounded-full border-2 border-white object-cover" loading="eager" />
+              ))}
+            </div>
+            <p class="text-[40px] font-normal leading-none tracking-[-0.03em] text-ink">{stats.bedrijven}</p>
+          </div>
+          <p class="max-w-[260px] text-sm text-muted">{stats.bedrijvenTekst}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="container-rp mt-12 lg:mt-16">
+    <PlatformBand />
+  </div>
+</section>

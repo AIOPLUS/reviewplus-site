@@ -1,0 +1,51 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import PageHero from '@/components/sections/PageHero.astro';
+import CtaFinal from '@/components/sections/CtaFinal.astro';
+import { breadcrumbSchema } from '@/lib/schema';
+import { url } from '@/lib/url';
+
+const artikelen = (await getCollection('articles', (a) => !a.data.concept)).sort((a, b) => b.data.datum.getTime() - a.data.datum.getTime());
+const datum = (d: Date) => d.toLocaleDateString('nl-NL', { day: 'numeric', month: 'long', year: 'numeric' });
+const onderwerpen = ['Reviews verzamelen', 'Reageren op reviews', 'Google-bedrijfsprofiel', 'Lokale vindbaarheid'];
+---
+<BaseLayout
+  title="Kennisbank: tips over reviews en je Google-bedrijfsprofiel | Review Plus"
+  description="Praktische tips over meer reviews verzamelen, reageren op reviews, je Google-bedrijfsprofiel en lokale vindbaarheid, van het team van Review Plus."
+  path="/articles"
+  page="kennisbank"
+  noindex={artikelen.length === 0}
+  schemas={[breadcrumbSchema([{ name: 'Home', path: '/' }, { name: 'Kennisbank', path: '/articles' }])]}
+>
+  <PageHero line1="Kennis" line2="bank" text="Praktische tips over reviews, je Google-bedrijfsprofiel en lokale vindbaarheid." compact />
+
+  <section class="pb-10">
+    <div class="container-rp">
+      {artikelen.length === 0 ? (
+        <div class="soft-card mx-auto grid max-w-[760px] justify-items-center gap-5 p-10 text-center">
+          <p class="eyebrow">Binnenkort</p>
+          <h2 class="heading-md">De eerste artikelen zijn in de maak</h2>
+          <p class="text-ink-soft">We schrijven over deze onderwerpen:</p>
+          <ul class="flex flex-wrap justify-center gap-2">
+            {onderwerpen.map((o) => <li class="rounded-full bg-white px-4 py-2 text-sm text-brand-600">{o}</li>)}
+          </ul>
+          <p class="text-ink-soft">Wil je ze als eerste lezen? Meld je onderaan de pagina aan voor de nieuwsbrief.</p>
+        </div>
+      ) : (
+        <ul class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+          {artikelen.map((a) => (
+            <li class="card reveal relative grid gap-3 p-6 transition-shadow hover:shadow-[var(--shadow-card)]">
+              <p class="eyebrow w-fit">{a.data.categorie}</p>
+              <h2 class="title"><a href={url(`/articles/${a.id}`)} class="after:absolute after:inset-0">{a.data.titel}</a></h2>
+              <p class="body-muted">{a.data.beschrijving}</p>
+              <p class="mt-auto text-sm text-muted"><time datetime={a.data.datum.toISOString()}>{datum(a.data.datum)}</time></p>
+            </li>
+          ))}
+        </ul>
+      )}
+    </div>
+  </section>
+
+  <CtaFinal />
+</BaseLayout>

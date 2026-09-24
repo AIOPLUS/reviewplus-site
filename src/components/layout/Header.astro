@@ -1,0 +1,105 @@
+---
+import Logo from './Logo.astro';
+import { brand, mainNav } from '@/config/brand';
+import { isCurrent, url } from '@/lib/url';
+
+const current = Astro.url.pathname;
+---
+<header class="fixed inset-x-0 top-0 z-50" data-header>
+  <div class="container-rp flex h-[88px] items-center justify-between gap-4 lg:h-[112px]">
+    <a href={url('/')} class="shrink-0 rounded-full" aria-label="Review Plus – home">
+      <Logo size={24} wordmark />
+    </a>
+
+    <nav aria-label="Hoofdmenu" class="hidden lg:block">
+      <ul class="flex items-center rounded-full bg-[#fafafa] p-1 transition-shadow duration-300" data-header-pill>
+        {mainNav.map((item) => {
+          const active = isCurrent(current, item.href);
+          return (
+            <li>
+              <a
+                href={url(item.href)}
+                aria-current={active ? 'page' : undefined}
+                class:list={[
+                  'flex items-center gap-2 rounded-full px-5 py-2.5 text-[15px] transition-colors',
+                  active ? 'bg-brand-100 text-brand-600' : 'text-ink hover:text-brand-600',
+                ]}
+              >
+                {active && <span class="size-1.5 rounded-full bg-brand-600" aria-hidden="true" />}
+                {item.label}
+              </a>
+            </li>
+          );
+        })}
+      </ul>
+    </nav>
+
+    <div class="flex items-center gap-2">
+      <a href={brand.appLoginUrl} class="btn btn-primary !min-h-[44px] !px-5 max-sm:hidden">Log in</a>
+      <a href={brand.shopUrl} class="btn btn-white !min-h-[44px] !px-5 max-sm:hidden">Shop</a>
+      <button
+        type="button"
+        class="grid size-11 place-items-center rounded-full bg-brand-100 text-brand-600 lg:hidden"
+        aria-expanded="false"
+        aria-controls="mobile-menu"
+        data-menu-toggle
+      >
+        <span class="sr-only">Menu</span>
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true" data-menu-icon>
+          <path d="M4 7h16M4 12h16M4 17h16" />
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  <div id="mobile-menu" class="container-rp lg:hidden" hidden>
+    <div class="grid gap-6 rounded-[var(--radius-panel)] bg-white p-6 shadow-[var(--shadow-card)]">
+      <ul class="grid gap-1">
+        {mainNav.map((item) => (
+          <li>
+            <a
+              href={url(item.href)}
+              aria-current={isCurrent(current, item.href) ? 'page' : undefined}
+              class="block rounded-xl px-3 py-3 text-lg text-ink hover:bg-brand-100 aria-[current=page]:bg-brand-100 aria-[current=page]:text-brand-600"
+            >{item.label}</a>
+          </li>
+        ))}
+        <li><a href={url('/contact')} class="block rounded-xl px-3 py-3 text-lg text-ink hover:bg-brand-100">Contact</a></li>
+      </ul>
+      <div class="grid grid-cols-2 gap-2">
+        <a href={brand.appLoginUrl} class="btn btn-primary">Log in</a>
+        <a href={brand.shopUrl} class="btn btn-soft">Shop</a>
+      </div>
+    </div>
+  </div>
+</header>
+
+<script>
+  const header = document.querySelector<HTMLElement>('[data-header]');
+  const pill = document.querySelector<HTMLElement>('[data-header-pill]');
+  const toggle = document.querySelector<HTMLButtonElement>('[data-menu-toggle]');
+  const menu = document.getElementById('mobile-menu');
+
+  // Bij scrollen krijgt de balk een witte achtergrond, zoals op de Framer-site.
+  const onScroll = () => {
+    const scrolled = window.scrollY > 24;
+    header?.classList.toggle('bg-white/85', scrolled);
+    header?.classList.toggle('backdrop-blur-md', scrolled);
+    pill?.classList.toggle('shadow-[var(--shadow-card)]', scrolled);
+  };
+  onScroll();
+  window.addEventListener('scroll', onScroll, { passive: true });
+
+  toggle?.addEventListener('click', () => {
+    const open = toggle.getAttribute('aria-expanded') === 'true';
+    toggle.setAttribute('aria-expanded', String(!open));
+    if (menu) menu.hidden = open;
+    header?.classList.toggle('bg-white/85', !open || window.scrollY > 24);
+  });
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && toggle?.getAttribute('aria-expanded') === 'true') {
+      toggle.click();
+      toggle.focus();
+    }
+  });
+</script>

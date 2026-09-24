@@ -1,0 +1,22 @@
+---
+import { Image } from 'astro:assets';
+import ArrowButton from '@/components/ui/ArrowButton.astro';
+import { DEMO_BOOKING_URL } from '@/config/site';
+import bg from '@/assets/img/cta-bg.png';
+import reviews from '@/assets/img/cta-reviews.png';
+import profiel from '@/assets/img/cta-bedrijfsprofiel.png';
+---
+<section class="pt-10" aria-labelledby="cta-title">
+  <div class="container-rp">
+    <div class="reveal relative isolate overflow-hidden rounded-[24px] bg-brand-400 px-6 py-20 text-center text-white lg:py-28">
+      <Image src={bg} alt="" class="absolute inset-0 -z-10 size-full object-cover" widths={[800, 1600]} sizes="(min-width: 1360px) 1296px, 100vw" />
+      <Image src={reviews} alt="" widths={[360, 720]} sizes="360px" class="absolute -left-10 bottom-[-12%] hidden w-[340px] -rotate-12 rounded-xl opacity-80 shadow-2xl lg:block" />
+      <Image src={profiel} alt="" widths={[360, 720]} sizes="360px" class="absolute -right-10 bottom-[-10%] hidden w-[340px] rotate-12 rounded-xl opacity-80 shadow-2xl lg:block" />
+      <div class="relative mx-auto grid max-w-[640px] justify-items-center gap-6">
+        <h2 id="cta-title" class="display text-white">Jouw stap naar een sterke online reputatie begint hier</h2>
+        <p class="lead text-white/90">Zie hoe Review Plus je reviews laat groeien en je bedrijf laat bloeien. Boek een demo en ontdek het zelf.</p>
+        <ArrowButton href={DEMO_BOOKING_URL} label="Boek een demo" variant="white" track="demo_klik" />
+      </div>
+    </div>
+  </div>
+</section>

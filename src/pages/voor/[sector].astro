@@ -1,0 +1,89 @@
+---
+import { Image } from 'astro:assets';
+import { getCollection, type CollectionEntry } from 'astro:content';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import ArrowButton from '@/components/ui/ArrowButton.astro';
+import Stats from '@/components/sections/Stats.astro';
+import Faq from '@/components/sections/Faq.astro';
+import CtaFinal from '@/components/sections/CtaFinal.astro';
+import { brand } from '@/config/brand';
+import { DEMO_BOOKING_URL } from '@/config/site';
+import { breadcrumbSchema, faqSchema } from '@/lib/schema';
+import { img } from '@/lib/images';
+import patroon from '@/assets/img/patroon-1.svg';
+
+export async function getStaticPaths() {
+  const sectors = await getCollection('sectors');
+  return sectors.map((s) => ({ params: { sector: s.data.slug }, props: { sector: s } }));
+}
+
+interface Props {
+  sector: CollectionEntry<'sectors'>;
+}
+const { sector } = Astro.props;
+const s = sector.data;
+const path = `/voor/${s.slug}`;
+const iconen = [
+  'M5 12.5 10 17l9-10',
+  'M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z',
+  'M3 3v18h18M7 16v-5M12 16V8M17 16v-8',
+];
+---
+<BaseLayout
+  title={s.metaTitle}
+  description={s.metaDescription}
+  path={path}
+  page="sector"
+  sector={s.slug}
+  schemas={[faqSchema(s.faq), breadcrumbSchema([{ name: 'Home', path: '/' }, { name: s.naam, path }])]}
+>
+  <section class="relative isolate overflow-hidden pb-16 pt-[140px] lg:pb-24 lg:pt-[200px]">
+    <Image src={patroon} alt="" class="pointer-events-none absolute left-[40%] top-[140px] -z-10 hidden w-[240px] lg:block" loading="eager" />
+    <div class="container-rp grid items-center gap-12 lg:grid-cols-[1.1fr_1fr]">
+      <div class="grid gap-7">
+        <p class="eyebrow w-fit">Review Plus voor {s.naam.toLowerCase()}</p>
+        <h1 class="display">{s.heroTitel}</h1>
+        <p class="lead max-w-[560px] text-ink-soft">{s.heroTekst}</p>
+        <div class="flex flex-wrap items-center gap-4">
+          <ArrowButton href={DEMO_BOOKING_URL} label="Boek een demo" track="demo_klik" />
+          {s.shopSector && (
+            <a href={`${brand.shopUrl}/voor/${s.shopSector}`} class="text-brand-600 underline underline-offset-4 hover:no-underline">Gratis NFC-kaarten aanvragen</a>
+          )}
+        </div>
+      </div>
+      <div class="relative aspect-[4/3] overflow-hidden rounded-[var(--radius-panel)] bg-brand-50">
+        <Image src={img(s.foto)} alt={s.fotoAlt} widths={[560, 1120]} sizes="(min-width: 1200px) 560px, 100vw" class="size-full object-cover" loading="eager" />
+      </div>
+    </div>
+  </section>
+
+  <section class="pb-20" aria-label="Samenvatting">
+    <div class="container-rp">
+      <p class="soft-card reveal mx-auto max-w-[900px] p-8 text-center text-lg leading-relaxed text-ink lg:p-12 lg:text-xl">{s.samenvatting}</p>
+    </div>
+  </section>
+
+  <section class="py-20 lg:py-28" aria-labelledby="toepassingen-title">
+    <div class="container-rp">
+      <div class="reveal grid justify-items-center gap-5 text-center">
+        <p class="eyebrow">Zo werkt het</p>
+        <h2 id="toepassingen-title" class="display"><span class="block">Reviews voor</span><span class="block text-brand-600">{s.doelgroep}</span></h2>
+      </div>
+      <ul class="mt-14 grid gap-4 md:grid-cols-3 lg:mt-20">
+        {s.toepassingen.map((t, i) => (
+          <li class="soft-card reveal grid content-start gap-4 p-8">
+            <span class="grid size-12 place-items-center rounded-xl bg-brand-600 text-white" aria-hidden="true">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d={iconen[i % iconen.length]} /></svg>
+            </span>
+            <h3 class="title">{t.titel}</h3>
+            <p class="body-muted">{t.tekst}</p>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <Stats />
+  <Faq items={s.faq} line1="Veelgestelde" line2="vragen" />
+  <CtaFinal />
+</BaseLayout>

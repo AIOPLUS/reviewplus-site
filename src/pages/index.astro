@@ -1,0 +1,29 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import HomeHero from '@/components/sections/HomeHero.astro';
+import AllInOne from '@/components/sections/AllInOne.astro';
+import FeatureBento from '@/components/sections/FeatureBento.astro';
+import MoreFeatures from '@/components/sections/MoreFeatures.astro';
+import Outcomes from '@/components/sections/Outcomes.astro';
+import Stats from '@/components/sections/Stats.astro';
+import Faq from '@/components/sections/Faq.astro';
+import CtaFinal from '@/components/sections/CtaFinal.astro';
+import { faq } from '@/config/content';
+import { faqSchema, softwareSchema, websiteSchema } from '@/lib/schema';
+---
+<BaseLayout
+  title="Review Plus – reputatiemanagement: meer en betere reviews, automatisch"
+  description="Verzamel automatisch meer Google-reviews via NFC, QR, e-mail en WhatsApp, laat AI op je reviews reageren en volg alles in één dashboard. Boek een gratis demo."
+  path="/"
+  page="home"
+  schemas={[websiteSchema(), softwareSchema(), faqSchema(faq)]}
+>
+  <HomeHero />
+  <AllInOne />
+  <FeatureBento />
+  <MoreFeatures />
+  <Outcomes />
+  <Stats />
+  <Faq items={faq} />
+  <CtaFinal />
+</BaseLayout>

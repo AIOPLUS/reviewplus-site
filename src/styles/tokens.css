@@ -1,0 +1,45 @@
+/*
+ * Design tokens van reviewplus.io, gemeten op de Framer-site (Fizens-template) op 24-09-2026.
+ * Poppins · primair blauw #0040C1 · tekst #171717 · kaarten 12px, knoppen en menu als pil (1000px).
+ * Breakpoints zoals Framer: 810px (tablet) en 1200px (desktop). Container 1296px.
+ */
+@theme {
+  --font-sans: 'Poppins', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+
+  --color-brand-50: #f5faff;
+  --color-brand-75: #f9fcff;
+  --color-brand-100: #eff4ff;
+  --color-brand-200: #d1e0ff;
+  --color-brand-300: #bfd7ff;
+  --color-brand-400: #2970ff;
+  --color-brand-500: #173edd;
+  --color-brand-600: #0040c1; /* primair */
+  --color-brand-700: #0035a0;
+  --color-brand-800: #002a80;
+  --color-brand-900: #001a52;
+  --color-logo: #1818ff; /* officiële logokleur */
+
+  --color-ink: #171717;
+  --color-ink-soft: #4b5563;
+  --color-muted: #6b7280;
+  --color-line: #e5e7eb;
+  --color-line-strong: #d1d5db;
+  --color-surface: #ffffff;
+  --color-surface-alt: #fafafa;
+
+  --color-success: #067647;
+  --color-success-bg: #ecfdf3;
+  --color-danger: #b42318;
+  --color-danger-bg: #fef3f2;
+
+  --radius-pill: 1000px;
+  --radius-card: 12px;
+  --radius-panel: 24px;
+  --radius-field: 12px;
+
+  --shadow-glow: 0px 15px 44px 0px rgba(0, 64, 193, 0.25);
+  --shadow-card: 0 1px 2px rgba(16, 24, 40, 0.04), 0 12px 32px -12px rgba(0, 64, 193, 0.14);
+
+  --breakpoint-md: 810px;
+  --breakpoint-lg: 1200px;
+}

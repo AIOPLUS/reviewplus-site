@@ -1,0 +1,22 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import PageHero from '@/components/sections/PageHero.astro';
+import FeatureBento from '@/components/sections/FeatureBento.astro';
+import MoreFeatures from '@/components/sections/MoreFeatures.astro';
+import Outcomes from '@/components/sections/Outcomes.astro';
+import CtaFinal from '@/components/sections/CtaFinal.astro';
+import { breadcrumbSchema, softwareSchema } from '@/lib/schema';
+---
+<BaseLayout
+  title="Functies: reviews verzamelen, AI-reacties en één dashboard | Review Plus"
+  description="Alle functies van Review Plus: reviews verzamelen via NFC, QR en slimme links, automatische AI-reacties, widgets, maandrapporten, beloningen en negatieve feedback privé afvangen."
+  path="/features"
+  page="functies"
+  schemas={[softwareSchema(), breadcrumbSchema([{ name: 'Home', path: '/' }, { name: 'Het product', path: '/features' }])]}
+>
+  <PageHero line1="Je review" line2="oplossing" text="Ervaar de rust van een online reputatie die volledig onder controle is." />
+  <FeatureBento line1="Ontdek onze" line2="functies" />
+  <MoreFeatures variant="alles" />
+  <Outcomes />
+  <CtaFinal />
+</BaseLayout>

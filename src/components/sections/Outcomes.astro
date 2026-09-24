@@ -1,0 +1,49 @@
+---
+import { Image } from 'astro:assets';
+import SectionHeader from '@/components/ui/SectionHeader.astro';
+import { uitkomsten } from '@/config/content';
+import bg from '@/assets/img/uitkomst-bg.png';
+import statistieken from '@/assets/img/uitkomst-statistieken.png';
+import snelheid from '@/assets/img/uitkomst-review-snelheid.png';
+import controle from '@/assets/img/uitkomst-controle.png';
+
+const beelden = {
+  statistieken: { src: statistieken, alt: 'Grafiek met gemiddelde score, reviews en groei over de maanden' },
+  snelheid: { src: snelheid, alt: 'Review Velocity: aantal nieuwe reviews per maand' },
+  controle: { src: controle, alt: 'Illustratie van een beveiligd overzicht' },
+} as const;
+---
+<section class="py-20 lg:py-28" aria-labelledby="uitkomsten-title">
+  <div class="container-rp">
+    <SectionHeader id="uitkomsten-title" eyebrow="Uitkomst" line1="Ervaar de" line2="uitkomsten" class="reveal" />
+
+    <div class="mt-14 grid gap-16 lg:mt-20 lg:gap-24">
+      {uitkomsten.map((u, i) => {
+        const beeld = beelden[u.beeld];
+        return (
+          <article class="reveal grid items-center gap-10 lg:grid-cols-2 lg:gap-20">
+            <div class:list={['relative isolate grid aspect-[5/4] place-items-center overflow-hidden rounded-[var(--radius-card)] bg-brand-50 p-8 lg:p-14', i % 2 === 1 && 'lg:order-2']}>
+              <Image src={bg} alt="" class="absolute inset-0 -z-10 size-full object-cover" widths={[640, 1280]} sizes="(min-width: 1200px) 620px, 100vw" />
+              <Image src={beeld.src} alt={beeld.alt} widths={[480, 960]} sizes="(min-width: 1200px) 480px, 80vw" class="max-h-full w-auto max-w-full rounded-xl object-contain" />
+            </div>
+            <div class="grid gap-6">
+              <p class="flex items-center gap-2 text-sm text-brand-600"><span class="size-1.5 rounded-full bg-brand-600" aria-hidden="true"></span>{u.label}</p>
+              <h3 class="heading-md text-ink">{u.titel}</h3>
+              <p class="lead text-ink-soft">{u.tekst}</p>
+              <ul class="grid gap-3 border-t border-line pt-6">
+                {u.punten.map((p) => (
+                  <li class="flex items-center gap-3 text-ink">
+                    <span class="grid size-6 shrink-0 place-items-center rounded-full bg-brand-600 text-white" aria-hidden="true">
+                      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5" /></svg>
+                    </span>
+                    {p}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </article>
+        );
+      })}
+    </div>
+  </div>
+</section>
