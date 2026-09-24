@@ -1,5 +1,4 @@
 ---
-# TODO Jordan: vul de [Invullen]-stukken aan en controleer uren en start. Zet daarna concept op false.
 titel: Customer success medewerker
 samenvatting: Je zorgt dat nieuwe klanten snel op gang komen met Review Plus en dat bestaande klanten er het maximale uit halen. Het aanspreekpunt voor al onze klanten.
 afdeling: Customer success
@@ -13,7 +12,7 @@ salarisTekst: Passend bij kennis en ervaring
 start: In overleg
 datum: 2026-09-25
 geldigTot: 2026-12-31
-concept: true
+concept: false
 ---
 
 ## Over de functie
@@ -42,7 +41,13 @@ Een klant die net start met Review Plus wil maar één ding: zo snel mogelijk me
 - Een salaris dat past bij je kennis en ervaring.
 - Een zelfstandige rol met veel contact met ondernemers uit allerlei branches.
 - Een klein team met korte lijnen, waar jouw ideeën direct het verschil maken.
-- **[Invullen: vakantiedagen, pensioen, reiskosten, laptop en telefoon, thuiswerkdagen]**
+- 25 vakantiedagen bij een fulltime dienstverband, plus 8% vakantiegeld.
+- Een pensioenregeling.
+- Reiskostenvergoeding voor woon-werkverkeer.
+- Een laptop en telefoon van de zaak.
+- Hybride werken: deels vanuit ons kantoor in Rotterdam, deels thuis.
+- Een jaarcontract, met de intentie om daarna een vast contract aan te bieden.
+- Budget voor trainingen en cursussen.
 
 ## Over Review Plus
 
@@ -50,6 +55,6 @@ Review Plus helpt ondernemers in Nederland en België aan meer en betere online 
 
 ## Sollicitatieprocedure
 
-Solliciteer via het formulier hieronder. Je hoort zo snel mogelijk van ons. Een eerste kennismaking is vaak een kort (video)gesprek, daarna volgt een tweede gesprek. **[Invullen of aanpassen: stappen en eventuele praktijkopdracht]**
+Solliciteer via het formulier hieronder. We beginnen met een kennismakingsgesprek van ongeveer 30 minuten via video. Klikt het, dan nodigen we je uit voor een tweede gesprek op ons kantoor in Rotterdam. Daarin bespreken we samen een paar echte klantvragen: hoe zou jij ze aanpakken? Daarna hoor je binnen een week of we je een aanbod doen.
 
 Acquisitie naar aanleiding van deze vacature wordt niet op prijs gesteld.

@@ -1,5 +1,4 @@
 ---
-# TODO Jordan: vul de [Invullen]-stukken aan en controleer uren en start. Zet daarna concept op false.
 titel: Marketing & content medewerker
 samenvatting: Je vertelt het verhaal van Review Plus. Met artikelen, social media en campagnes zorg je dat ondernemers ons vinden en ontdekken hoe ze meer reviews krijgen.
 afdeling: Marketing
@@ -13,7 +12,7 @@ salarisTekst: Passend bij kennis en ervaring
 start: In overleg
 datum: 2026-09-25
 geldigTot: 2026-12-31
-concept: true
+concept: false
 ---
 
 ## Over de functie
@@ -42,7 +41,13 @@ Ondernemers weten vaak niet hoeveel klanten ze mislopen door te weinig reviews. 
 - Een salaris dat past bij je kennis en ervaring.
 - Veel vrijheid om je eigen ideeën uit te voeren.
 - Een klein team met korte lijnen, waar je direct ziet wat jouw werk oplevert.
-- **[Invullen: vakantiedagen, pensioen, reiskosten, laptop en telefoon, thuiswerkdagen, opleidingsbudget]**
+- 25 vakantiedagen bij een fulltime dienstverband, plus 8% vakantiegeld.
+- Een pensioenregeling.
+- Reiskostenvergoeding voor woon-werkverkeer.
+- Een laptop en telefoon van de zaak.
+- Hybride werken: deels vanuit ons kantoor in Rotterdam, deels thuis.
+- Een jaarcontract, met de intentie om daarna een vast contract aan te bieden.
+- Opleidingsbudget voor cursussen in bijvoorbeeld SEO, adverteren of contentcreatie.
 
 ## Over Review Plus
 
@@ -50,6 +55,6 @@ Review Plus helpt ondernemers in Nederland en België aan meer en betere online 
 
 ## Sollicitatieprocedure
 
-Solliciteer via het formulier hieronder. Stuur gerust een link mee naar werk waar je trots op bent. Je hoort zo snel mogelijk van ons. **[Invullen of aanpassen: stappen en eventuele praktijkopdracht]**
+Solliciteer via het formulier hieronder. Stuur gerust een link mee naar werk waar je trots op bent. We beginnen met een kennismakingsgesprek van ongeveer 30 minuten via video. Klikt het, dan krijg je een korte praktijkopdracht, bijvoorbeeld een opzet voor een artikel of een social-mediapost. Die bespreken we in een tweede gesprek op ons kantoor in Rotterdam. Daarna hoor je binnen een week of we je een aanbod doen.
 
 Acquisitie naar aanleiding van deze vacature wordt niet op prijs gesteld.

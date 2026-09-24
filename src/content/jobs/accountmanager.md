@@ -1,5 +1,4 @@
 ---
-# TODO Jordan: vul de [Invullen]-stukken aan en controleer uren en start. Zet daarna concept op false.
 titel: Accountmanager
 samenvatting: Je helpt ondernemers ontdekken hoe ze met Review Plus meer en betere reviews krijgen. Van eerste gesprek en demo tot een tevreden nieuwe klant.
 afdeling: Sales
@@ -13,7 +12,7 @@ salarisTekst: Passend bij kennis en ervaring
 start: In overleg
 datum: 2026-09-25
 geldigTot: 2026-12-31
-concept: true
+concept: false
 ---
 
 ## Over de functie
@@ -39,9 +38,16 @@ Elke dag vragen ondernemers een gratis NFC-kaartenset aan in onze shop of planne
 ## Wat bieden wij?
 
 - Een salaris dat past bij je kennis en ervaring.
+- Een aantrekkelijke provisieregeling bovenop je vaste salaris.
 - Veel vrijheid en verantwoordelijkheid in een klein team met korte lijnen.
 - Een product waar ondernemers direct resultaat van zien.
-- **[Invullen: provisie of bonus, vakantiedagen, pensioen, reiskosten, laptop en telefoon, thuiswerkdagen]**
+- 25 vakantiedagen bij een fulltime dienstverband, plus 8% vakantiegeld.
+- Een pensioenregeling.
+- Reiskostenvergoeding voor woon-werkverkeer.
+- Een laptop en telefoon van de zaak.
+- Hybride werken: deels vanuit ons kantoor in Rotterdam, deels thuis.
+- Een jaarcontract, met de intentie om daarna een vast contract aan te bieden.
+- Budget voor trainingen in sales en onderhandelen.
 
 ## Over Review Plus
 
@@ -49,6 +55,6 @@ Review Plus helpt ondernemers in Nederland en België aan meer en betere online 
 
 ## Sollicitatieprocedure
 
-Solliciteer via het formulier hieronder. Je hoort zo snel mogelijk van ons. Een eerste kennismaking is vaak een kort (video)gesprek, daarna volgt een tweede gesprek. **[Invullen of aanpassen: stappen en eventuele praktijkopdracht]**
+Solliciteer via het formulier hieronder. We beginnen met een kennismakingsgesprek van ongeveer 30 minuten via video. Klikt het, dan nodigen we je uit voor een tweede gesprek op ons kantoor in Rotterdam. Daarin geef je een korte demo van Review Plus aan ons, alsof wij een ondernemer zijn. Geen zorgen: je krijgt vooraf alles wat je nodig hebt om je voor te bereiden. Daarna hoor je binnen een week of we je een aanbod doen.
 
 Acquisitie naar aanleiding van deze vacature wordt niet op prijs gesteld.
