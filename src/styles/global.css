@@ -84,6 +84,8 @@
   .prose-rp ol { list-style: decimal; padding-left: 1.25rem; }
   .prose-rp a { color: var(--color-brand-600); text-decoration: underline; }
   .prose-rp strong { color: var(--color-ink); }
+  .prose-rp blockquote { margin: 0 0 1.25rem; padding: 1rem 1.25rem; border-left: 3px solid var(--color-brand-600); background: var(--color-brand-50); border-radius: 0 var(--radius-card) var(--radius-card) 0; color: var(--color-ink); }
+  .prose-rp blockquote p { margin: 0; }
 
   /* Formulieren */
   .field { display: grid; gap: .4rem; }

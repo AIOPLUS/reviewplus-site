@@ -6,6 +6,7 @@ import { absoluteUrl } from '@/lib/url';
 
 /** Samenvatting van de site voor AI-assistenten (llmstxt.org). */
 export const GET: APIRoute = async () => {
+  const artikelen = (await getCollection('articles', (a) => !a.data.concept)).sort((a, b) => b.data.datum.getTime() - a.data.datum.getTime());
   const sectors = (await getCollection('sectors')).sort((a, b) => a.data.volgorde - b.data.volgorde);
   const lines = [
     `# ${brand.name}`,
@@ -28,6 +29,7 @@ export const GET: APIRoute = async () => {
     `- [Shop: gratis NFC-reviewkaarten](${brand.shopUrl})`,
     `- [Demo boeken](${brand.demoBookingUrl})`,
     '',
+    ...(artikelen.length ? ['## Kennisbank', ...artikelen.map((a) => `- [${a.data.titel}](${absoluteUrl(`/articles/${a.id}`)}): ${a.data.beschrijving}`), ''] : []),
     '## Veelgestelde vragen',
     ...faq.flatMap((f) => [`### ${f.vraag}`, f.antwoord, '']),
     `Contact: ${brand.email}`,
