@@ -7,9 +7,10 @@ import { planKenmerken, plannen, vergelijking } from '@/config/content';
 import { breadcrumbSchema, faqSchema, softwareSchema } from '@/lib/schema';
 import { DEMO_BOOKING_URL } from '@/config/site';
 import { url } from '@/lib/url';
+import { inclBtwTekst } from '@/lib/prijs';
 
 const prijsFaq = [
-  { vraag: 'Zijn de prijzen inclusief btw?', antwoord: 'Nee, alle prijzen zijn per maand en exclusief btw.' },
+  { vraag: 'Zijn de prijzen inclusief btw?', antwoord: 'De prijzen zijn per maand en exclusief btw. Bij elk plan staat ook het bedrag inclusief 21% btw. Voor Belgische bedrijven met een geldig btw-nummer wordt de btw verlegd.' },
   { vraag: 'Wat is het verschil tussen maandelijks en jaarlijks betalen?', antwoord: 'Bij maandelijkse facturering betaal je elke maand. Betaal je per jaar vooruit, dan is de prijs per maand lager. De looptijd (1, 2 of 3 jaar) kies je zelf.' },
   { vraag: 'Wat zit er in het welkomstpakket?', antwoord: 'Bij elk abonnement krijg je gratis NFC-reviewkaarten en NFC-totems, zodat je direct reviews kunt verzamelen: 5 kaarten en 3 totems bij 1 jaar, 10 kaarten en 5 totems bij 2 jaar, 15 kaarten en 7 totems bij 3 jaar.' },
   { vraag: 'Kan ik Review Plus eerst zien?', antwoord: 'Ja. Boek een vrijblijvende demo, dan laten we zien hoe Review Plus werkt voor jouw bedrijf.' },
@@ -42,6 +43,7 @@ const prijsFaq = [
                 <span class="text-[52px] font-medium leading-none tracking-[-0.03em]">€<span data-prijs-maand={p.maand} data-prijs-jaar={p.jaar}>{p.maand}</span></span>
                 <span class="pb-1 text-sm text-white/85">/mnd</span>
               </p>
+              <p class="-mt-2 text-sm text-white/90">€ <span data-prijs-maand={inclBtwTekst(p.maand)} data-prijs-jaar={inclBtwTekst(p.jaar)}>{inclBtwTekst(p.maand)}</span> incl. 21% btw</p>
             </div>
             <div class="-mt-6 flex flex-1 flex-col gap-6 rounded-t-[var(--radius-panel)] bg-white px-8 pb-8 pt-8">
               <div>
@@ -106,16 +108,16 @@ const prijsFaq = [
             </tr>
             <tr class="border-t border-line bg-brand-50">
               <th scope="row" class="px-6 py-4 font-medium text-ink">Per maand, maandelijkse facturering</th>
-              {plannen.map((p) => <td class="px-6 py-4 text-center font-medium text-ink">€ {p.maand}</td>)}
+              {plannen.map((p) => <td class="px-6 py-4 text-center font-medium text-ink">€ {p.maand}<span class="block text-xs font-normal text-muted">€ {inclBtwTekst(p.maand)} incl. btw</span></td>)}
             </tr>
             <tr class="border-t border-line bg-brand-50">
               <th scope="row" class="px-6 py-4 font-medium text-ink">Per maand, jaarlijkse facturering</th>
-              {plannen.map((p) => <td class="px-6 py-4 text-center font-medium text-brand-600">€ {p.jaar}</td>)}
+              {plannen.map((p) => <td class="px-6 py-4 text-center font-medium text-brand-600">€ {p.jaar}<span class="block text-xs font-normal text-muted">€ {inclBtwTekst(p.jaar)} incl. btw</span></td>)}
             </tr>
           </tbody>
         </table>
       </div>
-      <p class="mt-4 text-center text-sm text-muted">Alle prijzen per maand, exclusief btw.</p>
+      <p class="mt-4 text-center text-sm text-muted">Alle prijzen per maand, exclusief btw. Daaronder het bedrag inclusief 21% btw.</p>
     </div>
   </section>
 

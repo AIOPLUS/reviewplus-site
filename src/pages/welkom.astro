@@ -60,12 +60,12 @@ const onboarding = brand.onboardingBookingUrl as string;
   try {
     const raw = sessionStorage.getItem('rp_abonnement');
     const ref = new URLSearchParams(location.search).get('ref');
-    const d = raw ? (JSON.parse(raw) as { ref: string; naam: string; facturering: string; perMaand: number; perFactuur: number; pakket: string; email: string; voornaam: string }) : null;
+    const d = raw ? (JSON.parse(raw) as { ref: string; naam: string; facturering: string; perMaand: number; perFactuur: number; totaal: number; verlegd: boolean; pakket: string; email: string; voornaam: string }) : null;
     if (d && d.ref === ref) {
       const euro = (n: number) => `€ ${n.toLocaleString('nl-NL', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
       const box = document.querySelector<HTMLElement>('[data-welkom-samenvatting]')!;
       box.querySelector('[data-welkom-tekst]')!.textContent =
-        `${d.naam}, ${euro(d.perMaand)} per maand excl. btw (${d.facturering === 'jaar' ? `jaarlijks gefactureerd: ${euro(d.perFactuur)} per jaar` : 'maandelijks gefactureerd'}), inclusief gratis welkomstpakket: ${d.pakket}. Bevestiging verstuurd naar ${d.email}. Referentie: ${d.ref}.`;
+        `${d.naam}, ${euro(d.perMaand)} per maand excl. btw (${d.facturering === 'jaar' ? 'jaarlijks' : 'maandelijks'} gefactureerd: ${euro(d.perFactuur)} excl. btw, ${d.verlegd ? 'btw verlegd' : `${euro(d.totaal)} incl. 21% btw`} per factuur), inclusief gratis welkomstpakket: ${d.pakket}. Bevestiging verstuurd naar ${d.email}. Referentie: ${d.ref}.`;
       box.hidden = false;
     }
   } catch {

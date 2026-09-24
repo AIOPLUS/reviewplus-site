@@ -40,7 +40,7 @@ De URL's zijn gelijk aan de Framer-site, zodat posities in Google behouden blijv
 
 - De knoppen op `/plans` gaan naar `/aanmelden?plan=<1-jaar|2-jaar|3-jaar>&facturering=<maand|jaar>`.
 - De klant kiest plan en facturering, vult bedrijfs- en contactgegevens in en geeft akkoord op de algemene voorwaarden (de versie = `ingangsdatum` in `src/content/legal/algemene-voorwaarden.md`) en op zijn bevoegdheid.
-- Het formulier gaat naar het Make-scenario (`request_type: abonnement`, route 5d). Make rekent de prijs zelf opnieuw uit: **wijzig je prijzen in `src/config/content.ts`, pas ze dan ook aan in Make (module 121)**.
+- Het formulier gaat naar het Make-scenario (`request_type: abonnement`, route 5d). Make rekent de prijs zelf opnieuw uit: **wijzig je prijzen in `src/config/content.ts`, pas ze dan ook aan in Make (module 121)**. Prijzen zijn exclusief btw; de site en Make rekenen er 21% btw bij (`src/lib/prijs.ts`, Make-module 144). Belgische bedrijven met een geldig btw-nummer: btw verlegd.
 - Make maakt bedrijf, contact en een deal in fase "Offerte Getekend" aan in Teamleader, met taken voor de eerste factuur en het welkomstpakket, maakt het account op app.reviewplus.io aan (EmbedMyReviews Agency API) en stuurt een mail aan jou en een bevestiging aan de klant.
 - Account aanmaken werkt pas als in de Make-datastore `shop_data` de records `config:emr_token` (Agency API-token, veld `waarde`) en `config:emr_plan` (ID van het plan in EmbedMyReviews) bestaan. Zonder die records meldt de mail aan jou dat het account handmatig moet.
 - Onboarding-afspraak: zet de Teamleader-bookinglink in `brand.onboardingBookingUrl` (`src/config/brand.ts`). Leeg = "we nemen contact op".

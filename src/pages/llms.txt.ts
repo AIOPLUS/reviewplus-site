@@ -3,6 +3,7 @@ import { getCollection } from 'astro:content';
 import { brand } from '@/config/brand';
 import { faq, hoofdfuncties, extraFuncties, plannen } from '@/config/content';
 import { absoluteUrl } from '@/lib/url';
+import { inclBtwTekst } from '@/lib/prijs';
 
 /** Samenvatting van de site voor AI-assistenten (llmstxt.org). */
 export const GET: APIRoute = async () => {
@@ -18,7 +19,7 @@ export const GET: APIRoute = async () => {
     ...extraFuncties.map((f) => `- ${f.titel}: ${f.tekst}`),
     '',
     '## Prijzen (per maand, excl. btw)',
-    ...plannen.map((p) => `- ${p.naam}: € ${p.maand} bij maandelijkse facturering, € ${p.jaar} bij jaarlijkse facturering. Gratis welkomstpakket: ${p.pakket}.`),
+    ...plannen.map((p) => `- ${p.naam}: € ${p.maand} (€ ${inclBtwTekst(p.maand)} incl. 21% btw) bij maandelijkse facturering, € ${p.jaar} (€ ${inclBtwTekst(p.jaar)} incl. btw) bij jaarlijkse facturering. Gratis welkomstpakket: ${p.pakket}.`),
     '',
     '## Pagina\'s',
     `- [Het product](${absoluteUrl('/features')})`,

@@ -42,7 +42,7 @@ const standaard = plannen.find((p) => p.uitgelicht) ?? plannen[0];
                 <input type="radio" name="plan" value={p.id} class="sr-only" checked={p.id === standaard.id} />
                 <span class="text-sm text-muted">{p.label === p.looptijd ? 'Looptijd' : p.label}</span>
                 <span class="text-lg font-medium text-ink">{p.looptijd}</span>
-                <span class="text-sm text-ink-soft">vanaf € {p.jaar} p/m</span>
+                <span class="text-sm text-ink-soft">vanaf € {p.jaar} p/m excl. btw</span>
               </label>
             ))}
           </div>
@@ -184,11 +184,13 @@ const standaard = plannen.find((p) => p.uitgelicht) ?? plannen[0];
           <dl class="grid gap-3 text-sm">
             <div class="flex justify-between gap-4"><dt class="text-muted">Looptijd</dt><dd class="text-right text-ink" data-sam="looptijd">{standaard.looptijd}</dd></div>
             <div class="flex justify-between gap-4"><dt class="text-muted">Facturering</dt><dd class="text-right text-ink" data-sam="facturering">Maandelijks</dd></div>
-            <div class="flex justify-between gap-4"><dt class="text-muted">Prijs per maand</dt><dd class="text-right text-ink" data-sam="maandprijs">€ {standaard.maand}</dd></div>
-            <div class="flex justify-between gap-4"><dt class="text-muted" data-sam="factuurlabel">Per factuur</dt><dd class="text-right text-ink" data-sam="factuur">€ {standaard.maand}</dd></div>
+            <div class="flex justify-between gap-4"><dt class="text-muted">Prijs per maand</dt><dd class="text-right text-ink"><span data-sam="maandprijs">€ {standaard.maand}</span> excl. btw</dd></div>
+            <div class="flex justify-between gap-4 border-t border-line pt-3"><dt class="text-muted" data-sam="factuurlabel">Per maandfactuur</dt><dd class="text-right text-ink" data-sam="factuur">€ {standaard.maand} excl. btw</dd></div>
+            <div class="flex justify-between gap-4"><dt class="text-muted" data-sam="btwlabel">Btw 21%</dt><dd class="text-right text-ink" data-sam="btw"></dd></div>
+            <div class="flex justify-between gap-4 font-medium"><dt class="text-ink">Totaal incl. btw</dt><dd class="text-right text-ink" data-sam="totaal"></dd></div>
             <div class="flex justify-between gap-4 border-t border-line pt-3"><dt class="text-muted">Welkomstpakket</dt><dd class="text-right text-ink" data-sam="pakket">{standaard.pakket} (gratis)</dd></div>
           </dl>
-          <p class="text-xs text-muted">Alle bedragen exclusief btw.</p>
+          <p class="text-xs text-muted">Bedragen per factuur. Belgisch bedrijf met btw-nummer? Dan wordt de btw verlegd.</p>
         </div>
         <div class="soft-card grid gap-2 p-6">
           <p class="font-medium text-ink">Eerst meer weten?</p>
@@ -204,6 +206,7 @@ const standaard = plannen.find((p) => p.uitgelicht) ?? plannen[0];
   import { track } from '@/lib/client/analytics';
   import { normalizeUrl, validateCompanyNumber, validateEmail, validatePhone, validatePostcode, validateVat, type CountryCode } from '@/lib/validation';
   import { url } from '@/lib/url';
+  import { bedrag, inclBtw } from '@/lib/prijs';
 
   interface Plan { id: string; naam: string; looptijd: string; maanden: number; maand: string; jaar: string; pakket: string }
 
@@ -219,7 +222,6 @@ const standaard = plannen.find((p) => p.uitgelicht) ?? plannen[0];
     const field = (name: string) => form.elements.namedItem(name) as HTMLInputElement;
     const val = (name: string) => field(name)?.value.trim() ?? '';
     const radio = (name: string) => form.querySelector<HTMLInputElement>(`input[name="${name}"]:checked`)?.value ?? '';
-    const bedrag = (s: string) => Number(s.replace(/\./g, '').replace(',', '.'));
     const euro = (n: number) => `€ ${n.toLocaleString('nl-NL', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
 
     // Vooraf gekozen plan en facturering vanaf de prijspagina (?plan=2-jaar&facturering=jaar)
@@ -231,12 +233,17 @@ const standaard = plannen.find((p) => p.uitgelicht) ?? plannen[0];
     kies('plan', qs.get('plan'));
     kies('facturering', qs.get('facturering'));
 
+    // Belgisch bedrijf met geldig btw-nummer: btw verlegd (geen Nederlandse btw)
+    const land = () => (val('land') === 'BE' ? 'BE' : 'NL') as CountryCode;
+    const verlegd = () => land() === 'BE' && /^BE[01]\d{9}$/.test(val('btw').replace(/[\s.-]/g, '').toUpperCase());
+
     const huidig = () => {
       const plan = plannen.find((p) => p.id === radio('plan')) ?? plannen[0]!;
       const facturering = radio('facturering') === 'jaar' ? 'jaar' : 'maand';
       const perMaand = bedrag(facturering === 'jaar' ? plan.jaar : plan.maand);
       const perFactuur = facturering === 'jaar' ? perMaand * 12 : perMaand;
-      return { plan, facturering, perMaand, perFactuur } as const;
+      const totaal = verlegd() ? perFactuur : inclBtw(perFactuur);
+      return { plan, facturering, perMaand, perFactuur, btw: Math.round((totaal - perFactuur) * 100) / 100, totaal } as const;
     };
 
     const sam = (key: string, text: string) => {
@@ -244,30 +251,33 @@ const standaard = plannen.find((p) => p.uitgelicht) ?? plannen[0];
       if (el) el.textContent = text;
     };
     const updateSamenvatting = () => {
-      const { plan, facturering, perMaand, perFactuur } = huidig();
+      const { plan, facturering, perMaand, perFactuur, btw, totaal } = huidig();
       sam('naam', plan.naam);
       sam('looptijd', plan.looptijd);
       sam('facturering', facturering === 'jaar' ? 'Jaarlijks, vooraf' : 'Maandelijks');
       sam('maandprijs', euro(perMaand));
       sam('factuurlabel', facturering === 'jaar' ? 'Per jaarfactuur' : 'Per maandfactuur');
-      sam('factuur', euro(perFactuur));
+      sam('factuur', `${euro(perFactuur)} excl. btw`);
+      sam('btwlabel', verlegd() ? 'Btw verlegd' : 'Btw 21%');
+      sam('btw', euro(btw));
+      sam('totaal', euro(totaal));
       sam('pakket', `${plan.pakket} (gratis)`);
       const tekst = form.querySelector<HTMLElement>('[data-akkoord-tekst]');
       if (tekst) {
-        tekst.textContent = `Je sluit ${plan.naam} af voor een vaste looptijd van ${plan.looptijd}, voor ${euro(perMaand)} per maand exclusief btw (${facturering === 'jaar' ? `jaarlijks vooraf gefactureerd: ${euro(perFactuur)} per jaar` : 'maandelijks gefactureerd'}). De overeenkomst wordt daarna automatisch verlengd voor dezelfde periode, tenzij je uiterlijk 30 dagen voor het einde opzegt. Tussentijds opzeggen is niet mogelijk.`;
+        tekst.textContent = `Je sluit ${plan.naam} af voor een vaste looptijd van ${plan.looptijd}, voor ${euro(perMaand)} per maand exclusief btw (${facturering === 'jaar' ? `jaarlijks vooraf gefactureerd: ${euro(perFactuur)} per jaar excl. btw, ${euro(totaal)} incl. btw` : `maandelijks gefactureerd: ${euro(totaal)} per maand incl. btw`}${verlegd() ? ', btw verlegd' : ''}). De overeenkomst wordt daarna automatisch verlengd voor dezelfde periode, tenzij je uiterlijk 30 dagen voor het einde opzegt. Tussentijds opzeggen is niet mogelijk.`;
       }
     };
     form.querySelectorAll('input[name="plan"], input[name="facturering"]').forEach((el) => el.addEventListener('change', updateSamenvatting));
     updateSamenvatting();
 
-    // Land bepaalt KvK/KBO en voorbeeld btw-nummer
-    const land = () => (val('land') === 'BE' ? 'BE' : 'NL') as CountryCode;
+    // Land bepaalt KvK/KBO en het voorbeeld-btw-nummer
     const updateLand = () => {
       const label = form.querySelector('[data-nummer-label]');
       if (label) label.firstChild!.textContent = land() === 'NL' ? 'KvK-nummer ' : 'Ondernemingsnummer (KBO) ';
       field('btw').placeholder = land() === 'NL' ? 'NL123456789B01' : 'BE0123456789';
     };
-    field('land').addEventListener('change', updateLand);
+    field('land').addEventListener('change', () => { updateLand(); updateSamenvatting(); });
+    field('btw').addEventListener('input', updateSamenvatting);
 
     // Turnstile pas laden zodra iemand het formulier invult.
     const loadTurnstile = () => {
@@ -324,7 +334,7 @@ const standaard = plannen.find((p) => p.uitgelicht) ?? plannen[0];
       if (val('website_url')) return; // honeypot
       if (!webhook) return fail('Het formulier is nog niet gekoppeld. Mail ons via support@reviewplus.io.');
 
-      const { plan, facturering, perMaand, perFactuur } = huidig();
+      const { plan, facturering, perMaand, perFactuur, totaal } = huidig();
       const ref = `RP-${Date.now().toString(36).toUpperCase()}${Math.random().toString(36).slice(2, 5).toUpperCase()}`;
       submit.disabled = true;
       submit.textContent = 'Bezig met afsluiten…';
@@ -366,7 +376,7 @@ const standaard = plannen.find((p) => p.uitgelicht) ?? plannen[0];
         if (!res.ok) throw new Error(String(res.status));
         track('plan_afgesloten', { plan: plan.id, facturering });
         try {
-          sessionStorage.setItem('rp_abonnement', JSON.stringify({ ref, naam: plan.naam, looptijd: plan.looptijd, facturering, perMaand, perFactuur, pakket: plan.pakket, email: email.value, voornaam: val('voornaam') }));
+          sessionStorage.setItem('rp_abonnement', JSON.stringify({ ref, naam: plan.naam, looptijd: plan.looptijd, facturering, perMaand, perFactuur, totaal, verlegd: verlegd(), pakket: plan.pakket, email: email.value, voornaam: val('voornaam') }));
         } catch { /* niet erg */ }
         location.href = url(`/welkom?ref=${encodeURIComponent(ref)}`);
       } catch (err) {
