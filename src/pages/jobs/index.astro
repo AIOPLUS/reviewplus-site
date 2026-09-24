@@ -1,0 +1,69 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import PageHero from '@/components/sections/PageHero.astro';
+import { brand } from '@/config/brand';
+import { breadcrumbSchema } from '@/lib/schema';
+import { url } from '@/lib/url';
+import { vacatures, locatie, dienstverband } from '@/lib/jobs';
+
+const lijst = await vacatures();
+const open = lijst.filter((v) => !v.data.gesloten);
+const waarom = [
+  { titel: 'Direct impact', tekst: 'Je werkt in een klein team aan een product dat ondernemers elke dag helpt. Wat je doet, zie je meteen terug bij klanten.' },
+  { titel: 'Ruimte voor ideeën', tekst: 'Korte lijnen en weinig regels. Heb je een beter idee, dan proberen we het gewoon.' },
+  { titel: 'Groeien met het bedrijf', tekst: 'Review Plus groeit, en jij groeit mee: in verantwoordelijkheid, kennis en rol.' },
+];
+---
+<BaseLayout
+  title="Vacatures: werken bij Review Plus"
+  description="Werken bij Review Plus? Bekijk onze vacatures in sales, customer success en marketing en help ondernemers aan een sterke online reputatie."
+  path="/jobs"
+  page="vacatures"
+  noindex={open.length === 0}
+  schemas={[breadcrumbSchema([{ name: 'Home', path: '/' }, { name: 'Vacatures', path: '/jobs' }])]}
+>
+  <PageHero line1="Werken bij" line2="Review Plus" text="Help ondernemers aan meer en betere reviews. We zoeken mensen die energie krijgen van klanten, groei en een product dat echt verschil maakt." compact />
+
+  <section class="pb-16 lg:pb-24" aria-labelledby="vacatures-title">
+    <div class="container-rp grid gap-8">
+      <h2 id="vacatures-title" class="heading-md text-center">{open.length ? `${open.length} openstaande ${open.length === 1 ? 'vacature' : 'vacatures'}` : 'Op dit moment geen vacatures'}</h2>
+      {lijst.length > 0 && (
+        <ul class="mx-auto grid w-full max-w-[960px] gap-4">
+          {lijst.map((v) => (
+            <li class="card reveal relative grid gap-4 p-6 transition-shadow hover:shadow-[var(--shadow-card)] md:grid-cols-[1fr_auto] md:items-center md:p-8">
+              <div class="grid gap-2">
+                <p class="flex flex-wrap gap-2">
+                  <span class="eyebrow w-fit">{v.data.afdeling}</span>
+                  {v.data.concept && <span class="rounded-full bg-amber-100 px-3 py-1 text-xs font-medium text-amber-900">Concept, alleen op de testversie</span>}
+                  {v.data.gesloten && <span class="rounded-full bg-surface-alt px-3 py-1 text-xs font-medium text-muted">Gesloten</span>}
+                </p>
+                <h3 class="title"><a href={url(`/jobs/${v.id}`)} class="after:absolute after:inset-0">{v.data.titel}</a></h3>
+                <p class="body-muted">{v.data.samenvatting}</p>
+                <p class="text-sm text-ink-soft">{dienstverband(v)} · {v.data.uren} · {locatie(v)}</p>
+              </div>
+              <span class="btn btn-primary w-fit" aria-hidden="true">Bekijk vacature</span>
+            </li>
+          ))}
+        </ul>
+      )}
+      <div class="soft-card mx-auto grid w-full max-w-[960px] gap-3 p-8 text-center md:text-left">
+        <p class="font-medium text-ink">Staat jouw functie er niet tussen?</p>
+        <p class="body-muted">We zijn altijd benieuwd naar mensen die Review Plus verder willen helpen. Stuur een open sollicitatie via het <a class="text-brand-600 underline" href={url('/contact')}>contactformulier</a> of mail naar <a class="text-brand-600 underline" href={`mailto:${brand.email}`}>{brand.email}</a>.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="pb-16 lg:pb-24" aria-labelledby="waarom-title">
+    <div class="container-rp grid gap-10">
+      <h2 id="waarom-title" class="heading-lg text-center">Waarom Review Plus?</h2>
+      <ul class="grid gap-4 md:grid-cols-3">
+        {waarom.map((w) => (
+          <li class="soft-card reveal grid content-start gap-3 p-8">
+            <h3 class="title">{w.titel}</h3>
+            <p class="body-muted">{w.tekst}</p>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+</BaseLayout>

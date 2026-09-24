@@ -23,6 +23,16 @@ De URL's zijn gelijk aan de Framer-site, zodat posities in Google behouden blijv
 - Menu en footer: `src/config/brand.ts`
 - Nieuw kennisbankartikel: maak `src/content/articles/<slug>.md` (velden: zie `src/content.config.ts`)
 - Nieuwe branche: kopieer een bestand in `src/content/sectors/`
+- Nieuwe vacature: kopieer een bestand in `src/content/jobs/` (velden: zie `src/content.config.ts`)
+
+## Vacatures (`/jobs`)
+
+- `concept: true`: alleen zichtbaar op de testversie, met een gele conceptbalk. Zet op `false` om te publiceren.
+- `gesloten: true`: de pagina blijft bestaan, maar solliciteren kan niet meer. Of verwijder het bestand.
+- `geldigTot`: tot wanneer de vacature openstaat. Google for Jobs gebruikt deze datum; verleng hem als de vacature langer loopt.
+- Gepubliceerde, open vacatures krijgen automatisch JobPosting-gegevens voor Google for Jobs. Vul daarvoor een echte `plaats` in, en bij voorkeur ook een `salaris`.
+- Sollicitaties gaan via het formulier naar het Make-scenario (`request_type: sollicitatie`). Je krijgt een mail op support@ waarop je direct de kandidaat antwoordt. De kandidaat krijgt een bevestiging en kan daarop zijn cv als bijlage terugsturen.
+- Bewaartermijn: verwijder sollicitaties uiterlijk 4 weken na afloop van de procedure, of maximaal 1 jaar als de kandidaat daar toestemming voor geeft (staat ook in de privacyverklaring).
 
 ## Lokaal
 

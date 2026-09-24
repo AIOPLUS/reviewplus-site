@@ -175,4 +175,5 @@ Deze bijlage beschrijft welke diensten we gebruiken op reviewplus.io en shop.rev
 - **Spamcontrole**: bij het versturen van een formulier gebruiken we Cloudflare Turnstile om misbruik door bots tegen te gaan.
 - **Bezoekersstatistieken**: we meten het gebruik van de website met Umami, zonder cookies en zonder dat we bezoekers persoonlijk kunnen herkennen.
 - **Advertentiecookies**: alleen als je daar in de cookiemelding toestemming voor geeft, plaatsen we cookies van Meta en Google Ads om onze advertenties te meten. Je kunt je keuze altijd wijzigen via "Cookie-instellingen" onderaan de website.
+- **Sollicitaties** via reviewplus.io/jobs worden via Make.com naar onze mailbox (Google Workspace) gestuurd. We gebruiken deze gegevens alleen om je sollicitatie te beoordelen en verwijderen ze uiterlijk vier weken na afloop van de sollicitatieprocedure. Met jouw toestemming bewaren we ze maximaal een jaar, voor het geval er later een passende functie vrijkomt.
 - **Bewaartermijn aanvragen**: ontstaat er geen klantrelatie, dan bewaren we gegevens uit aanvragen maximaal 24 maanden na het laatste contact.

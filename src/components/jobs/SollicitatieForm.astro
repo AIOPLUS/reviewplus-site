@@ -1,0 +1,175 @@
+---
+import { LEAD } from '@/config/site';
+import { url } from '@/lib/url';
+
+/** Sollicitatieformulier. Gaat naar hetzelfde Make-scenario als het contactformulier (request_type "sollicitatie"). */
+interface Props {
+  titel: string;
+  slug: string;
+}
+const { titel, slug } = Astro.props;
+---
+<div class="grid gap-6">
+  <form
+    class="card grid gap-5 p-6 md:p-10"
+    novalidate
+    data-sollicitatie
+    data-webhook={LEAD.webhookUrl}
+    data-turnstile={LEAD.turnstileSiteKey}
+    data-titel={titel}
+    data-slug={slug}
+  >
+    <div class="grid gap-5 sm:grid-cols-2">
+      <div class="field">
+        <label for="voornaam">Voornaam <span class="req" aria-hidden="true">*</span></label>
+        <input id="voornaam" name="voornaam" class="input" autocomplete="given-name" required />
+      </div>
+      <div class="field">
+        <label for="achternaam">Achternaam <span class="req" aria-hidden="true">*</span></label>
+        <input id="achternaam" name="achternaam" class="input" autocomplete="family-name" required />
+      </div>
+      <div class="field">
+        <label for="email">E-mailadres <span class="req" aria-hidden="true">*</span></label>
+        <input id="email" name="email" type="email" class="input" autocomplete="email" required />
+      </div>
+      <div class="field">
+        <label for="telefoon">Telefoonnummer <span class="req" aria-hidden="true">*</span></label>
+        <input id="telefoon" name="telefoon" type="tel" class="input" autocomplete="tel" required />
+      </div>
+      <div class="field">
+        <label for="woonplaats">Woonplaats</label>
+        <input id="woonplaats" name="woonplaats" class="input" autocomplete="address-level2" />
+      </div>
+      <div class="field">
+        <label for="linkedin">LinkedIn-profiel of link naar je cv</label>
+        <input id="linkedin" name="linkedin" type="url" class="input" inputmode="url" placeholder="https://" />
+      </div>
+      <div class="field sm:col-span-2">
+        <label for="bericht">Waarom wil je bij Review Plus werken? <span class="req" aria-hidden="true">*</span></label>
+        <textarea id="bericht" name="bericht" class="input min-h-[180px]" required></textarea>
+        <p class="hint">Een paar zinnen is genoeg. Je cv kun je ook later sturen: je krijgt een bevestigingsmail waarop je het als bijlage kunt terugsturen.</p>
+      </div>
+    </div>
+    <!-- Honeypot tegen spam: echte bezoekers zien dit veld niet -->
+    <div class="sr-only" aria-hidden="true">
+      <label for="website_url">Laat dit veld leeg</label>
+      <input id="website_url" name="website_url" tabindex="-1" autocomplete="off" />
+    </div>
+    <label class="check">
+      <input type="checkbox" name="akkoord" required />
+      <span>Ik ga akkoord met de <a class="text-brand-600 underline" href={url('/privacy-policy')}>privacyverklaring</a>. We gebruiken je gegevens alleen voor deze sollicitatie. <span class="req" aria-hidden="true">*</span></span>
+    </label>
+    <div data-turnstile-slot class="min-h-[65px]" hidden={!LEAD.turnstileSiteKey}></div>
+    <p class="error" data-form-error hidden role="alert"></p>
+    <button type="submit" class="btn btn-primary btn-lg w-full sm:w-fit">Verstuur sollicitatie</button>
+  </form>
+
+  <div class="soft-card grid justify-items-center gap-4 p-10 text-center" data-sollicitatie-success hidden tabindex="-1">
+    <span class="grid size-14 place-items-center rounded-full bg-success-bg text-2xl text-success" aria-hidden="true">✓</span>
+    <h3 class="heading-md">Bedankt voor je sollicitatie!</h3>
+    <p class="text-ink-soft">We hebben je sollicitatie ontvangen en sturen je een bevestiging per e-mail. Heb je een cv? Antwoord dan op die mail en stuur het als bijlage mee.</p>
+  </div>
+</div>
+
+<script>
+  import { track } from '@/lib/client/analytics';
+  import { validateEmail } from '@/lib/validation';
+
+  const form = document.querySelector<HTMLFormElement>('[data-sollicitatie]');
+  if (form) {
+    const webhook = form.dataset.webhook ?? '';
+    const siteKey = form.dataset.turnstile ?? '';
+    const errorBox = form.querySelector<HTMLElement>('[data-form-error]')!;
+    const submit = form.querySelector<HTMLButtonElement>('button[type=submit]')!;
+    let widgetId: string | undefined;
+
+    // Turnstile pas laden zodra iemand het formulier gebruikt.
+    const loadTurnstile = () => {
+      const slot = form.querySelector('[data-turnstile-slot]');
+      if (!siteKey || !slot || widgetId !== undefined || document.querySelector('script[data-ts]')) return;
+      const s = document.createElement('script');
+      s.src = 'https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit';
+      s.async = true;
+      s.dataset.ts = '';
+      s.onload = () => { widgetId = window.turnstile?.render(slot, { sitekey: siteKey, language: 'nl', appearance: 'interaction-only', action: 'sollicitatie' }); };
+      document.head.appendChild(s);
+    };
+    form.addEventListener('focusin', loadTurnstile, { once: true });
+
+    const field = (name: string) => form.elements.namedItem(name) as HTMLInputElement;
+    const val = (name: string) => field(name)?.value.trim() ?? '';
+    const fail = (message: string, focus?: HTMLElement) => {
+      errorBox.textContent = message;
+      errorBox.hidden = false;
+      focus?.focus();
+    };
+    const invalid = (name: string, message: string) => {
+      field(name).setAttribute('aria-invalid', 'true');
+      fail(message, field(name));
+    };
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      errorBox.hidden = true;
+      form.querySelectorAll('[aria-invalid]').forEach((el) => el.removeAttribute('aria-invalid'));
+
+      for (const name of ['voornaam', 'achternaam']) {
+        if (!val(name)) return invalid(name, 'Vul alle verplichte velden in.');
+      }
+      const email = validateEmail(val('email'));
+      if (!email.ok) return invalid('email', email.error ?? 'Vul een geldig e-mailadres in.');
+      if (val('telefoon').replace(/\D/g, '').length < 9) return invalid('telefoon', 'Vul een geldig telefoonnummer in.');
+      let linkedin = val('linkedin');
+      if (linkedin && !/^https?:\/\//i.test(linkedin)) linkedin = `https://${linkedin}`;
+      if (linkedin && !URL.canParse(linkedin)) return invalid('linkedin', 'Vul een geldige link in, bijvoorbeeld https://www.linkedin.com/in/jouwnaam.');
+      if (!val('bericht')) return invalid('bericht', 'Vertel in een paar zinnen waarom je bij ons wilt werken.');
+      if (!(field('akkoord') as HTMLInputElement).checked) return fail('Ga akkoord met de privacyverklaring.', field('akkoord'));
+      if (val('website_url')) return; // honeypot
+      if (!webhook) return fail('Het formulier is nog niet gekoppeld. Mail je sollicitatie naar support@reviewplus.io.');
+
+      submit.disabled = true;
+      submit.textContent = 'Bezig met versturen…';
+      try {
+        let token: string | null = null;
+        if (siteKey) {
+          loadTurnstile();
+          for (let i = 0; i < 24 && !token; i++) {
+            token = window.turnstile?.getResponse(widgetId) || null;
+            if (!token) await new Promise((r) => setTimeout(r, 250));
+          }
+          if (!token) throw new Error('turnstile');
+        }
+        const res = await fetch(webhook, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            request_type: 'sollicitatie',
+            lead_source: 'site',
+            submitted_at: new Date().toISOString(),
+            pagina: location.href,
+            vacature: { titel: form.dataset.titel, slug: form.dataset.slug },
+            contact: { voornaam: val('voornaam'), achternaam: val('achternaam'), email: email.value, telefoon: val('telefoon') },
+            woonplaats: val('woonplaats'),
+            linkedin,
+            bericht: val('bericht'),
+            turnstile_token: token,
+          }),
+        });
+        if (!res.ok) throw new Error(String(res.status));
+        track('sollicitatie_verzonden', { vacature: form.dataset.slug ?? '' });
+        form.hidden = true;
+        const success = document.querySelector<HTMLElement>('[data-sollicitatie-success]')!;
+        success.hidden = false;
+        success.focus();
+      } catch (err) {
+        window.turnstile?.reset(widgetId);
+        fail(err instanceof Error && err.message === 'turnstile'
+          ? 'De beveiligingscontrole is nog niet klaar. Wacht een paar seconden en probeer het opnieuw.'
+          : 'Versturen is niet gelukt. Probeer het opnieuw of mail je sollicitatie naar support@reviewplus.io.');
+      } finally {
+        submit.disabled = false;
+        submit.textContent = 'Verstuur sollicitatie';
+      }
+    });
+  }
+</script>

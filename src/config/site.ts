@@ -11,6 +11,8 @@ function normBase(raw: string | undefined): string {
 export const SITE_URL = (env.SITE_URL || 'https://reviewplus.io').replace(/\/+$/, '');
 /** "/" op reviewplus.io, "/reviewplus-site" op de testversie (GitHub Pages zonder eigen domein). */
 export const BASE_PATH = normBase(env.BASE_PATH);
+/** Concepten (vacatures met `concept: true`) zijn alleen zichtbaar op de testversie, nooit op reviewplus.io. */
+export const TOON_CONCEPTEN = BASE_PATH !== '/';
 
 export const DEMO_BOOKING_URL = brand.demoBookingUrl;
 export const LOGIN_URL = brand.appLoginUrl;

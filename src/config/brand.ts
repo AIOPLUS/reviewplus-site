@@ -38,6 +38,7 @@ export const footerNav = [
       { label: 'Over ons', href: '/about' },
       { label: 'Contact', href: '/contact' },
       { label: 'Kennisbank', href: '/articles' },
+      { label: 'Vacatures', href: '/jobs' },
     ],
   },
   {

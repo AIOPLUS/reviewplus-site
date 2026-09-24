@@ -1,0 +1,92 @@
+---
+import { render } from 'astro:content';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import SollicitatieForm from '@/components/jobs/SollicitatieForm.astro';
+import { brand } from '@/config/brand';
+import { breadcrumbSchema } from '@/lib/schema';
+import { url } from '@/lib/url';
+import { vacatures, kenmerken, jobPostingSchema, type Vacature } from '@/lib/jobs';
+
+export async function getStaticPaths() {
+  return (await vacatures()).map((v) => ({ params: { slug: v.id }, props: { vacature: v } }));
+}
+
+interface Props {
+  vacature: Vacature;
+}
+const { vacature } = Astro.props;
+const { Content } = await render(vacature);
+const d = vacature.data;
+const path = `/jobs/${vacature.id}`;
+const lijst = kenmerken(vacature);
+const datum = (x: Date) => x.toLocaleDateString('nl-NL', { day: 'numeric', month: 'long', year: 'numeric' });
+---
+<BaseLayout
+  title={`Vacature ${d.titel} | Werken bij Review Plus`}
+  description={d.samenvatting}
+  path={path}
+  page="vacature"
+  noindex={d.concept || d.gesloten}
+  schemas={[
+    jobPostingSchema(vacature, vacature.rendered?.html ?? d.samenvatting),
+    breadcrumbSchema([{ name: 'Home', path: '/' }, { name: 'Vacatures', path: '/jobs' }, { name: d.titel, path }]),
+  ]}
+>
+  <article class="container-rp pt-[140px] lg:pt-[200px]">
+    <header class="mx-auto grid max-w-[1080px] gap-5">
+      <a href={url('/jobs')} class="w-fit text-sm text-brand-600 hover:underline">← Alle vacatures</a>
+      {d.concept && (
+        <p class="rounded-[var(--radius-card)] bg-amber-100 px-4 py-3 text-sm text-amber-900">
+          <strong>Concept.</strong> Deze vacature is alleen zichtbaar op de testversie. Zet <code>concept: false</code> in het bestand om hem te publiceren.
+        </p>
+      )}
+      <p class="eyebrow w-fit">{d.afdeling}</p>
+      <h1 class="display">{d.titel}</h1>
+      <p class="lead max-w-[760px] text-ink-soft">{d.samenvatting}</p>
+      {!d.gesloten && <a href="#solliciteren" class="btn btn-primary btn-lg w-fit">Solliciteer direct</a>}
+    </header>
+
+    <div class="mx-auto mt-12 grid max-w-[1080px] gap-10 lg:grid-cols-[1fr_320px] lg:gap-16">
+      <div class="prose-rp">
+        <Content />
+      </div>
+      <aside class="grid content-start gap-4 lg:sticky lg:top-[120px] lg:self-start">
+        <div class="soft-card grid gap-4 p-6">
+          <p class="font-medium text-ink">In het kort</p>
+          <dl class="grid gap-3 text-sm">
+            {lijst.map((k) => (
+              <div class="grid gap-0.5">
+                <dt class="text-muted">{k.label}</dt>
+                <dd class="text-ink">{k.waarde}</dd>
+              </div>
+            ))}
+          </dl>
+          <p class="text-xs text-muted">Geplaatst op <time datetime={d.datum.toISOString()}>{datum(d.datum)}</time></p>
+        </div>
+        <div class="soft-card grid gap-2 p-6">
+          <p class="font-medium text-ink">Vragen over deze vacature?</p>
+          <p class="body-muted">Mail naar <a href={`mailto:${brand.email}?subject=${encodeURIComponent(`Vraag over de vacature ${d.titel}`)}`} class="text-brand-600 underline">{brand.email}</a>.</p>
+        </div>
+      </aside>
+    </div>
+  </article>
+
+  <section id="solliciteren" class="scroll-mt-[120px] py-16 lg:py-24" aria-labelledby="solliciteren-title">
+    <div class="container-rp mx-auto grid max-w-[1080px] gap-8">
+      {d.gesloten ? (
+        <div class="soft-card grid gap-3 p-8 text-center">
+          <h2 id="solliciteren-title" class="heading-md">Deze vacature is gesloten</h2>
+          <p class="text-ink-soft">Bekijk onze <a href={url('/jobs')} class="text-brand-600 underline">andere vacatures</a> of stuur een open sollicitatie naar <a href={`mailto:${brand.email}`} class="text-brand-600 underline">{brand.email}</a>.</p>
+        </div>
+      ) : (
+        <>
+          <div class="grid gap-3 text-center">
+            <h2 id="solliciteren-title" class="heading-lg">Solliciteer als {d.titel.toLowerCase()}</h2>
+            <p class="text-ink-soft">Vul het formulier in. Je hoort zo snel mogelijk van ons.</p>
+          </div>
+          <SollicitatieForm titel={d.titel} slug={vacature.id} />
+        </>
+      )}
+    </div>
+  </section>
+</BaseLayout>
