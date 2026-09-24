@@ -72,11 +72,11 @@ const pijlers = [
   <section class="py-16 lg:py-24" aria-labelledby="branches-title">
     <div class="container-rp">
       <SectionHeader id="branches-title" eyebrow="Voor wie" line1="Gemaakt voor" line2="lokale ondernemers" class="reveal" />
-      <ul class="mt-14 grid gap-4 sm:grid-cols-2 lg:mt-20 lg:grid-cols-3">
+      <ul class="mt-14 grid gap-4 sm:grid-cols-2 lg:mt-20 lg:grid-cols-5">
         {sectors.map((s) => (
           <li class="reveal">
-            <a href={url(`/voor/${s.data.slug}`)} class="group relative isolate flex h-[220px] items-end overflow-hidden rounded-[var(--radius-panel)] p-6 text-white">
-              <Image src={img(s.data.foto)} alt="" widths={[420, 840]} sizes="(min-width: 1200px) 420px, 50vw" class="absolute inset-0 -z-10 size-full object-cover transition-transform duration-500 group-hover:scale-105" />
+            <a href={url(`/voor/${s.data.slug}`)} class="group relative isolate flex h-[240px] items-end overflow-hidden rounded-[var(--radius-panel)] p-5 text-white">
+              <Image src={img(s.data.foto)} alt="" widths={[420, 840]} sizes="(min-width: 1200px) 260px, 50vw" class="absolute inset-0 -z-10 size-full object-cover transition-transform duration-500 group-hover:scale-105" />
               <span class="absolute inset-0 -z-10 bg-gradient-to-t from-brand-900/80 via-brand-900/20 to-transparent" aria-hidden="true"></span>
               <span class="grid gap-1">
                 <span class="text-xl font-medium">{s.data.naam}</span>

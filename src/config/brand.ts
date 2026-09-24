@@ -61,6 +61,7 @@ export const footerNav = [
       { label: 'Zorg', href: '/voor/zorg' },
       { label: 'Sportscholen', href: '/voor/sportscholen' },
       { label: 'Vrije tijd & beleving', href: '/voor/vrije-tijd' },
+      { label: 'Franchiseketens', href: '/voor/franchise' },
     ],
   },
   {

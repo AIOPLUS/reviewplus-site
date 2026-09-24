@@ -66,6 +66,7 @@ Eigen beelden van de Framer-site staan in `src/assets/img/`. Deze branchefoto's 
 | `foto-winkel.jpg` | https://unsplash.com/photos/woman-leaning-on-pink-desk-IxgPCAUSaOM |
 | `foto-zorg.jpg` | https://unsplash.com/photos/man-in-white-dress-shirt-sitting-on-black-office-rolling-chair-QA9fRIi6sFw |
 | `foto-sportschool.jpg` | https://unsplash.com/photos/a-man-and-woman-exercising-wSUlQl8HPYc |
+| `foto-franchise.jpg` | https://unsplash.com/photos/two-grocery-store-employees-smiling-at-the-camera-2oBnIuO9wv4 |
 | `foto-vrije-tijd.jpg` | https://images.unsplash.com/photo-1558271697-dd9f331ca8b3 (arcadekasten) |
 
 ## Nog te doen (Jordan)
