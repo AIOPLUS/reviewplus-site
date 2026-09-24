@@ -1,14 +1,15 @@
 ---
-# TODO Jordan: controleer uren, plaats (standplaats), salaris en start. Zet daarna concept op false.
+# TODO Jordan: vul de [Invullen]-stukken aan en controleer uren en start. Zet daarna concept op false.
 titel: Customer success medewerker
 samenvatting: Je zorgt dat nieuwe klanten snel op gang komen met Review Plus en dat bestaande klanten er het maximale uit halen. Het aanspreekpunt voor al onze klanten.
 afdeling: Customer success
 dienstverband: [fulltime, parttime]
 uren: 24 tot 40 uur per week
 werkplek: hybride
-plaats: "[Invullen: standplaats]"
+plaats: Rotterdam
+regio: Zuid-Holland
 land: NL
-# salaris: { min: 2600, max: 3400, per: maand }
+salarisTekst: Passend bij kennis en ervaring
 start: In overleg
 datum: 2026-09-25
 geldigTot: 2026-12-31
@@ -38,7 +39,7 @@ Een klant die net start met Review Plus wil maar één ding: zo snel mogelijk me
 
 ## Wat bieden wij?
 
-- Een salaris dat past bij je ervaring.
+- Een salaris dat past bij je kennis en ervaring.
 - Een zelfstandige rol met veel contact met ondernemers uit allerlei branches.
 - Een klein team met korte lijnen, waar jouw ideeën direct het verschil maken.
 - **[Invullen: vakantiedagen, pensioen, reiskosten, laptop en telefoon, thuiswerkdagen]**

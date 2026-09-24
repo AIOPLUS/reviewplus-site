@@ -1,14 +1,15 @@
 ---
-# TODO Jordan: controleer uren, plaats (standplaats), salaris en start. Zet daarna concept op false.
+# TODO Jordan: vul de [Invullen]-stukken aan en controleer uren en start. Zet daarna concept op false.
 titel: Marketing & content medewerker
 samenvatting: Je vertelt het verhaal van Review Plus. Met artikelen, social media en campagnes zorg je dat ondernemers ons vinden en ontdekken hoe ze meer reviews krijgen.
 afdeling: Marketing
 dienstverband: [fulltime, parttime]
 uren: 24 tot 40 uur per week
 werkplek: hybride
-plaats: "[Invullen: standplaats]"
+plaats: Rotterdam
+regio: Zuid-Holland
 land: NL
-# salaris: { min: 2800, max: 3600, per: maand }
+salarisTekst: Passend bij kennis en ervaring
 start: In overleg
 datum: 2026-09-25
 geldigTot: 2026-12-31
@@ -38,7 +39,7 @@ Ondernemers weten vaak niet hoeveel klanten ze mislopen door te weinig reviews. 
 
 ## Wat bieden wij?
 
-- Een salaris dat past bij je ervaring.
+- Een salaris dat past bij je kennis en ervaring.
 - Veel vrijheid om je eigen ideeën uit te voeren.
 - Een klein team met korte lijnen, waar je direct ziet wat jouw werk oplevert.
 - **[Invullen: vakantiedagen, pensioen, reiskosten, laptop en telefoon, thuiswerkdagen, opleidingsbudget]**

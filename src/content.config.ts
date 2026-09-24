@@ -73,6 +73,8 @@ const jobs = defineCollection({
     land: z.enum(['NL', 'BE']).default('NL'),
     /** Brutosalaris in euro's; laat weg als je dat (nog) niet wilt noemen. */
     salaris: z.object({ min: z.number(), max: z.number().optional(), per: z.enum(['uur', 'maand', 'jaar']) }).optional(),
+    /** Tekst als je geen bedragen noemt, bv. "Passend bij kennis en ervaring". */
+    salarisTekst: z.string().optional(),
     start: z.string().optional(),
     datum: z.coerce.date(),
     /** Tot wanneer de vacature openstaat (ook voor Google for Jobs). */

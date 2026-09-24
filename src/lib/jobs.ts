@@ -20,7 +20,7 @@ export function dienstverband(v: Vacature): string {
 
 export function salaris(v: Vacature): string | null {
   const s = v.data.salaris;
-  if (!s) return null;
+  if (!s) return v.data.salarisTekst ?? null;
   return `${euro(s.min)}${s.max ? ` – ${euro(s.max)}` : ''} bruto per ${s.per}`;
 }
 

@@ -1,14 +1,15 @@
 ---
-# TODO Jordan: controleer uren, plaats (standplaats), salaris en start. Zet daarna concept op false.
+# TODO Jordan: vul de [Invullen]-stukken aan en controleer uren en start. Zet daarna concept op false.
 titel: Accountmanager
 samenvatting: Je helpt ondernemers ontdekken hoe ze met Review Plus meer en betere reviews krijgen. Van eerste gesprek en demo tot een tevreden nieuwe klant.
 afdeling: Sales
 dienstverband: [fulltime, parttime]
 uren: 32 tot 40 uur per week
 werkplek: hybride
-plaats: "[Invullen: standplaats]"
+plaats: Rotterdam
+regio: Zuid-Holland
 land: NL
-# salaris: { min: 3000, max: 4000, per: maand }
+salarisTekst: Passend bij kennis en ervaring
 start: In overleg
 datum: 2026-09-25
 geldigTot: 2026-12-31
@@ -37,7 +38,7 @@ Elke dag vragen ondernemers een gratis NFC-kaartenset aan in onze shop of planne
 
 ## Wat bieden wij?
 
-- Een salaris dat past bij je ervaring.
+- Een salaris dat past bij je kennis en ervaring.
 - Veel vrijheid en verantwoordelijkheid in een klein team met korte lijnen.
 - Een product waar ondernemers direct resultaat van zien.
 - **[Invullen: provisie of bonus, vakantiedagen, pensioen, reiskosten, laptop en telefoon, thuiswerkdagen]**
