@@ -199,7 +199,7 @@ import { url } from '@/lib/url';
       } catch (err) {
         window.turnstile?.reset(widgetId);
         fail(err instanceof Error && err.message === 'turnstile'
-          ? 'De beveiligingscontrole is nog niet klaar. Wacht een paar seconden en probeer het opnieuw.'
+          ? 'De beveiligingscontrole is nog niet afgerond. Staat er een vakje "Ik ben geen robot"? Vink het aan en klik daarna opnieuw op versturen.'
           : 'Versturen is niet gelukt. Probeer het opnieuw of mail naar support@reviewplus.io.');
       } finally {
         submit.disabled = false;
