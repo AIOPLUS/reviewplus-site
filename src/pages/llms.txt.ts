@@ -23,6 +23,7 @@ export const GET: APIRoute = async () => {
     '## Pagina\'s',
     `- [Het product](${absoluteUrl('/features')})`,
     `- [Prijzen](${absoluteUrl('/plans')})`,
+    `- [Plan direct online afsluiten](${absoluteUrl('/aanmelden')})`,
     `- [Over ons](${absoluteUrl('/about')})`,
     `- [Contact](${absoluteUrl('/contact')})`,
     ...sectors.map((s) => `- [Review Plus voor ${s.data.naam.toLowerCase()}](${absoluteUrl(`/voor/${s.data.slug}`)}): ${s.data.samenvatting}`),

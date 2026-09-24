@@ -19,7 +19,7 @@ export default defineConfig({
   output: 'static',
   integrations: [
     sitemap({
-      filter: (page) => !/\/(bedankt|404)(\.html)?$/.test(page),
+      filter: (page) => !/\/(bedankt|welkom|404)(\.html)?$/.test(page),
     }),
   ],
   image: { responsiveStyles: true },

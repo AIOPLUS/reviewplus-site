@@ -9,6 +9,14 @@ export const brand = {
   appLoginUrl: 'https://app.reviewplus.io/login',
   demoBookingUrl:
     'https://cloud.teamleader.eu/review-plus/bookings/u/review1/t/demonstratie-met-review-plus-2/',
+  /**
+   * Teamleader-bookinglink voor de onboarding na het afsluiten van een plan.
+   * TODO Jordan: maak in Teamleader Bookings een afspraaksoort "Onboarding Review Plus" en zet de link hier.
+   * Gebruik niet de demolink: het dagelijkse Make-scenario koppelt demo-afspraken aan shop-aanvragen.
+   * Leeg = geen boekknop; we laten dan weten dat we zelf contact opnemen.
+   */
+  onboardingBookingUrl: '',
+  appForgotPasswordUrl: 'https://app.reviewplus.io/forgot-password',
   email: 'support@reviewplus.io',
   /** Rasterlogo voor schema.org/Google (min. 112px). Icoon zelf: components/layout/Logo.astro */
   logo: '/assets/brand/logo-512.png',

@@ -1,0 +1,74 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import PageHero from '@/components/sections/PageHero.astro';
+import { brand } from '@/config/brand';
+
+/** Bedankpagina na het afsluiten van een plan (/aanmelden). Niet in de sitemap, niet geïndexeerd. */
+const onboarding = brand.onboardingBookingUrl as string;
+---
+<BaseLayout
+  title="Welkom bij Review Plus"
+  description="Je plan is afgesloten. Dit zijn de volgende stappen."
+  path="/welkom"
+  page="welkom"
+  noindex
+>
+  <PageHero line1="Welkom bij" line2="Review Plus" text="Je plan is afgesloten. Je ontvangt binnen een paar minuten een bevestiging per e-mail." compact />
+
+  <section class="pb-16 lg:pb-24">
+    <div class="container-rp mx-auto grid max-w-[860px] gap-6">
+      <div class="soft-card grid gap-3 p-6" data-welkom-samenvatting hidden>
+        <p class="font-medium text-ink">Je plan</p>
+        <p class="text-ink-soft" data-welkom-tekst></p>
+      </div>
+
+      <ol class="grid gap-4">
+        <li class="card grid gap-2 p-6 md:p-8">
+          <p class="eyebrow w-fit">Stap 1</p>
+          <h2 class="title">Check je mailbox</h2>
+          <p class="body-muted">In de bevestigingsmail staan je plan, je akkoord op de algemene voorwaarden en de volgende stappen. Niets ontvangen? Kijk ook in je spamfolder of mail naar <a class="text-brand-600 underline" href={`mailto:${brand.email}`}>{brand.email}</a>.</p>
+        </li>
+        <li class="card grid gap-2 p-6 md:p-8">
+          <p class="eyebrow w-fit">Stap 2</p>
+          <h2 class="title">Log in op je account</h2>
+          <p class="body-muted">We maken je account op app.reviewplus.io automatisch aan met het e-mailadres dat je hebt opgegeven. Stel je wachtwoord in via "Wachtwoord vergeten" en je kunt direct aan de slag. Je ontvangt ook een aparte mail om je Google-bedrijfsprofiel met één klik te koppelen.</p>
+          <a href={brand.appForgotPasswordUrl} class="btn btn-soft mt-2 w-fit">Wachtwoord instellen</a>
+        </li>
+        <li class="card grid gap-2 p-6 md:p-8">
+          <p class="eyebrow w-fit">Stap 3</p>
+          <h2 class="title">Plan je onboarding</h2>
+          {onboarding ? (
+            <>
+              <p class="body-muted">In een korte onboarding zetten we samen alles goed op: je reviewcampagnes, je NFC-kaarten en de AI-reacties.</p>
+              <a href={onboarding} target="_blank" rel="noopener" class="btn btn-primary mt-2 w-fit">Plan je onboarding<span class="sr-only"> (opent in een nieuw tabblad)</span></a>
+            </>
+          ) : (
+            <p class="body-muted">In een korte onboarding zetten we samen alles goed op: je reviewcampagnes, je NFC-kaarten en de AI-reacties. We nemen binnen één werkdag contact met je op om een moment te plannen.</p>
+          )}
+        </li>
+        <li class="card grid gap-2 p-6 md:p-8">
+          <p class="eyebrow w-fit">Stap 4</p>
+          <h2 class="title">Je welkomstpakket komt eraan</h2>
+          <p class="body-muted">We versturen je gratis NFC-kaarten en totems naar het adres dat je hebt opgegeven. De eerste factuur ontvang je per e-mail.</p>
+        </li>
+      </ol>
+    </div>
+  </section>
+</BaseLayout>
+
+<script>
+  try {
+    const raw = sessionStorage.getItem('rp_abonnement');
+    const ref = new URLSearchParams(location.search).get('ref');
+    const d = raw ? (JSON.parse(raw) as { ref: string; naam: string; facturering: string; perMaand: number; perFactuur: number; pakket: string; email: string; voornaam: string }) : null;
+    if (d && d.ref === ref) {
+      const euro = (n: number) => `€ ${n.toLocaleString('nl-NL', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+      const box = document.querySelector<HTMLElement>('[data-welkom-samenvatting]')!;
+      box.querySelector('[data-welkom-tekst]')!.textContent =
+        `${d.naam}, ${euro(d.perMaand)} per maand excl. btw (${d.facturering === 'jaar' ? `jaarlijks gefactureerd: ${euro(d.perFactuur)} per jaar` : 'maandelijks gefactureerd'}), inclusief gratis welkomstpakket: ${d.pakket}. Bevestiging verstuurd naar ${d.email}. Referentie: ${d.ref}.`;
+      box.hidden = false;
+    }
+  } catch {
+    /* geen samenvatting, geen probleem */
+  }
+</script>

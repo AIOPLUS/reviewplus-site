@@ -1,0 +1,382 @@
+---
+import { getEntry } from 'astro:content';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import PageHero from '@/components/sections/PageHero.astro';
+import { DEMO_BOOKING_URL, LEAD } from '@/config/site';
+import { plannen } from '@/config/content';
+import { breadcrumbSchema } from '@/lib/schema';
+import { url } from '@/lib/url';
+
+/** Online een plan afsluiten. Gaat naar het Make-scenario (request_type "abonnement"); Make rekent de prijs zelf opnieuw uit. */
+const voorwaarden = await getEntry('legal', 'algemene-voorwaarden');
+const avVersie = voorwaarden?.data.ingangsdatum ?? '';
+const standaard = plannen.find((p) => p.uitgelicht) ?? plannen[0];
+---
+<BaseLayout
+  title="Plan afsluiten | Review Plus"
+  description="Sluit direct online je Review Plus Online-abonnement af. Kies 1, 2 of 3 jaar, maandelijkse of jaarlijkse facturering, en ontvang een gratis welkomstpakket met NFC-kaarten en totems."
+  path="/aanmelden"
+  page="aanmelden"
+  schemas={[breadcrumbSchema([{ name: 'Home', path: '/' }, { name: 'Prijzen', path: '/plans' }, { name: 'Plan afsluiten', path: '/aanmelden' }])]}
+>
+  <PageHero line1="Plan" line2="afsluiten" text="Kies je plan, vul je bedrijfsgegevens in en ga direct van start. Je ontvangt meteen een bevestiging per e-mail." compact />
+
+  <section class="pb-16 lg:pb-24" aria-label="Aanmeldformulier">
+    <form
+      class="container-rp grid items-start gap-8 lg:grid-cols-[1fr_380px]"
+      novalidate
+      data-aanmelden
+      data-webhook={LEAD.webhookUrl}
+      data-turnstile={LEAD.turnstileSiteKey}
+      data-av-versie={avVersie}
+      data-plannen={JSON.stringify(plannen.map((p) => ({ id: p.id, naam: p.naam, looptijd: p.looptijd, maanden: p.maanden, maand: p.maand, jaar: p.jaar, pakket: p.pakket })))}
+    >
+      <div class="grid gap-6">
+        <!-- 1. Plan -->
+        <fieldset class="card grid gap-5 p-6 md:p-8">
+          <legend class="sr-only">Kies je plan</legend>
+          <h2 class="title" aria-hidden="true"><span class="text-brand-600">1.</span> Kies je plan</h2>
+          <div class="grid gap-3 md:grid-cols-3">
+            {plannen.map((p) => (
+              <label class="relative grid cursor-pointer gap-1 rounded-[var(--radius-card)] border border-line p-4 transition-colors hover:border-brand-400 has-checked:border-brand-600 has-checked:bg-brand-50 has-focus-visible:ring-4 has-focus-visible:ring-brand-100">
+                <input type="radio" name="plan" value={p.id} class="sr-only" checked={p.id === standaard.id} />
+                <span class="text-sm text-muted">{p.label === p.looptijd ? 'Looptijd' : p.label}</span>
+                <span class="text-lg font-medium text-ink">{p.looptijd}</span>
+                <span class="text-sm text-ink-soft">vanaf € {p.jaar} p/m</span>
+              </label>
+            ))}
+          </div>
+          <div class="grid gap-2">
+            <p class="text-sm font-medium text-ink" id="facturering-label">Facturering</p>
+            <div class="grid gap-3 sm:grid-cols-2" role="radiogroup" aria-labelledby="facturering-label">
+              <label class="flex cursor-pointer items-center gap-3 rounded-[var(--radius-card)] border border-line p-4 has-checked:border-brand-600 has-checked:bg-brand-50">
+                <input type="radio" name="facturering" value="maand" checked class="size-5 accent-[var(--color-brand-600)]" />
+                <span><span class="font-medium text-ink">Maandelijks</span><br /><span class="text-sm text-muted">Elke maand een factuur</span></span>
+              </label>
+              <label class="flex cursor-pointer items-center gap-3 rounded-[var(--radius-card)] border border-line p-4 has-checked:border-brand-600 has-checked:bg-brand-50">
+                <input type="radio" name="facturering" value="jaar" class="size-5 accent-[var(--color-brand-600)]" />
+                <span><span class="font-medium text-ink">Jaarlijks</span> <span class="rounded-full bg-pink-100 px-2 py-0.5 text-xs text-pink-800">Voordeliger</span><br /><span class="text-sm text-muted">Eén factuur per jaar, vooraf</span></span>
+              </label>
+            </div>
+          </div>
+        </fieldset>
+
+        <!-- 2. Bedrijf -->
+        <fieldset class="card grid gap-5 p-6 md:p-8">
+          <legend class="sr-only">Bedrijfsgegevens</legend>
+          <h2 class="title" aria-hidden="true"><span class="text-brand-600">2.</span> Bedrijfsgegevens</h2>
+          <div class="grid gap-5 sm:grid-cols-2">
+            <div class="field">
+              <label for="land">Land <span class="req" aria-hidden="true">*</span></label>
+              <select id="land" name="land" class="input" autocomplete="country">
+                <option value="NL">Nederland</option>
+                <option value="BE">België</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="bedrijf">Bedrijfsnaam <span class="req" aria-hidden="true">*</span></label>
+              <input id="bedrijf" name="bedrijf" class="input" autocomplete="organization" required />
+            </div>
+            <div class="field">
+              <label for="bedrijfsnummer" data-nummer-label>KvK-nummer <span class="req" aria-hidden="true">*</span></label>
+              <input id="bedrijfsnummer" name="bedrijfsnummer" class="input" inputmode="numeric" required />
+            </div>
+            <div class="field">
+              <label for="btw">Btw-nummer</label>
+              <input id="btw" name="btw" class="input" data-btw-placeholder placeholder="NL123456789B01" />
+            </div>
+            <div class="field">
+              <label for="straat">Straat <span class="req" aria-hidden="true">*</span></label>
+              <input id="straat" name="straat" class="input" autocomplete="address-line1" required />
+            </div>
+            <div class="grid grid-cols-2 gap-3">
+              <div class="field">
+                <label for="huisnummer">Huisnummer <span class="req" aria-hidden="true">*</span></label>
+                <input id="huisnummer" name="huisnummer" class="input" required />
+              </div>
+              <div class="field">
+                <label for="toevoeging">Toevoeging</label>
+                <input id="toevoeging" name="toevoeging" class="input" />
+              </div>
+            </div>
+            <div class="field">
+              <label for="postcode">Postcode <span class="req" aria-hidden="true">*</span></label>
+              <input id="postcode" name="postcode" class="input" autocomplete="postal-code" required />
+            </div>
+            <div class="field">
+              <label for="plaats">Plaats <span class="req" aria-hidden="true">*</span></label>
+              <input id="plaats" name="plaats" class="input" autocomplete="address-level2" required />
+            </div>
+            <div class="field sm:col-span-2">
+              <label for="website">Website</label>
+              <input id="website" name="website" class="input" inputmode="url" autocomplete="url" placeholder="www.jouwbedrijf.nl" />
+            </div>
+          </div>
+          <p class="hint">Op dit adres versturen we ook je gratis welkomstpakket.</p>
+        </fieldset>
+
+        <!-- 3. Contact -->
+        <fieldset class="card grid gap-5 p-6 md:p-8">
+          <legend class="sr-only">Contactpersoon</legend>
+          <h2 class="title" aria-hidden="true"><span class="text-brand-600">3.</span> Contactpersoon</h2>
+          <div class="grid gap-5 sm:grid-cols-2">
+            <div class="field">
+              <label for="voornaam">Voornaam <span class="req" aria-hidden="true">*</span></label>
+              <input id="voornaam" name="voornaam" class="input" autocomplete="given-name" required />
+            </div>
+            <div class="field">
+              <label for="achternaam">Achternaam <span class="req" aria-hidden="true">*</span></label>
+              <input id="achternaam" name="achternaam" class="input" autocomplete="family-name" required />
+            </div>
+            <div class="field">
+              <label for="functie">Functie</label>
+              <input id="functie" name="functie" class="input" autocomplete="organization-title" placeholder="Eigenaar" />
+            </div>
+            <div class="field">
+              <label for="telefoon">Telefoonnummer <span class="req" aria-hidden="true">*</span></label>
+              <input id="telefoon" name="telefoon" type="tel" class="input" autocomplete="tel" required />
+            </div>
+            <div class="field">
+              <label for="email">E-mailadres <span class="req" aria-hidden="true">*</span></label>
+              <input id="email" name="email" type="email" class="input" autocomplete="email" required aria-describedby="email-hint" />
+              <p class="hint" id="email-hint">Hiermee log je in op app.reviewplus.io.</p>
+            </div>
+            <div class="field">
+              <label for="factuur_email">E-mailadres voor facturen</label>
+              <input id="factuur_email" name="factuur_email" type="email" class="input" aria-describedby="factuur-hint" />
+              <p class="hint" id="factuur-hint">Leeg = hetzelfde e-mailadres.</p>
+            </div>
+          </div>
+        </fieldset>
+
+        <!-- 4. Akkoord -->
+        <fieldset class="card grid gap-5 p-6 md:p-8">
+          <legend class="sr-only">Akkoord</legend>
+          <h2 class="title" aria-hidden="true"><span class="text-brand-600">4.</span> Akkoord</h2>
+          <p class="text-ink-soft" data-akkoord-tekst>
+            Je sluit Review Plus Online af voor een vaste looptijd. De overeenkomst wordt daarna automatisch verlengd voor dezelfde periode, tenzij je uiterlijk 30 dagen voor het einde opzegt. Tussentijds opzeggen is niet mogelijk.
+          </p>
+          <label class="check">
+            <input type="checkbox" name="akkoord_voorwaarden" required />
+            <span>Ik ga akkoord met de <a class="text-brand-600 underline" href={url('/term-and-conditions')} target="_blank" rel="noopener">algemene voorwaarden<span class="sr-only"> (opent in een nieuw tabblad)</span></a> (versie {avVersie}) en de <a class="text-brand-600 underline" href={url('/privacy-policy')} target="_blank" rel="noopener">privacyverklaring<span class="sr-only"> (opent in een nieuw tabblad)</span></a>. <span class="req" aria-hidden="true">*</span></span>
+          </label>
+          <label class="check">
+            <input type="checkbox" name="akkoord_bevoegd" required />
+            <span>Ik ben bevoegd om namens dit bedrijf deze overeenkomst aan te gaan. <span class="req" aria-hidden="true">*</span></span>
+          </label>
+          <!-- Honeypot tegen spam: echte bezoekers zien dit veld niet -->
+          <div class="sr-only" aria-hidden="true">
+            <label for="website_url">Laat dit veld leeg</label>
+            <input id="website_url" name="website_url" tabindex="-1" autocomplete="off" />
+          </div>
+          <div data-turnstile-slot class="min-h-[65px]" hidden={!LEAD.turnstileSiteKey}></div>
+          <p class="error" data-form-error hidden role="alert"></p>
+          <button type="submit" class="btn btn-primary btn-lg w-full sm:w-fit">Akkoord en plan afsluiten</button>
+          <p class="hint">Alleen voor bedrijven. Je ontvangt de eerste factuur per e-mail, met een betaaltermijn van 14 dagen.</p>
+        </fieldset>
+      </div>
+
+      <!-- Samenvatting -->
+      <aside class="grid gap-4 lg:sticky lg:top-[110px]" aria-labelledby="samenvatting-title">
+        <div class="soft-card grid gap-4 p-6" aria-live="polite">
+          <h2 id="samenvatting-title" class="font-medium text-ink">Je plan</h2>
+          <p class="text-lg font-medium text-brand-600" data-sam="naam">{standaard.naam}</p>
+          <dl class="grid gap-3 text-sm">
+            <div class="flex justify-between gap-4"><dt class="text-muted">Looptijd</dt><dd class="text-right text-ink" data-sam="looptijd">{standaard.looptijd}</dd></div>
+            <div class="flex justify-between gap-4"><dt class="text-muted">Facturering</dt><dd class="text-right text-ink" data-sam="facturering">Maandelijks</dd></div>
+            <div class="flex justify-between gap-4"><dt class="text-muted">Prijs per maand</dt><dd class="text-right text-ink" data-sam="maandprijs">€ {standaard.maand}</dd></div>
+            <div class="flex justify-between gap-4"><dt class="text-muted" data-sam="factuurlabel">Per factuur</dt><dd class="text-right text-ink" data-sam="factuur">€ {standaard.maand}</dd></div>
+            <div class="flex justify-between gap-4 border-t border-line pt-3"><dt class="text-muted">Welkomstpakket</dt><dd class="text-right text-ink" data-sam="pakket">{standaard.pakket} (gratis)</dd></div>
+          </dl>
+          <p class="text-xs text-muted">Alle bedragen exclusief btw.</p>
+        </div>
+        <div class="soft-card grid gap-2 p-6">
+          <p class="font-medium text-ink">Eerst meer weten?</p>
+          <p class="body-muted">Plan een vrijblijvende demo of <a href={url('/contact')} class="text-brand-600 underline">stel je vraag</a>.</p>
+          <a href={DEMO_BOOKING_URL} target="_blank" rel="noopener" data-track="demo_klik" data-track-plek="aanmelden" class="btn btn-soft mt-2 w-fit">Boek een demo<span class="sr-only"> (opent in een nieuw tabblad)</span></a>
+        </div>
+      </aside>
+    </form>
+  </section>
+</BaseLayout>
+
+<script>
+  import { track } from '@/lib/client/analytics';
+  import { normalizeUrl, validateCompanyNumber, validateEmail, validatePhone, validatePostcode, validateVat, type CountryCode } from '@/lib/validation';
+  import { url } from '@/lib/url';
+
+  interface Plan { id: string; naam: string; looptijd: string; maanden: number; maand: string; jaar: string; pakket: string }
+
+  const form = document.querySelector<HTMLFormElement>('[data-aanmelden]');
+  if (form) {
+    const plannen = JSON.parse(form.dataset.plannen ?? '[]') as Plan[];
+    const webhook = form.dataset.webhook ?? '';
+    const siteKey = form.dataset.turnstile ?? '';
+    const errorBox = form.querySelector<HTMLElement>('[data-form-error]')!;
+    const submit = form.querySelector<HTMLButtonElement>('button[type=submit]')!;
+    let widgetId: string | undefined;
+
+    const field = (name: string) => form.elements.namedItem(name) as HTMLInputElement;
+    const val = (name: string) => field(name)?.value.trim() ?? '';
+    const radio = (name: string) => form.querySelector<HTMLInputElement>(`input[name="${name}"]:checked`)?.value ?? '';
+    const bedrag = (s: string) => Number(s.replace(/\./g, '').replace(',', '.'));
+    const euro = (n: number) => `€ ${n.toLocaleString('nl-NL', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+
+    // Vooraf gekozen plan en facturering vanaf de prijspagina (?plan=2-jaar&facturering=jaar)
+    const qs = new URLSearchParams(location.search);
+    const kies = (name: string, value: string | null) => {
+      const el = value ? form.querySelector<HTMLInputElement>(`input[name="${name}"][value="${CSS.escape(value)}"]`) : null;
+      if (el) el.checked = true;
+    };
+    kies('plan', qs.get('plan'));
+    kies('facturering', qs.get('facturering'));
+
+    const huidig = () => {
+      const plan = plannen.find((p) => p.id === radio('plan')) ?? plannen[0]!;
+      const facturering = radio('facturering') === 'jaar' ? 'jaar' : 'maand';
+      const perMaand = bedrag(facturering === 'jaar' ? plan.jaar : plan.maand);
+      const perFactuur = facturering === 'jaar' ? perMaand * 12 : perMaand;
+      return { plan, facturering, perMaand, perFactuur } as const;
+    };
+
+    const sam = (key: string, text: string) => {
+      const el = form.querySelector<HTMLElement>(`[data-sam="${key}"]`);
+      if (el) el.textContent = text;
+    };
+    const updateSamenvatting = () => {
+      const { plan, facturering, perMaand, perFactuur } = huidig();
+      sam('naam', plan.naam);
+      sam('looptijd', plan.looptijd);
+      sam('facturering', facturering === 'jaar' ? 'Jaarlijks, vooraf' : 'Maandelijks');
+      sam('maandprijs', euro(perMaand));
+      sam('factuurlabel', facturering === 'jaar' ? 'Per jaarfactuur' : 'Per maandfactuur');
+      sam('factuur', euro(perFactuur));
+      sam('pakket', `${plan.pakket} (gratis)`);
+      const tekst = form.querySelector<HTMLElement>('[data-akkoord-tekst]');
+      if (tekst) {
+        tekst.textContent = `Je sluit ${plan.naam} af voor een vaste looptijd van ${plan.looptijd}, voor ${euro(perMaand)} per maand exclusief btw (${facturering === 'jaar' ? `jaarlijks vooraf gefactureerd: ${euro(perFactuur)} per jaar` : 'maandelijks gefactureerd'}). De overeenkomst wordt daarna automatisch verlengd voor dezelfde periode, tenzij je uiterlijk 30 dagen voor het einde opzegt. Tussentijds opzeggen is niet mogelijk.`;
+      }
+    };
+    form.querySelectorAll('input[name="plan"], input[name="facturering"]').forEach((el) => el.addEventListener('change', updateSamenvatting));
+    updateSamenvatting();
+
+    // Land bepaalt KvK/KBO en voorbeeld btw-nummer
+    const land = () => (val('land') === 'BE' ? 'BE' : 'NL') as CountryCode;
+    const updateLand = () => {
+      const label = form.querySelector('[data-nummer-label]');
+      if (label) label.firstChild!.textContent = land() === 'NL' ? 'KvK-nummer ' : 'Ondernemingsnummer (KBO) ';
+      field('btw').placeholder = land() === 'NL' ? 'NL123456789B01' : 'BE0123456789';
+    };
+    field('land').addEventListener('change', updateLand);
+
+    // Turnstile pas laden zodra iemand het formulier invult.
+    const loadTurnstile = () => {
+      const slot = form.querySelector('[data-turnstile-slot]');
+      if (!siteKey || !slot || widgetId !== undefined || document.querySelector('script[data-ts]')) return;
+      const s = document.createElement('script');
+      s.src = 'https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit';
+      s.async = true;
+      s.dataset.ts = '';
+      s.onload = () => { widgetId = window.turnstile?.render(slot, { sitekey: siteKey, language: 'nl', appearance: 'interaction-only', action: 'abonnement' }); };
+      document.head.appendChild(s);
+    };
+    form.addEventListener('input', loadTurnstile, { once: true });
+
+    const fail = (message: string, focus?: HTMLElement) => {
+      errorBox.textContent = message;
+      errorBox.hidden = false;
+      focus?.focus();
+    };
+    const invalid = (name: string, message: string) => {
+      field(name).setAttribute('aria-invalid', 'true');
+      fail(message, field(name));
+    };
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      errorBox.hidden = true;
+      form.querySelectorAll('[aria-invalid]').forEach((el) => el.removeAttribute('aria-invalid'));
+      const c = land();
+
+      if (!val('bedrijf')) return invalid('bedrijf', 'Vul je bedrijfsnaam in.');
+      const nummer = validateCompanyNumber(c, val('bedrijfsnummer'));
+      if (!nummer.ok) return invalid('bedrijfsnummer', nummer.error!);
+      const btw = validateVat(c, val('btw'));
+      for (const [name, msg] of [['straat', 'Vul je straat in.'], ['huisnummer', 'Vul je huisnummer in.']] as const) {
+        if (!val(name)) return invalid(name, msg);
+      }
+      const postcode = validatePostcode(c, val('postcode'));
+      if (!postcode.ok) return invalid('postcode', postcode.error!);
+      if (!val('plaats')) return invalid('plaats', 'Vul je plaats in.');
+      const website = normalizeUrl(val('website'));
+      if (!website.ok) return invalid('website', website.error!);
+      for (const [name, msg] of [['voornaam', 'Vul je voornaam in.'], ['achternaam', 'Vul je achternaam in.']] as const) {
+        if (!val(name)) return invalid(name, msg);
+      }
+      const telefoon = validatePhone(c, val('telefoon'));
+      if (!telefoon.ok) return invalid('telefoon', telefoon.error!);
+      const email = validateEmail(val('email'));
+      if (!email.ok) return invalid('email', email.error!);
+      const factuurEmail = val('factuur_email') ? validateEmail(val('factuur_email')) : email;
+      if (!factuurEmail.ok) return invalid('factuur_email', factuurEmail.error!);
+      if (!(field('akkoord_voorwaarden') as HTMLInputElement).checked) return fail('Ga akkoord met de algemene voorwaarden om je plan af te sluiten.', field('akkoord_voorwaarden'));
+      if (!(field('akkoord_bevoegd') as HTMLInputElement).checked) return fail('Bevestig dat je bevoegd bent om deze overeenkomst aan te gaan.', field('akkoord_bevoegd'));
+      if (val('website_url')) return; // honeypot
+      if (!webhook) return fail('Het formulier is nog niet gekoppeld. Mail ons via support@reviewplus.io.');
+
+      const { plan, facturering, perMaand, perFactuur } = huidig();
+      const ref = `RP-${Date.now().toString(36).toUpperCase()}${Math.random().toString(36).slice(2, 5).toUpperCase()}`;
+      submit.disabled = true;
+      submit.textContent = 'Bezig met afsluiten…';
+      try {
+        let token: string | null = null;
+        if (siteKey) {
+          loadTurnstile();
+          for (let i = 0; i < 24 && !token; i++) {
+            token = window.turnstile?.getResponse(widgetId) || null;
+            if (!token) await new Promise((r) => setTimeout(r, 250));
+          }
+          if (!token) throw new Error('turnstile');
+        }
+        const res = await fetch(webhook, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            request_type: 'abonnement',
+            lead_source: 'site',
+            lead_ref: ref,
+            submitted_at: new Date().toISOString(),
+            pagina: location.href,
+            plan: { id: plan.id, facturering },
+            bedrijf: {
+              naam: val('bedrijf'),
+              land: c,
+              bedrijfsnummer_type: c === 'NL' ? 'kvk' : 'kbo',
+              bedrijfsnummer: nummer.value,
+              btw_nummer: btw.value,
+              website: website.value,
+            },
+            adres: { straat: val('straat'), huisnummer: val('huisnummer'), toevoeging: val('toevoeging'), postcode: postcode.value, plaats: val('plaats'), land: c },
+            contact: { voornaam: val('voornaam'), achternaam: val('achternaam'), functie: val('functie'), email: email.value, telefoon: telefoon.value },
+            factuur_email: factuurEmail.value,
+            akkoord: { voorwaarden: true, bevoegd: true, voorwaarden_versie: form.dataset.avVersie, tijdstip: new Date().toISOString() },
+            turnstile_token: token,
+          }),
+        });
+        if (!res.ok) throw new Error(String(res.status));
+        track('plan_afgesloten', { plan: plan.id, facturering });
+        try {
+          sessionStorage.setItem('rp_abonnement', JSON.stringify({ ref, naam: plan.naam, looptijd: plan.looptijd, facturering, perMaand, perFactuur, pakket: plan.pakket, email: email.value, voornaam: val('voornaam') }));
+        } catch { /* niet erg */ }
+        location.href = url(`/welkom?ref=${encodeURIComponent(ref)}`);
+      } catch (err) {
+        window.turnstile?.reset(widgetId);
+        submit.disabled = false;
+        submit.textContent = 'Akkoord en plan afsluiten';
+        fail(err instanceof Error && err.message === 'turnstile'
+          ? 'De beveiligingscontrole is nog niet afgerond. Staat er een vakje "Ik ben geen robot"? Vink het aan en klik daarna opnieuw op afsluiten.'
+          : 'Afsluiten is niet gelukt. Probeer het opnieuw of mail naar support@reviewplus.io.');
+      }
+    });
+  }
+</script>

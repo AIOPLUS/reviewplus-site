@@ -5,6 +5,7 @@ import Faq from '@/components/sections/Faq.astro';
 import CtaFinal from '@/components/sections/CtaFinal.astro';
 import { planKenmerken, plannen, vergelijking } from '@/config/content';
 import { breadcrumbSchema, faqSchema, softwareSchema } from '@/lib/schema';
+import { DEMO_BOOKING_URL } from '@/config/site';
 import { url } from '@/lib/url';
 
 const prijsFaq = [
@@ -59,11 +60,12 @@ const prijsFaq = [
                   </li>
                 ))}
               </ul>
-              <a href={url(`/contact?plan=${encodeURIComponent(p.looptijd)}`)} class:list={['btn mt-auto w-full', p.uitgelicht ? 'btn-primary' : 'btn-soft']} data-track="plan_klik" data-track-plek={p.looptijd}>Kies {p.looptijd}</a>
+              <a href={url(`/aanmelden?plan=${p.id}&facturering=maand`)} data-plan-link={p.id} class:list={['btn mt-auto w-full', p.uitgelicht ? 'btn-primary' : 'btn-soft']} data-track="plan_klik" data-track-plek={p.looptijd}>Kies {p.looptijd}</a>
             </div>
           </li>
         ))}
       </ul>
+      <p class="mt-8 text-center text-ink-soft">Eerst meer weten? <a href={DEMO_BOOKING_URL} target="_blank" rel="noopener" class="text-brand-600 underline" data-track="demo_klik" data-track-plek="prijzen">Boek een demo<span class="sr-only"> (opent in een nieuw tabblad)</span></a> of <a href={url('/contact')} class="text-brand-600 underline">stel je vraag</a>.</p>
     </div>
   </section>
 
@@ -130,6 +132,11 @@ const prijsFaq = [
     });
     document.querySelectorAll<HTMLElement>('[data-facturering]').forEach((el) => {
       el.textContent = mode === 'maand' ? 'maandelijkse' : 'jaarlijkse';
+    });
+    document.querySelectorAll<HTMLAnchorElement>('[data-plan-link]').forEach((a) => {
+      const u = new URL(a.href);
+      u.searchParams.set('facturering', mode);
+      a.href = u.toString();
     });
   };
   options.forEach((o) => o.addEventListener('click', () => setBilling(o.dataset.billingOption as 'maand' | 'jaar')));

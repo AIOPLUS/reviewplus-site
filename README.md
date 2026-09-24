@@ -12,6 +12,7 @@ De hoofdsite van Review Plus, nagebouwd van de Framer-site (Fizens-template) in 
 | `/about` (Over ons) | `src/pages/about.astro` |
 | `/contact` | `src/pages/contact.astro` |
 | `/articles` (Kennisbank) | `src/pages/articles/` + `src/content/articles/*.md` |
+| `/aanmelden` (Plan afsluiten) + `/welkom` | `src/pages/aanmelden.astro`, `src/pages/welkom.astro` |
 | `/jobs` (Vacatures) | `src/pages/jobs/` + `src/content/jobs/*.md` |
 | `/voor/<branche>` | `src/pages/voor/[sector].astro` + `src/content/sectors/*.md` |
 | `/privacy-policy`, `/term-and-conditions` | `src/content/legal/*.md` |
@@ -34,6 +35,15 @@ De URL's zijn gelijk aan de Framer-site, zodat posities in Google behouden blijv
 - Gepubliceerde, open vacatures krijgen automatisch JobPosting-gegevens voor Google for Jobs (standplaats Rotterdam, hybride). Salaris: `salarisTekst` (nu "Passend bij kennis en ervaring") of bedragen via `salaris`; alleen bedragen gaan mee naar Google.
 - Sollicitaties gaan via het formulier naar het Make-scenario (`request_type: sollicitatie`). Je krijgt een mail op support@ waarop je direct de kandidaat antwoordt. De kandidaat krijgt een bevestiging en kan daarop zijn cv als bijlage terugsturen.
 - Bewaartermijn: verwijder sollicitaties uiterlijk 4 weken na afloop van de procedure, of maximaal 1 jaar als de kandidaat daar toestemming voor geeft (staat ook in de privacyverklaring).
+
+## Plan online afsluiten (`/aanmelden`)
+
+- De knoppen op `/plans` gaan naar `/aanmelden?plan=<1-jaar|2-jaar|3-jaar>&facturering=<maand|jaar>`.
+- De klant kiest plan en facturering, vult bedrijfs- en contactgegevens in en geeft akkoord op de algemene voorwaarden (de versie = `ingangsdatum` in `src/content/legal/algemene-voorwaarden.md`) en op zijn bevoegdheid.
+- Het formulier gaat naar het Make-scenario (`request_type: abonnement`, route 5d). Make rekent de prijs zelf opnieuw uit: **wijzig je prijzen in `src/config/content.ts`, pas ze dan ook aan in Make (module 121)**.
+- Make maakt bedrijf, contact en een deal in fase "Offerte Getekend" aan in Teamleader, met taken voor de eerste factuur en het welkomstpakket, maakt het account op app.reviewplus.io aan (EmbedMyReviews Agency API) en stuurt een mail aan jou en een bevestiging aan de klant.
+- Account aanmaken werkt pas als in de Make-datastore `shop_data` de records `config:emr_token` (Agency API-token, veld `waarde`) en `config:emr_plan` (ID van het plan in EmbedMyReviews) bestaan. Zonder die records meldt de mail aan jou dat het account handmatig moet.
+- Onboarding-afspraak: zet de Teamleader-bookinglink in `brand.onboardingBookingUrl` (`src/config/brand.ts`). Leeg = "we nemen contact op".
 
 ## Lokaal
 

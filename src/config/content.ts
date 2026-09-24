@@ -84,11 +84,14 @@ export const faq = [
   },
 ] as const;
 
-/** Abonnementen (excl. btw). Prijzen per maand bij maandelijkse of jaarlijkse facturering, zoals op de huidige site. */
+/**
+ * Plannen. Prijzen per maand excl. btw: `maand` bij maandelijkse, `jaar` bij jaarlijkse facturering.
+ * LET OP: de prijzen staan ook in het Make-scenario (route "Abonnement afgesloten"). Wijzig ze daar ook.
+ */
 export const plannen = [
-  { looptijd: '1 jaar', naam: 'Review Plus Online (1 jaar)', label: '1 jaar', maand: '149,95', jaar: '79,95', pakket: '5 NFC-kaarten & 3 NFC-totems', pakketKort: '5 kaarten + 3 totems', support: 'Standaard', uitgelicht: false },
-  { looptijd: '2 jaar', naam: 'Review Plus Online (2 jaar)', label: 'Populair', maand: '124,95', jaar: '69,95', pakket: '10 NFC-kaarten & 5 NFC-totems', pakketKort: '10 kaarten + 5 totems', support: 'Prioriteit', uitgelicht: true },
-  { looptijd: '3 jaar', naam: 'Review Plus Online (3 jaar)', label: 'Beste keuze', maand: '99,95', jaar: '59,95', pakket: '15 NFC-kaarten & 7 NFC-totems', pakketKort: '15 kaarten + 7 totems', support: 'Prioriteit', uitgelicht: false },
+  { id: '1-jaar', maanden: 12, looptijd: '1 jaar', naam: 'Review Plus Online (1 jaar)', label: '1 jaar', maand: '149,95', jaar: '79,95', pakket: '5 NFC-kaarten & 3 NFC-totems', pakketKort: '5 kaarten + 3 totems', support: 'Standaard', uitgelicht: false },
+  { id: '2-jaar', maanden: 24, looptijd: '2 jaar', naam: 'Review Plus Online (2 jaar)', label: 'Populair', maand: '124,95', jaar: '69,95', pakket: '10 NFC-kaarten & 5 NFC-totems', pakketKort: '10 kaarten + 5 totems', support: 'Prioriteit', uitgelicht: true },
+  { id: '3-jaar', maanden: 36, looptijd: '3 jaar', naam: 'Review Plus Online (3 jaar)', label: 'Beste keuze', maand: '99,95', jaar: '59,95', pakket: '15 NFC-kaarten & 7 NFC-totems', pakketKort: '15 kaarten + 7 totems', support: 'Prioriteit', uitgelicht: false },
 ] as const;
 
 export const planKenmerken = ['Automatisch reviews verzamelen', 'AI-reacties op reviews', 'Dashboard met alle platformen'] as const;

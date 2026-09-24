@@ -170,7 +170,8 @@ Op deze privacyverklaring is uitsluitend Nederlands recht van toepassing.
 
 Deze bijlage beschrijft welke diensten we gebruiken op reviewplus.io en shop.reviewplus.io.
 
-- **Formulieren en aanvragen** (contact, nieuwsbrief, aanvragen in de shop) worden verwerkt via Make.com en komen terecht in Teamleader (klantbeheer en demo-afspraken) en in onze mailbox (Google Workspace).
+- **Formulieren en aanvragen** (contact, nieuwsbrief, aanvragen in de shop, het online afsluiten van een plan) worden verwerkt via Make.com en komen terecht in Teamleader (klantbeheer, offertes en demo-afspraken) en in onze mailbox (Google Workspace).
+- **Account**: sluit je online een plan af, dan maken we met je naam, bedrijfsnaam, e-mailadres en telefoonnummer automatisch je account aan op app.reviewplus.io, ons reviewplatform.
 - **Betalingen** voor betaalde extra's in de shop lopen via Mollie.
 - **Spamcontrole**: bij het versturen van een formulier gebruiken we Cloudflare Turnstile om misbruik door bots tegen te gaan.
 - **Bezoekersstatistieken**: we meten het gebruik van de website met Umami, zonder cookies en zonder dat we bezoekers persoonlijk kunnen herkennen.
