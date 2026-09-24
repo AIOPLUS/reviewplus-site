@@ -56,6 +56,18 @@ De testversie staat op `https://aioplus.github.io/reviewplus-site` en wordt niet
 
 Terug naar Framer kan door de DNS-records terug te zetten.
 
+## Foto's
+
+Eigen beelden van de Framer-site staan in `src/assets/img/`. Deze branchefoto's komen van Unsplash (gratis, ook commercieel, naamsvermelding niet verplicht; https://unsplash.com/license):
+
+| Bestand | Unsplash-foto |
+|---|---|
+| `foto-hotel.jpg` | https://unsplash.com/photos/man-in-black-shirt-standing-beside-counter-yIcm3DWRz-c |
+| `foto-winkel.jpg` | https://unsplash.com/photos/woman-leaning-on-pink-desk-IxgPCAUSaOM |
+| `foto-zorg.jpg` | https://unsplash.com/photos/man-in-white-dress-shirt-sitting-on-black-office-rolling-chair-QA9fRIi6sFw |
+| `foto-sportschool.jpg` | https://unsplash.com/photos/a-man-and-woman-exercising-wSUlQl8HPYc |
+| `foto-vrije-tijd.jpg` | https://images.unsplash.com/photo-1558271697-dd9f331ca8b3 (arcadekasten) |
+
 ## Nog te doen (Jordan)
 
 - `src/pages/about.astro`: eigen verhaal toevoegen (wie, waarom, waar gevestigd).

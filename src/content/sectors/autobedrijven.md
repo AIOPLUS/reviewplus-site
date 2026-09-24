@@ -9,7 +9,7 @@ heroTekst: Wie een auto koopt of laat onderhouden, leest eerst reviews. Met Revi
 samenvatting: Review Plus stuurt klanten na aflevering of onderhoud automatisch een reviewverzoek, beantwoordt reviews met AI en toont de reviews van al je vestigingen en platformen in één overzicht.
 foto: foto-autobedrijf.jpg
 fotoAlt: Showroom van een autobedrijf
-volgorde: 3
+volgorde: 4
 toepassingen:
   - titel: Na aflevering of onderhoud
     tekst: Een NFC-kaart bij de balie of een automatisch bericht na de werkplaatsafspraak. De klant geeft direct zijn mening.

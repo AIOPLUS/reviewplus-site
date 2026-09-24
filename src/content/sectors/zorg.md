@@ -7,10 +7,10 @@ metaDescription: Review Plus helpt tandartsen, fysiotherapeuten en andere zorgpr
 heroTitel: Meer reviews voor je praktijk
 heroTekst: Nieuwe patiënten kiezen een praktijk vaak op basis van reviews. Review Plus helpt je om de ervaring van je patiënten zichtbaar te maken.
 samenvatting: Review Plus vraagt patiënten na hun afspraak om een review, via een NFC-kaart bij de balie, een QR-code of een automatisch bericht. De AI helpt je professioneel en zorgvuldig te reageren, en je ziet alle reviews in één dashboard.
-foto: app-dashboard-telefoon.png
-fotoAlt: Dashboard van Review Plus op een telefoon
+foto: foto-zorg.jpg
+fotoAlt: Tandarts in gesprek met een patiënt in de behandelstoel
 shopSector: tandartsen
-volgorde: 6
+volgorde: 7
 toepassingen:
   - titel: Bij de balie
     tekst: Een NFC-kaart of totem bij de balie. Patiënten geven hun review na de afspraak, zonder gedoe.

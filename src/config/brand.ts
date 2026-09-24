@@ -53,11 +53,14 @@ export const footerNav = [
     title: 'Branches',
     links: [
       { label: 'Horeca', href: '/voor/horeca' },
+      { label: 'Hotels & hospitality', href: '/voor/hotels' },
       { label: 'Beauty & wellness', href: '/voor/beauty' },
       { label: 'Autobedrijven', href: '/voor/autobedrijven' },
       { label: 'Installateurs', href: '/voor/installateurs' },
       { label: 'Winkels', href: '/voor/retail' },
       { label: 'Zorg', href: '/voor/zorg' },
+      { label: 'Sportscholen', href: '/voor/sportscholen' },
+      { label: 'Vrije tijd & beleving', href: '/voor/vrije-tijd' },
     ],
   },
   {

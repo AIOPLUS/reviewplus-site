@@ -9,7 +9,7 @@ heroTekst: Na een geslaagde installatie is de klant het meest tevreden. Review P
 samenvatting: Review Plus maakt het makkelijk om na elke klus een review te vragen, met een NFC-kaart die je monteur bij zich heeft, een QR-code op de factuur of een automatisch bericht. De AI beantwoordt reviews en je ziet alles in één dashboard.
 foto: foto-zonnepanelen.jpg
 fotoAlt: Installateur bij zonnepanelen met een tablet
-volgorde: 4
+volgorde: 5
 toepassingen:
   - titel: Kaart in de bus
     tekst: Je monteur laat de klant na de klus op een NFC-kaart tikken. In een paar seconden staat de review online.

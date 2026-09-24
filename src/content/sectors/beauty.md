@@ -10,7 +10,7 @@ samenvatting: Review Plus vraagt je klanten na een behandeling automatisch om ee
 foto: foto-salon.jpg
 fotoAlt: Interieur van een beautysalon
 shopSector: beauty
-volgorde: 2
+volgorde: 3
 toepassingen:
   - titel: Direct na de behandeling
     tekst: Leg een NFC-kaart of totem bij de kassa. Klanten laten hun review achter terwijl ze afrekenen.

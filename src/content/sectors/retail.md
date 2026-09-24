@@ -7,10 +7,10 @@ metaDescription: Review Plus helpt winkels en retailers aan meer Google-reviews 
 heroTitel: Meer reviews voor je winkel
 heroTekst: Klanten zoeken online voordat ze langskomen. Met meer en betere reviews word je vaker gevonden en gekozen.
 samenvatting: Review Plus verzamelt reviews bij de kassa met NFC-totems en QR-codes, stuurt automatische verzoeken na een aankoop en beantwoordt reviews met AI. Al je filialen en platformen zie je in één overzicht.
-foto: app-reviewpagina.png
-fotoAlt: Reviewpagina van Review Plus op een telefoon
+foto: foto-winkel.jpg
+fotoAlt: Eigenares achter de toonbank van haar cadeauwinkel
 shopSector: retail
-volgorde: 5
+volgorde: 6
 toepassingen:
   - titel: Totem bij de kassa
     tekst: Een NFC-totem naast de pinautomaat. Klanten tikken en laten hun review achter terwijl ze afrekenen.
