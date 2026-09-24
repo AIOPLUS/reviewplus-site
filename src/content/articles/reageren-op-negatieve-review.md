@@ -39,7 +39,7 @@ Gebruik de naam van de reviewer, verwijs naar wat hij schreef en onderteken met 
 
 ## Een voorbeeld
 
-> Hoi Sanne, dank je wel voor je eerlijke review. Vervelend om te lezen dat je bestelling niet compleet was, dat hoort niet te gebeuren. We hebben het met het team besproken en controleren bestellingen voortaan nog een keer bij de uitgifte. Ik maak het graag goed met je; wil je me mailen op info@jouwbedrijf.nl? Groet, Mark
+> Hoi Sanne, dank je wel voor je eerlijke review. Vervelend om te lezen dat je bestelling niet compleet was, dat hoort niet te gebeuren. We hebben het met het team besproken en controleren bestellingen voortaan nog een keer bij de uitgifte. Ik maak het graag goed met je. Wil je me even bellen of mailen? Groet, Mark
 
 Kort, persoonlijk, met een excuus, een concrete verbetering en een uitnodiging om het op te lossen.
 
