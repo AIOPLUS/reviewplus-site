@@ -12,10 +12,11 @@ De hoofdsite van Review Plus, nagebouwd van de Framer-site (Fizens-template) in 
 | `/about` (Over ons) | `src/pages/about.astro` |
 | `/contact` | `src/pages/contact.astro` |
 | `/articles` (Kennisbank) | `src/pages/articles/` + `src/content/articles/*.md` |
+| `/jobs` (Vacatures) | `src/pages/jobs/` + `src/content/jobs/*.md` |
 | `/voor/<branche>` | `src/pages/voor/[sector].astro` + `src/content/sectors/*.md` |
 | `/privacy-policy`, `/term-and-conditions` | `src/content/legal/*.md` |
 
-De URL's zijn gelijk aan de Framer-site, zodat posities in Google behouden blijven. Template-pagina's van Framer (`/overview`, `/changelog`, `/download`, `/integration/*`, `/team-member/*`, `/jobs/*` en de Engelse voorbeeldartikelen) bestaan niet meer en geven een 404.
+De URL's zijn gelijk aan de Framer-site, zodat posities in Google behouden blijven. Template-pagina's van Framer (`/overview`, `/changelog`, `/download`, `/integration/*`, `/team-member/*`, de oude `/jobs/*`-voorbeelden en de Engelse voorbeeldartikelen) bestaan niet meer en geven een 404.
 
 ## Teksten aanpassen
 
