@@ -26,6 +26,8 @@
     "typescript": "^6.0.3"
   },
   "devDependencies": {
+    "@iconify-json/logos": "^1.2.14",
+    "@iconify-json/simple-icons": "^1.2.97",
     "@typescript-eslint/parser": "^8.70.1",
     "eslint": "^10.11.0",
     "eslint-plugin-astro": "^3.2.1",

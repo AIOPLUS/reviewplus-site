@@ -103,9 +103,29 @@ export const vergelijking = [
   { groep: 'Extra voordelen', rijen: ['Integraties', 'Rapportages'] },
 ] as const;
 
-export const platformLogos = [
-  { naam: 'Google', bestand: 'logo-google.png' },
-  { naam: 'ChatGPT', bestand: 'logo-chatgpt.png' },
-  { naam: 'Tripadvisor', bestand: 'logo-tripadvisor.png' },
-  { naam: 'Trustpilot', bestand: 'logo-trustpilot.png' },
-] as const;
+/**
+ * Logo's in de blauwe band op de homepage. Iconen uit Iconify: "si:" = Simple Icons, "logos:" = SVG Logos (wit gemaakt).
+ * Zonder `icoon` wordt alleen de naam getoond (Mollie, Teamleader en Moneybird staan niet in deze sets).
+ */
+export const platformen: readonly { naam: string; icoon?: string; woordmerk?: boolean }[] = [
+  { naam: 'Google', icoon: 'si:google' },
+  { naam: 'ChatGPT', icoon: 'si:openai' },
+  { naam: 'Anthropic', icoon: 'si:anthropic' },
+  { naam: 'Claude Code', icoon: 'si:claude' },
+  { naam: 'Grok', icoon: 'logos:grok-icon' },
+  { naam: 'Gemini', icoon: 'si:googlegemini' },
+  { naam: 'Meta AI', icoon: 'si:metaai' },
+  { naam: 'WhatsApp Business', icoon: 'si:whatsapp' },
+  { naam: 'Make', icoon: 'si:make' },
+  { naam: 'Mollie' },
+  { naam: 'GitHub', icoon: 'si:github' },
+  { naam: 'Teamleader Focus' },
+  { naam: 'Umami Cloud', icoon: 'si:umami' },
+  { naam: 'Cloudflare', icoon: 'si:cloudflare' },
+  { naam: 'Slack', icoon: 'si:slack' },
+  { naam: 'Notion', icoon: 'si:notion' },
+  { naam: 'GoDaddy', icoon: 'si:godaddy' },
+  { naam: 'OpenAI', icoon: 'si:openai' },
+  { naam: 'Google Workspace', icoon: 'logos:google-workspace', woordmerk: true },
+  { naam: 'Moneybird' },
+];
