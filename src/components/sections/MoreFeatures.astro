@@ -54,7 +54,10 @@ const iconen: Record<string, string> = {
 
     {variant === 'kort' && (
       <div class="relative mt-16 grid place-items-center overflow-hidden lg:mt-20">
-        <p class="pointer-events-none absolute top-1/3 select-none text-center text-[56px] font-semibold uppercase leading-none tracking-[-0.02em] text-brand-100 lg:text-[140px]" aria-hidden="true">Verschillende<br />functies</p>
+        <svg class="pointer-events-none absolute top-[28%] w-full max-w-[1100px] select-none" viewBox="0 0 1100 300" aria-hidden="true" focusable="false">
+          <text x="550" y="130" text-anchor="middle" fill="var(--color-brand-100)" font-size="140" font-weight="600" letter-spacing="-2">VERSCHILLENDE</text>
+          <text x="550" y="270" text-anchor="middle" fill="var(--color-brand-100)" font-size="140" font-weight="600" letter-spacing="-2">FUNCTIES</text>
+        </svg>
         <div class="reveal relative w-[260px] lg:w-[300px]">
           <Image src={appBronnen} alt="Review Plus-app: reviewbronnen koppelen, zoals Google" widths={[280, 560]} sizes="280px" class="absolute left-[5%] top-[2.5%] w-[90%] rounded-[34px]" />
           <Image src={iphone} alt="" widths={[300, 600]} sizes="300px" class="relative w-full" />
