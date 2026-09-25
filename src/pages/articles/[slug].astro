@@ -2,6 +2,7 @@
 import { getCollection, render, type CollectionEntry } from 'astro:content';
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import CtaFinal from '@/components/sections/CtaFinal.astro';
+import ArticleTeasers from '@/components/sections/ArticleTeasers.astro';
 import { brand } from '@/config/brand';
 import { absoluteUrl, url } from '@/lib/url';
 import { breadcrumbSchema } from '@/lib/schema';
@@ -51,5 +52,6 @@ const articleSchema = {
       <Content />
     </div>
   </article>
+  <ArticleTeasers titel="Lees ook" zonder={artikel.id} categorie={d.categorie} />
   <CtaFinal />
 </BaseLayout>

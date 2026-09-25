@@ -8,7 +8,7 @@ const woorden = Array.from({ length: 4 }, () => 'REPUTATIE MANAGEMENT');
 const items = platformen.map((p) => ({ ...p, svg: p.icoon ? brandIcon(p.icoon) : null }));
 ---
 <div class="relative isolate overflow-hidden rounded-[24px] bg-brand-600 text-white">
-  <Image src={bg} alt="" class="absolute inset-0 -z-10 size-full object-cover" widths={[800, 1400, 2000]} sizes="(min-width: 1360px) 1296px, 100vw" loading="eager" />
+  <Image src={bg} alt="" class="absolute inset-0 -z-10 size-full object-cover" widths={[800, 1400, 2000]} sizes="(min-width: 1360px) 1296px, 100vw" loading="eager" fetchpriority="high" />
 
   <!-- Lopende tekst -->
   <div class="overflow-hidden pt-8 lg:pt-10" aria-hidden="true">

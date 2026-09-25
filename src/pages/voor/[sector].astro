@@ -6,6 +6,7 @@ import ArrowButton from '@/components/ui/ArrowButton.astro';
 import Stats from '@/components/sections/Stats.astro';
 import Faq from '@/components/sections/Faq.astro';
 import CtaFinal from '@/components/sections/CtaFinal.astro';
+import ArticleTeasers from '@/components/sections/ArticleTeasers.astro';
 import { brand } from '@/config/brand';
 import { DEMO_BOOKING_URL } from '@/config/site';
 import { breadcrumbSchema, faqSchema } from '@/lib/schema';
@@ -85,5 +86,6 @@ const iconen = [
 
   <Stats />
   <Faq items={s.faq} line1="Veelgestelde" line2="vragen" />
+  <ArticleTeasers titel="Tips om meer reviews te krijgen" />
   <CtaFinal />
 </BaseLayout>

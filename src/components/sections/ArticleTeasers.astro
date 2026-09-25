@@ -1,0 +1,40 @@
+---
+import { getCollection } from 'astro:content';
+import { url } from '@/lib/url';
+
+/**
+ * "Lees ook"-blok met kennisbankartikelen. Artikelen uit dezelfde categorie eerst.
+ * Toont niets als er (nog) geen gepubliceerde artikelen zijn.
+ */
+interface Props {
+  titel?: string;
+  /** Id van het huidige artikel, dat wordt overgeslagen. */
+  zonder?: string;
+  categorie?: string;
+  aantal?: number;
+}
+const { titel = 'Uit de Kennisbank', zonder, categorie, aantal = 3 } = Astro.props;
+
+const artikelen = (await getCollection('articles', (a) => !a.data.concept && a.id !== zonder))
+  .sort((a, b) => Number(b.data.categorie === categorie) - Number(a.data.categorie === categorie) || b.data.datum.getTime() - a.data.datum.getTime())
+  .slice(0, aantal);
+---
+{artikelen.length > 0 && (
+  <section class="py-16 lg:py-20" aria-labelledby="lees-ook-title">
+    <div class="container-rp grid gap-8">
+      <div class="flex flex-wrap items-end justify-between gap-4">
+        <h2 id="lees-ook-title" class="heading-md">{titel}</h2>
+        <a href={url('/articles')} class="text-brand-600 underline">Alle artikelen</a>
+      </div>
+      <ul class="grid gap-4 md:grid-cols-3">
+        {artikelen.map((a) => (
+          <li class="card relative grid content-start gap-3 p-6 transition-shadow hover:shadow-[var(--shadow-card)]">
+            <p class="eyebrow w-fit">{a.data.categorie}</p>
+            <h3 class="title"><a href={url(`/articles/${a.id}`)} class="after:absolute after:inset-0">{a.data.titel}</a></h3>
+            <p class="body-muted line-clamp-3">{a.data.beschrijving}</p>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+)}
