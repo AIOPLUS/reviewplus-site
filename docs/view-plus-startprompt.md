@@ -19,6 +19,34 @@ Je gaat de website van **View Plus** bouwen, het zustermerk van **Review Plus**.
   - Beide actieve plekken zijn dus bezet.
 - Andere diensten: Teamleader Focus (CRM, Sales Pipeline), Gmail via Google Workspace (support@reviewplus.io), Cloudflare Turnstile, Umami Cloud (analytics), Mollie, EmbedMyReviews (white label achter app.reviewplus.io), GitHub (org AIOPLUS). Het Fizens-template van Framer is betaald en mag gebruikt worden.
 
+## Wat we al weten over View Plus
+
+Het merkmateriaal staat in `C:\Users\jorda\.claude\projects\viewplus-brand\`:
+- `logo-icoon.webp`: het beeldmerk, 1915×2000, transparant;
+- `logo-met-woordmerk.png`: logo en woordmerk op een A4-pagina; uitsnijden nodig;
+- `brochure-pagina-1.png`: de eerste brochurepagina als afbeelding;
+- `View Plus - Brochure.pdf`: de volledige brochure. De tekst is gecodeerd; bekijk de PNG of render de pagina's.
+
+- **Logo**: hetzelfde beeldmerk als Review Plus (vier vlakken, links twee kwartcirkels), maar in **paars**. Woordmerk: **"View"** vet + **"Plus"** regular, in hetzelfde paars. Maak er een SVG van: een variant van `src/components/layout/Logo.astro`, plus een favicon en OG-beelden.
+- **Kleuren** (gemeten): beeldmerk **#7A01B0**, woordmerk **#8000B0**, lichtpaarse vlakken **#F7E7FD**, tekst bijna zwart (#150E08). Bouw er een paarse schaal van in `tokens.css` (50–900) in plaats van het blauw van Review Plus. Controleer het contrast, WCAG AA.
+- **Wat View Plus doet**: social media management, professionele fotografie en content voor lokale ondernemers, met als eerste doelgroep de horeca. Slogan in de brochure: **"Van Concept naar Content. Vergroot je online zichtbaarheid."** Drie pijlers: **Fotografie** (beelden die de sfeer en uitstraling vastleggen), **Content** (content die jouw zaak online tot leven brengt) en **Engagement** (actieve interactie met jouw doelgroep). Ondertitel: "Professionele fotografie, sterke content en actief beheer."
+- **Social media management: € 75 per week** (vraag of dit exclusief btw is). Daarbij hoort:
+  - een contentkalender vooraf;
+  - drie vaste contentpijlers, samen bepaald;
+  - 2 tot 3 posts per week, inclusief captions en hashtags;
+  - inspelen op actualiteit en lokale gebeurtenissen;
+  - reageren op alle reacties;
+  - actief interactie zoeken met relevante accounts.
+  Het doel is meer bereik, de juiste doelgroep en meer betrokkenheid.
+- **Fotografie: shootdag € 475 exclusief btw.** Ongeveer 2 uur, circa 40 bewerkte foto's, vrij te gebruiken voor Instagram én de website. Eén shootdag is genoeg voor 2 tot 3 maanden content; opnieuw fotograferen bij bijvoorbeeld een nieuwe (seizoens)kaart. Ook grafische elementen in de posts voor een herkenbare stijl.
+- **Uitbreidingen**: videomateriaal, en een reviewsysteem voor meer Google-reviews. Dat laatste is een natuurlijke link naar Review Plus; verwijs daar op de site naar.
+- **Let op**: de brochure is een voorstel voor één klant, het Italiaanse restaurant Segugio in Amsterdam. Gebruik die naam, hun Instagram en foto's **niet** op de site zonder toestemming van Jordan. Schrijf de teksten algemeen, voor "jouw zaak".
+- **Gevolgen voor de site**: de Review Plus-opzet (softwareplannen van 1/2/3 jaar, NFC-welkomstpakket, EmbedMyReviews-account) past niet één op één. Stel een passende opzet voor, bijvoorbeeld:
+  - een prijspagina met "Social media management vanaf € 75 per week" en "Shootdag € 475";
+  - een aanvraag- of offerteformulier in plaats van direct online afsluiten;
+  - een portfolio- of werkpagina.
+  Laat mij kiezen voordat je bouwt.
+
 ## Doel
 
 Een nieuwe repo `AIOPLUS/viewplus-site` op basis van reviewplus-site, met View Plus-branding, eerst op een testversie (`https://aioplus.github.io/viewplus-site`) en daarna live op **https://www.viewplus.io**. De `www`-versie is het hoofdadres; `viewplus.io` zonder www stuurt door naar www. Bij GitHub Pages: custom domain `www.viewplus.io`, en voor het kale domein de A-records van GitHub Pages, zodat GitHub zelf doorstuurt.
@@ -27,12 +55,12 @@ Een nieuwe repo `AIOPLUS/viewplus-site` op basis van reviewplus-site, met View P
 
 Verzin niets over View Plus. Vraag in één keer wat nodig is en wat je niet uit bestaand materiaal kunt halen:
 
-1. **Wat is View Plus?** Welke dienst of welk product, voor wie, en wat is het verschil met Review Plus? Is er een bestaande site (bijvoorbeeld Framer) waar ik teksten en beelden van kan overnemen? Zo ja: de URL.
-2. **Branding**: logo (bestand of link), hoofdkleur(en), lettertype (of Poppins houden), tone of voice.
+1. **Aanbod**: klopt het beeld hierboven? Zijn er meer diensten (andere platformen dan Instagram, zoals TikTok, Facebook of LinkedIn; video; websitebeelden), pakketten of looptijden? Is € 75 per week exclusief btw? Welke doelgroepen naast horeca? Is er een bestaande site of social-mediaprofiel om beelden van over te nemen?
+2. **Branding**: logo en kleuren zijn bekend (zie hierboven). Houden we Poppins als lettertype, en welke tone of voice?
 3. **E-mailadres** voor contact en formulieren (het domein is al bekend: www.viewplus.io). Waar wordt het domein beheerd (voor de DNS-stappen later)?
 4. **Pagina's**: welke van de Review Plus-pagina's blijven: prijzen/plannen + online afsluiten, Kennisbank, vacatures, sectorpagina's (welke branches), Over ons? Komt er ook een shop?
-5. **Prijzen en plannen**, als die er zijn (excl. btw; looptijd en facturering).
-6. **Foto's**: eigen beelden, of zoek ik passende Unsplash-foto's (gratis, vrij te gebruiken)?
+5. **Prijzen**: kloppen € 75 per week (social media management) en € 475 per shootdag, exclusief btw? Is er een minimale looptijd, opzegtermijn of pakketkorting? Mogen de prijzen op de site staan, of liever "vanaf" en een offerte?
+6. **Foto's**: juist voor een fotografiedienst tellen eigen beelden. Welk eigen werk mag ik gebruiken, en van welke klanten heb je toestemming? Anders tijdelijk passende Unsplash-foto's, duidelijk als voorbeeld, met de afspraak dat die vervangen worden.
 7. **Formulieren en automatisering** (belangrijk vanwege het gratis Make-plan):
    - (a) Via het bestaande scenario 7570648, met een extra veld `merk: "viewplus"` en eigen routes en mailteksten. Geen extra scenario nodig; verbruikt wel operaties van hetzelfde tegoed.
    - (b) Een eigen scenario voor View Plus. Vereist een betaald Make-plan.
