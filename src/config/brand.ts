@@ -54,6 +54,7 @@ export const footerNav = [
     links: [
       { label: 'Functies', href: '/features' },
       { label: 'Prijzen', href: '/plans' },
+      { label: 'Plan afsluiten', href: '/aanmelden' },
       { label: 'Shop', href: brand.shopUrl },
       { label: 'Inloggen', href: brand.appLoginUrl },
     ],
