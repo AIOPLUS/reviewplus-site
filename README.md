@@ -65,9 +65,9 @@ npm run check    # typecheck + lint + build + linkcheck
 | `PUBLIC_ANALYTICS_PROVIDER` / `PUBLIC_UMAMI_WEBSITE_ID` | leeg | Umami |
 | `PUBLIC_META_PIXEL_ID`, `PUBLIC_GADS_ID`, `PUBLIC_GADS_CONVERSION_LABEL` | leeg | als je advertenties draait |
 
-De testversie staat op `https://aioplus.github.io/reviewplus-site` en wordt niet geïndexeerd (`robots.txt` blokkeert alles zolang `BASE_PATH` niet `/` is).
+**Live sinds 25-09-2026 op https://www.reviewplus.io** (GitHub Pages, custom domain `www.reviewplus.io`; `reviewplus.io` stuurt door naar www). Er is geen aparte testversie meer: `robots.txt` blokkeert alleen als `BASE_PATH` niet `/` is. Wil je later weer een testomgeving, maak dan een tweede repo of een preview-branch.
 
-## Overstappen van Framer naar deze site
+## Overstap van Framer (uitgevoerd op 25-09-2026)
 
 1. Cloudflare Turnstile: voeg `reviewplus.io` en `www.reviewplus.io` toe als hostname van het widget.
 2. GitHub-variabelen: `SITE_URL=https://www.reviewplus.io`, `BASE_PATH=/` (www is het hoofdadres, net als bij Framer).
@@ -76,7 +76,7 @@ De testversie staat op `https://aioplus.github.io/reviewplus-site` en wordt niet
 5. DNS bij GoDaddy: A-records van `reviewplus.io` (@) naar GitHub Pages (185.199.108.153, .109.153, .110.153, .111.153) en `www` als CNAME naar `aioplus.github.io`. Haal de Framer-records weg (A 31.43.160.6 en 31.43.161.6, CNAME www → sites.framer.app). **Laat MX (Google) en TXT (SPF, google-site-verification) staan.**
 6. Controleer de site, dien de sitemap in bij Google Search Console en zeg daarna het Framer-abonnement op.
 
-Terug naar Framer kan door de DNS-records terug te zetten.
+Oude DNS (voor een eventuele terugval naar Framer, zolang het abonnement loopt): A `@` → 31.43.160.6 en 31.43.161.6, CNAME `www` → sites.framer.app.
 
 ## Foto's
 
