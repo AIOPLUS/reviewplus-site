@@ -53,13 +53,20 @@ Het merkmateriaal staat in `C:\Users\jorda\.claude\projects\viewplus-brand\`:
 
 Een nieuwe repo `AIOPLUS/viewplus-site` op basis van reviewplus-site, met View Plus-branding, eerst op een testversie (`https://aioplus.github.io/viewplus-site`) en daarna live op **https://www.viewplus.io**. De `www`-versie is het hoofdadres; `viewplus.io` zonder www stuurt door naar www. Bij GitHub Pages: custom domain `www.viewplus.io`, en voor het kale domein de A-records van GitHub Pages, zodat GitHub zelf doorstuurt.
 
+**Domeinen van View Plus** (DNS bij GoDaddy):
+- **www.viewplus.io**: de site, deze opdracht.
+- **shop.viewplus.io**: webshop waarin View Plus reseller wordt van o.a. [Smiirl](https://www.smiirl.com/en/discover/instagram/5d/)-tellers (live volgers/likes-teller) en andere tools. Die bouwen we **na** de site, als aparte repo op basis van `review plus shop`. Vraag dan eerst de details: productlijst, inkoop- en verkoopprijzen, levering (dropship of voorraad), betaling (Mollie), retourbeleid en de voorwaarden van het resellerschap. Gebruik productfoto's en merknamen van leveranciers alleen met hun toestemming.
+- **app.viewplus.io**: eigen app, zelf te bouwen (geen white-label leverancier), later. Houd er nu alleen rekening mee in menu en footer (bijvoorbeeld een "Inloggen"-link pas zodra de app er is).
+
+Zet in de site alvast een plek voor de shop klaar (menu-item "Shop" dat pas zichtbaar wordt als `brand.shopUrl` gevuld is), net zoals de Review Plus-site naar shop.reviewplus.io linkt.
+
 ## Stap 1: vraag mij eerst (met AskUserQuestion, gebundeld)
 
 Verzin niets over View Plus. Vraag in één keer wat nodig is en wat je niet uit bestaand materiaal kunt halen:
 
 1. **Aanbod**: klopt het beeld hierboven? Zijn er meer diensten (andere platformen dan Instagram, zoals TikTok, Facebook of LinkedIn; video; websitebeelden), pakketten of looptijden? Is € 75 per week exclusief btw? Welke doelgroepen naast horeca? Is er een bestaande site of social-mediaprofiel om beelden van over te nemen?
 2. **Branding**: logo en kleuren zijn bekend (zie hierboven). Houden we Poppins als lettertype, en welke tone of voice?
-3. **E-mailadres** voor contact en formulieren (het domein is al bekend: www.viewplus.io). Waar wordt het domein beheerd (voor de DNS-stappen later)?
+3. **E-mailadres** voor contact en formulieren (domein www.viewplus.io, DNS bij GoDaddy).
 4. **Pagina's**: welke van de Review Plus-pagina's blijven: prijzen/plannen + online afsluiten, Kennisbank, vacatures, sectorpagina's (welke branches), Over ons? Komt er ook een shop?
 5. **Prijzen**: kloppen € 75 per week (social media management) en € 475 per shootdag, exclusief btw? Is er een minimale looptijd, opzegtermijn of pakketkorting? Mogen de prijzen op de site staan, of liever "vanaf" en een offerte?
 6. **Foto's**: juist voor een fotografiedienst tellen eigen beelden. Welk eigen werk mag ik gebruiken, en van welke klanten heb je toestemming? Anders tijdelijk passende Unsplash-foto's, duidelijk als voorbeeld, met de afspraak dat die vervangen worden.
