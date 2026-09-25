@@ -72,7 +72,7 @@ npm run check    # typecheck + lint + build + linkcheck
 1. Cloudflare Turnstile: voeg `reviewplus.io` en `www.reviewplus.io` toe als hostname van het widget.
 2. GitHub-variabelen: `SITE_URL=https://www.reviewplus.io`, `BASE_PATH=/` (www is het hoofdadres, net als bij Framer).
 3. `public/CNAME` bevat `www.reviewplus.io` (staat er al).
-4. GitHub → Settings → Pages → Custom domain `www.reviewplus.io` → Enforce HTTPS (zodra het certificaat er is). GitHub stuurt `reviewplus.io` dan zelf door naar www.
+4. GitHub → Settings → Pages → Custom domain `www.reviewplus.io` → Enforce HTTPS (staat aan; certificaat van Let's Encrypt, verlengt GitHub zelf). GitHub stuurt `reviewplus.io` dan zelf door naar www.
 5. DNS bij GoDaddy: A-records van `reviewplus.io` (@) naar GitHub Pages (185.199.108.153, .109.153, .110.153, .111.153) en `www` als CNAME naar `aioplus.github.io`. Haal de Framer-records weg (A 31.43.160.6 en 31.43.161.6, CNAME www → sites.framer.app). **Laat MX (Google) en TXT (SPF, google-site-verification) staan.**
 6. Controleer de site, dien de sitemap in bij Google Search Console en zeg daarna het Framer-abonnement op.
 
