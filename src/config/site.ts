@@ -21,6 +21,8 @@ export const LOGIN_URL = brand.appLoginUrl;
 export const LEAD = {
   webhookUrl: env.PUBLIC_LEAD_WEBHOOK_URL || '',
   turnstileSiteKey: env.PUBLIC_TURNSTILE_SITE_KEY || '',
+  /** KvK-zoekproxy (Cloudflare Worker, zie workers/kvk-zoeken). Leeg = geen KvK-autofill. */
+  kvkProxyUrl: env.PUBLIC_KVK_PROXY_URL || '',
   fallbackEmail: brand.email,
 };
 

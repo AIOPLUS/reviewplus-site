@@ -87,8 +87,19 @@
   .prose-rp blockquote { margin: 0 0 1.25rem; padding: 1rem 1.25rem; border-left: 3px solid var(--color-brand-600); background: var(--color-brand-50); border-radius: 0 var(--radius-card) var(--radius-card) 0; color: var(--color-ink); }
   .prose-rp blockquote p { margin: 0; }
 
+  /* KvK-autofill (src/lib/client/kvk-autofill.ts) */
+  .kvk-lijst {
+    position: absolute; left: 0; right: 0; top: 100%; z-index: 30; margin-top: 4px; max-height: 320px; overflow: auto;
+    background: #fff; border: 1px solid var(--color-line); border-radius: var(--radius-field); box-shadow: var(--shadow-card); padding: 4px;
+  }
+  .kvk-lijst [role='option'] { display: grid; gap: 2px; padding: 10px 12px; border-radius: 8px; cursor: pointer; }
+  .kvk-lijst [role='option'][aria-selected='true'], .kvk-lijst [role='option']:hover { background: var(--color-brand-50); }
+  .kvk-naam { font-weight: 500; color: var(--color-ink); }
+  .kvk-info { font-size: .85rem; color: var(--color-muted); }
+  .kvk-bron { padding: 6px 12px 4px; font-size: .75rem; color: var(--color-muted); }
+
   /* Formulieren */
-  .field { display: grid; gap: .4rem; }
+  .field { display: grid; gap: .4rem; align-content: start; }
   .field label { font-size: .95rem; font-weight: 500; color: var(--color-ink); }
   .field .req { color: var(--color-brand-600); }
   .input {

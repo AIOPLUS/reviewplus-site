@@ -1,0 +1,12 @@
+# Cloudflare Worker: KvK-zoekproxy voor de formulieren (zie README.md in deze map).
+name = "reviewplus-kvk"
+main = "src/index.js"
+compatibility_date = "2026-09-01"
+
+[vars]
+# Productie-API van KvK. Voor de KvK-testomgeving: https://api.kvk.nl/test/api/v2
+KVK_BASE = "https://api.kvk.nl/api/v2"
+# Alleen deze websites mogen de Worker aanroepen (komma-gescheiden, zonder slash aan het eind)
+ALLOWED_ORIGINS = "https://reviewplus.io,https://www.reviewplus.io,https://shop.reviewplus.io,https://aioplus.github.io,http://localhost:4321,http://localhost:4322"
+
+# Het geheim KVK_API_KEY zet je met: npx wrangler secret put KVK_API_KEY

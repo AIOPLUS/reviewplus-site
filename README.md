@@ -61,6 +61,7 @@ npm run check    # typecheck + lint + build + linkcheck
 | `BASE_PATH` | leeg (= `/reviewplus-site`) | `/` |
 | `PUBLIC_LEAD_WEBHOOK_URL` | Make-webhook (zelfde als de shop) | idem |
 | `PUBLIC_TURNSTILE_SITE_KEY` | zelfde site key als de shop | idem |
+| `PUBLIC_KVK_PROXY_URL` | URL van de KvK-Worker (`workers/kvk-zoeken`) | idem; leeg = geen KvK-autofill |
 | `PUBLIC_ANALYTICS_PROVIDER` / `PUBLIC_UMAMI_WEBSITE_ID` | leeg | Umami |
 | `PUBLIC_META_PIXEL_ID`, `PUBLIC_GADS_ID`, `PUBLIC_GADS_CONVERSION_LABEL` | leeg | als je advertenties draait |
 
