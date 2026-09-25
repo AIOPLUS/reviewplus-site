@@ -8,7 +8,7 @@ function normBase(raw: string | undefined): string {
 }
 
 /** Absolute origin zonder trailing slash, bv. https://reviewplus.io */
-export const SITE_URL = (env.SITE_URL || 'https://reviewplus.io').replace(/\/+$/, '');
+export const SITE_URL = (env.SITE_URL || 'https://www.reviewplus.io').replace(/\/+$/, '');
 /** "/" op reviewplus.io, "/reviewplus-site" op de testversie (GitHub Pages zonder eigen domein). */
 export const BASE_PATH = normBase(env.BASE_PATH);
 /** Concepten (vacatures met `concept: true`) zijn alleen zichtbaar op de testversie, nooit op reviewplus.io. */

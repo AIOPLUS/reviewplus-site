@@ -4,7 +4,7 @@
 export const brand = {
   name: 'Review Plus',
   legalName: 'Review Plus', // TODO: Jordan vult de juridische naam (zoals in KvK) in.
-  siteUrl: 'https://reviewplus.io',
+  siteUrl: 'https://www.reviewplus.io',
   shopUrl: 'https://shop.reviewplus.io',
   appLoginUrl: 'https://app.reviewplus.io/login',
   demoBookingUrl:
