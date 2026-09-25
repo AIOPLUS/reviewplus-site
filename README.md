@@ -76,7 +76,7 @@ npm run check    # typecheck + lint + build + linkcheck
 5. DNS bij GoDaddy: A-records van `reviewplus.io` (@) naar GitHub Pages (185.199.108.153, .109.153, .110.153, .111.153) en `www` als CNAME naar `aioplus.github.io`. Haal de Framer-records weg (A 31.43.160.6 en 31.43.161.6, CNAME www → sites.framer.app). **Laat MX (Google) en TXT (SPF, google-site-verification) staan.**
 6. Controleer de site, dien de sitemap in bij Google Search Console en zeg daarna het Framer-abonnement op.
 
-Oude DNS (voor een eventuele terugval naar Framer, zolang het abonnement loopt): A `@` → 31.43.160.6 en 31.43.161.6, CNAME `www` → sites.framer.app.
+Framer is opgezegd en het domein is daar verwijderd (25-09-2026); terugvallen kan niet meer.
 
 ## Foto's
 
