@@ -17,7 +17,7 @@ De hoofdsite van Review Plus, nagebouwd van de Framer-site (Fizens-template) in 
 | `/voor/<branche>` | `src/pages/voor/[sector].astro` + `src/content/sectors/*.md` |
 | `/privacy-policy`, `/term-and-conditions` | `src/content/legal/*.md` |
 
-De URL's zijn gelijk aan de Framer-site, zodat posities in Google behouden blijven. Template-pagina's van Framer (`/overview`, `/changelog`, `/download`, `/integration/*`, `/team-member/*`, de oude `/jobs/*`-voorbeelden en de Engelse voorbeeldartikelen) bestaan niet meer en geven een 404.
+De URL's zijn gelijk aan de Framer-site, zodat posities in Google behouden blijven. Oude template-pagina's van Framer (`/overview`, `/changelog`, `/download`, `/integration/*`, `/team-member/*`, de oude `/jobs/*`-voorbeelden en de Engelse voorbeeldartikelen) sturen door naar de best passende pagina (`redirects` in `astro.config.mjs`).
 
 ## Teksten aanpassen
 
