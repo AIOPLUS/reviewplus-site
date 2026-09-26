@@ -1,5 +1,7 @@
 ---
 import Logo from './Logo.astro';
+import LabelSwitcher from './LabelSwitcher.astro';
+import LabelList from './LabelList.astro';
 import { brand, mainNav } from '@/config/brand';
 import { isCurrent, url } from '@/lib/url';
 
@@ -7,9 +9,12 @@ const current = Astro.url.pathname;
 ---
 <header class="fixed inset-x-0 top-0 z-50" data-header>
   <div class="container-rp flex h-[88px] items-center justify-between gap-4 lg:h-[112px]">
-    <a href={url('/')} class="shrink-0 rounded-full" aria-label="Review Plus – home">
-      <Logo size={24} wordmark />
-    </a>
+    <div class="flex shrink-0 items-center gap-3">
+      <a href={url('/')} class="shrink-0 rounded-full" aria-label="Review Plus – home">
+        <Logo size={24} wordmark />
+      </a>
+      <LabelSwitcher />
+    </div>
 
     <nav aria-label="Hoofdmenu" class="hidden lg:block">
       <ul class="flex items-center rounded-full bg-[#fafafa] p-1 transition-shadow duration-300" data-header-pill>
@@ -69,6 +74,10 @@ const current = Astro.url.pathname;
       <div class="grid grid-cols-2 gap-2">
         <a href={brand.appLoginUrl} class="btn btn-primary">Log in</a>
         <a href={brand.shopUrl} class="btn btn-soft">Shop</a>
+      </div>
+      <div class="grid gap-3 border-t border-line pt-5">
+        <p class="px-3 text-sm text-muted">Onze andere labels</p>
+        <LabelList plek="menu" />
       </div>
     </div>
   </div>

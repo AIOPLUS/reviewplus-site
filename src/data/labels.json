@@ -1,0 +1,44 @@
+{
+  "_uitleg": "Centrale lijst van alle AIO Plus-labels. Wordt gepubliceerd op https://www.reviewplus.io/labels.json; andere sites (shop, View Plus, ...) lezen die bij het bouwen. status: live (klikbaar) of binnenkort (alleen naam + 'Binnenkort'). Leeg omschrijving/kleur = nog onbekend.",
+  "labels": [
+    {
+      "id": "reviewplus",
+      "naam": "Review Plus",
+      "omschrijving": "Online reputatiemanagement",
+      "kleur": "#1818FF",
+      "url": "https://www.reviewplus.io",
+      "status": "live"
+    },
+    {
+      "id": "viewplus",
+      "naam": "View Plus",
+      "omschrijving": "Social media management",
+      "kleur": "#7A01B0",
+      "url": "https://www.viewplus.io",
+      "status": "binnenkort"
+    },
+    {
+      "id": "websiteplus",
+      "naam": "Website Plus",
+      "omschrijving": "",
+      "kleur": "",
+      "url": "",
+      "status": "binnenkort"
+    },
+    {
+      "id": "tabplus",
+      "naam": "Tab Plus",
+      "omschrijving": "",
+      "kleur": "",
+      "url": "",
+      "status": "binnenkort"
+    }
+  ],
+  "bundel": {
+    "id": "aioplus",
+    "naam": "AIO Plus",
+    "omschrijving": "",
+    "url": "",
+    "status": "binnenkort"
+  }
+}

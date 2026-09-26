@@ -8,7 +8,8 @@ export type EventName =
   | 'contact_verzonden'
   | 'nieuwsbrief_aangemeld'
   | 'sollicitatie_verzonden'
-  | 'plan_afgesloten';
+  | 'plan_afgesloten'
+  | 'label_klik';
 
 type Props = Record<string, string | number | boolean>;
 
@@ -48,6 +49,7 @@ export function bindTrackedClicks(): void {
     if (!el) return;
     const props: Props = {};
     if (el.dataset.trackPlek) props.plek = el.dataset.trackPlek;
+    if (el.dataset.trackLabel) props.label = el.dataset.trackLabel;
     track(el.dataset.track as EventName, props);
   });
 }

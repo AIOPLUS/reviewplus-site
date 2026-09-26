@@ -27,6 +27,13 @@ De URL's zijn gelijk aan de Framer-site, zodat posities in Google behouden blijv
 - Nieuwe branche: kopieer een bestand in `src/content/sectors/`
 - Nieuwe vacature: kopieer een bestand in `src/content/jobs/` (velden: zie `src/content.config.ts`)
 
+## Labelwisselaar (AIO Plus)
+
+- Naast het logo staat het menu **Labels** met alle labels van AIO Plus; in het mobiele menu en de footer staat een compacte lijst.
+- Alle labels staan in **`src/data/labels.json`** (naam, omschrijving, kleur, url, status `live` of `binnenkort`). Die lijst wordt ook gepubliceerd op `https://www.reviewplus.io/labels.json`, zodat de shop en de andere labelsites hem bij het bouwen kunnen lezen.
+- Label live? Zet `status` op `live` en vul `url` in; na de volgende deploy is hij klikbaar. Lege omschrijving of kleur = alleen de naam, in grijs.
+- Links naar andere labels krijgen `utm_source=reviewplus&utm_medium=labelwisselaar`; klikken worden gemeten als event `label_klik`.
+
 ## Vacatures (`/jobs`)
 
 - `concept: true`: alleen zichtbaar op de testversie, met een gele conceptbalk. Zet op `false` om te publiceren.
