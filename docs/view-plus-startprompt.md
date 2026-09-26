@@ -58,6 +58,8 @@ Een nieuwe repo `AIOPLUS/viewplus-site` op basis van reviewplus-site, met View P
 - **shop.viewplus.io**: webshop waarin View Plus reseller wordt van o.a. [Smiirl](https://www.smiirl.com/en/discover/instagram/5d/)-tellers (live volgers/likes-teller) en andere tools. Die bouwen we **na** de site, als aparte repo op basis van `review plus shop`. Vraag dan eerst de details: productlijst, inkoop- en verkoopprijzen, levering (dropship of voorraad), betaling (Mollie), retourbeleid en de voorwaarden van het resellerschap. Gebruik productfoto's en merknamen van leveranciers alleen met hun toestemming.
 - **app.viewplus.io**: eigen app, zelf te bouwen (geen white-label leverancier), later. Houd er nu alleen rekening mee in menu en footer (bijvoorbeeld een "Inloggen"-link pas zodra de app er is).
 
+Neem de **labelwisselaar** over (`LabelSwitcher.astro`, `LabelList.astro`, `src/lib/labels.ts`; zie `projects/CLAUDE.md`). Zet `HUIDIG_LABEL` op `viewplus`. Lees de labellijst bij het bouwen van `https://www.reviewplus.io/labels.json`, met een eigen kopie als terugval.
+
 Zet in de site alvast een plek voor de shop klaar (menu-item "Shop" dat pas zichtbaar wordt als `brand.shopUrl` gevuld is), net zoals de Review Plus-site naar shop.reviewplus.io linkt.
 
 ## Stap 1: vraag mij eerst (met AskUserQuestion, gebundeld)
