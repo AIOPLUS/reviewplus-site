@@ -129,6 +129,37 @@ const labelKleuren = labels.slice(0, 4).map((l) => l.kleur);
       else delete el.dataset.actief;
     });
 
+    // Met de muis: openen bij hover, sluiten kort na het verlaten (de korte vertraging overbrugt
+    // het gat tussen logo en menu). Touch en toetsenbord blijven op klikken werken.
+    const summary = el.querySelector('summary');
+    let sluitTimer: ReturnType<typeof setTimeout> | undefined;
+    let viaHover = false;
+    el.addEventListener('pointerenter', (e) => {
+      if (e.pointerType !== 'mouse') return;
+      clearTimeout(sluitTimer);
+      if (!el.open) {
+        viaHover = true;
+        el.open = true;
+      }
+    });
+    el.addEventListener('pointerleave', (e) => {
+      if (e.pointerType !== 'mouse' || !viaHover) return;
+      sluitTimer = setTimeout(() => {
+        el.open = false;
+        viaHover = false;
+      }, 250);
+    });
+    el.addEventListener('toggle', () => {
+      if (!el.open) viaHover = false;
+    });
+    // Klikken op het logo terwijl het menu via hover al open is: open laten in plaats van dichtklappen.
+    summary?.addEventListener('click', (e) => {
+      if (viaHover && el.open) {
+        e.preventDefault();
+        viaHover = false;
+      }
+    });
+
     // Hover of focus op een label: het bijbehorende vlak in het logo licht op.
     el.querySelectorAll<HTMLElement>('[data-vlak]').forEach((item) => {
       const aan = () => (el.dataset.actief = item.dataset.vlak);
