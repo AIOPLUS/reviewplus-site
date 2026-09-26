@@ -1,5 +1,5 @@
 {
-  "_uitleg": "Centrale lijst van alle AIO Plus-labels. Wordt gepubliceerd op https://www.reviewplus.io/labels.json; andere sites (shop, View Plus, ...) lezen die bij het bouwen. status: live (klikbaar) of binnenkort (alleen naam + 'Binnenkort'). Leeg omschrijving/kleur = nog onbekend.",
+  "_uitleg": "Centrale lijst van alle AIO Plus-labels. Wordt gepubliceerd op https://www.reviewplus.io/labels.json; andere sites (shop, View Plus, ...) lezen die bij het bouwen. De volgorde is ook het vlak in het AIO Plus-beeldmerk: 1 linksboven, 2 rechtsboven, 3 linksonder, 4 rechtsonder. status: live (klikbaar) of binnenkort. Bron teksten/kleuren: brochures in aioplus-brand/.",
   "labels": [
     {
       "id": "reviewplus",
@@ -20,24 +20,24 @@
     {
       "id": "websiteplus",
       "naam": "Website Plus",
-      "omschrijving": "",
-      "kleur": "",
-      "url": "",
+      "omschrijving": "Websites die klanten opleveren",
+      "kleur": "#FF5722",
+      "url": "https://www.websiteplus.io",
       "status": "binnenkort"
     },
     {
       "id": "tabplus",
       "naam": "Tab Plus",
-      "omschrijving": "",
-      "kleur": "",
-      "url": "",
+      "omschrijving": "Kassa en operatie voor horeca en retail",
+      "kleur": "#14893F",
+      "url": "https://www.tabplus.io",
       "status": "binnenkort"
     }
   ],
   "bundel": {
     "id": "aioplus",
     "naam": "AIO Plus",
-    "omschrijving": "",
+    "omschrijving": "Alle labels in één platform",
     "url": "",
     "status": "binnenkort"
   }

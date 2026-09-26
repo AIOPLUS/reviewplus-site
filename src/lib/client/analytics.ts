@@ -9,7 +9,8 @@ export type EventName =
   | 'nieuwsbrief_aangemeld'
   | 'sollicitatie_verzonden'
   | 'plan_afgesloten'
-  | 'label_klik';
+  | 'label_klik'
+  | 'labels_geopend';
 
 type Props = Record<string, string | number | boolean>;
 

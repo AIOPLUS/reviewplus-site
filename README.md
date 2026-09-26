@@ -29,10 +29,11 @@ De URL's zijn gelijk aan de Framer-site, zodat posities in Google behouden blijv
 
 ## Labelwisselaar (AIO Plus)
 
-- Naast het logo staat het menu **Labels** met alle labels van AIO Plus; in het mobiele menu en de footer staat een compacte lijst.
+- Het **beeldmerk in de header is de wisselaar** (`LabelSwitcher.astro`, `LabelMark.astro`). Bij hover schuiven de vier vlakken uit elkaar en kleuren ze naar de vier labels: linksboven Review, rechtsboven View, linksonder Website, rechtsonder Tab (zoals het AIO Plus-merk). Een klik opent het menu; hover op een label laat het bijbehorende vlak oplichten. Eén keer per bezoek bloeit het logo kort op als hint. Het woord "Review Plus" blijft de link naar home. Met "beweging verminderen" aan wisselen alleen de kleuren.
+- In het mobiele menu en de footer staat een compacte lijst.
 - Alle labels staan in **`src/data/labels.json`** (naam, omschrijving, kleur, url, status `live` of `binnenkort`). Die lijst wordt ook gepubliceerd op `https://www.reviewplus.io/labels.json`, zodat de shop en de andere labelsites hem bij het bouwen kunnen lezen.
 - Label live? Zet `status` op `live` en vul `url` in; na de volgende deploy is hij klikbaar. Lege omschrijving of kleur = alleen de naam, in grijs.
-- Links naar andere labels krijgen `utm_source=reviewplus&utm_medium=labelwisselaar`; klikken worden gemeten als event `label_klik`.
+- Links naar andere labels krijgen `utm_source=reviewplus&utm_medium=labelwisselaar`; klikken worden gemeten als event `label_klik`, openen van het menu als `labels_geopend`.
 
 ## Vacatures (`/jobs`)
 
